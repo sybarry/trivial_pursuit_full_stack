@@ -6,6 +6,18 @@
 - Cherif Mohamed Abdallah
 - Eklo Afi Sabine
 
+== Accord sur le dévelopemment
+On choisit la conception du groupe Snorlax comme base pour le développement du logiciel
+
+== TODO
+[IMPORTANT]
+====
+- [] Coder le backend indépendamment du frontend
+- [] Code le frontend indépendamment du backend
+- [] Relier le frontend et le backend avec des websockets
+====
+
+
 == Utilitaire
 
 **link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]** +
