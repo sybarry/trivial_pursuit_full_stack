@@ -8,7 +8,7 @@ stages:
   - test
 
 services:
-  - sismics/hsqldb:3.1.2
+  - yonadev/hsqldb:latest
 
 cache:
   paths:
