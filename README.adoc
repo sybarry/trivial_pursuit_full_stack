@@ -8,5 +8,5 @@
 
 == Utilitaire
 
-**link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]**
+**link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]** +
 **link:https://p-trans.univ-nantes.io/projet/[Sujet Projet]**
