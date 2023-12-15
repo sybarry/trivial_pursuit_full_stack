@@ -9,4 +9,4 @@
 == Utilitaire
 
 **link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]**
-**lin:https://p-trans.univ-nantes.io/projet/[Sujet Projet]**
+**link:https://p-trans.univ-nantes.io/projet/[Sujet Projet]**
