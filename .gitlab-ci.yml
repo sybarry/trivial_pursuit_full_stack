@@ -15,6 +15,7 @@ unit-test:
   stage: test
   script:
     - cd trivial_pursuit_server
+    - java -cp ./lib/hsqldb.jar org.hsqldb.Server
     - mvn $MAVEN_CLI_OPTS test
   artifacts:
     when: always
