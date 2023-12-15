@@ -14,6 +14,7 @@ cache:
 unit-test:
   stage: test
   script:
+    - cd trivial_pursuit_server
     - mvn $MAVEN_CLI_OPTS test
   artifacts:
     when: always
