@@ -1,0 +1,9 @@
+{
+    "files": [],
+    "references": [
+      { "path": "./packages/api" },
+      { "path": "./packages/core" },
+      { "path": "./packages/websocket" },
+      { "path": "./packages/web" }
+    ]
+}

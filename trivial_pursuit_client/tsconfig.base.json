@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "incremental": true,
+      "target": "ES2020",
+      "module": "Node16",
+      "declaration": true,
+      "sourceMap": true,
+      "declarationMap": true,
+      "strict": true,
+      "moduleResolution": "Node16",
+      "esModuleInterop": true,
+      "skipLibCheck": false,
+      "forceConsistentCasingInFileNames": true,
+      "composite": true
+    }
+  }

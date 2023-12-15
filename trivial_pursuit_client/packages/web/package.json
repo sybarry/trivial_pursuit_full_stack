@@ -1,0 +1,15 @@
+{
+  "name": "@trivial-pursuit-client/web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trivial-pursuit-client/core": "^1.0.0"
+  }
+}
