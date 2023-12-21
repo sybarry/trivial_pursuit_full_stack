@@ -51,7 +51,8 @@ pages:
 
     - rm -rf public
     - mkdir public
-    - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public
+    - ls -a
+    - mv trivialPursuitServer-core/target/site/jacoco/* public
 #    - cd ../trivialPursuitServer-websocket-controller
 #    - mvn clean jacoco:prepare-agent install jacoco:report
 #    - rm -rf public
