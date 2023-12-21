@@ -38,7 +38,8 @@ pages:
     - cd trivial_pursuit_server
     - mvn clean package
     - cd trivialPursuitServer-core
-    - mvn jacoco:prepare-agent install jacoco:report
+    - mvn jacoco:prepare-agent 
+    - mvn jacoco:report
     - rm -rf public
     - mkdir public
     - mv target/site/* public
