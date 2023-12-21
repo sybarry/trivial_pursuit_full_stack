@@ -23,3 +23,9 @@ buildNumber.properties
 .history/
 *.vsix
 
+
+test.lck
+test.log
+test.properties
+test.script
+

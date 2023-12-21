@@ -71,8 +71,6 @@ class UserRepositoryTest {
         userRepository.save(user1);
         userRepository.flush();
 
-
-
         //VERIFY
         Optional<User> opt = userRepository.findById(user1.getId());
         Assertions.assertTrue(opt.isPresent());
