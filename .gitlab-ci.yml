@@ -6,6 +6,8 @@ variables:
 
 stages:
   - test
+  - coverage
+  - deploy
 
 services:
   - name: docker-registry.univ-nantes.fr/e206597m/trivial_pursuit_full_stack/hsqldb:v1
@@ -26,3 +28,33 @@ unit-test:
       junit:
         - ./target/surefire-reports/TEST-*.xml
         - ./target/failsafe-reports/TEST-*.xml
+
+jacoco-pitest:
+  stage: coverage
+  script:
+    - cd trivial_pursuit_server
+    - mvn $MAVEN_CLI_OPTS verify
+  artifacts:
+    when: always
+
+
+pages:
+  stage: deploy
+  dependencies:
+    - unit-test
+    - jacoco-pitest
+  interruptible: true
+  script:
+    - cd trivial_pursuit_server/trivialPursuitServer-core
+    - mvn clean jacoco:prepare-agent install jacoco:report
+    - rm -rf public
+    - mkdir public
+    - mv target/site/* public
+#    - cd ../trivialPursuitServer-websocket-controller
+#    - mvn clean jacoco:prepare-agent install jacoco:report
+#    - rm -rf public
+#    - mkdir public
+#    - mv target/site/* public
+  artifacts:
+    paths:
+      - public
