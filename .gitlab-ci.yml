@@ -36,9 +36,7 @@ pages:
   interruptible: true
   script:
     - cd trivial_pursuit_server
-    - mvn clean package
-
-    - mvn jacoco:prepare-agent install jacoco:report
+    - mvn jacoco:prepare-agent jacoco:report
 
     - cd ..
     - rm -rf public
