@@ -49,13 +49,14 @@ pages:
     - mkdir data
     - mkdir websocket
 
-    - cd ../trivial_pursuit_server
+    - cd ..
     - mv index.html public
-    - mv trivialPursuitServer-api/target/site/jacoco/* public/api
-    - mv trivialPursuitServer-core/target/site/jacoco/* public/core
-    - mv trivialPursuitServer-data/target/site/jacoco/* public/data
-    - mv trivialPursuitServer-websocket-controller/target/site/jacoco/* public/websocket
+    - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api
+    - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public/core
+    - mv trivial_pursuit_server/trivialPursuitServer-data/target/site/jacoco/* public/data
+    - mv trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site/jacoco/* public/websocket
 
+    - cd ..
   artifacts:
     paths:
       - public
