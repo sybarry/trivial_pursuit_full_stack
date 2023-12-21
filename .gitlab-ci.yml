@@ -8,7 +8,7 @@ stages:
   - test
 
 services:
-  - name: docker-registry.univ-nantes.fr/e206597m/trivial_pursuit_server:latest
+  - name: docker-registry.univ-nantes.fr/e206597m/trivial_pursuit_full_stack/hsqldb:v1
     alias: bdd
 
 cache:
