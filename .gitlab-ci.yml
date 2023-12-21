@@ -37,7 +37,8 @@ pages:
   script:
     - cd trivial_pursuit_server
     - mvn clean package
-    - cd trivialPursuitServer-core
+    - cd trivialPursuitServer-core/target
+    - ls -a
     #- mvn jacoco:prepare-agent 
     - mvn install
     - mvn jacoco:report
