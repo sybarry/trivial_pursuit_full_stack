@@ -22,3 +22,4 @@ On choisit la conception du groupe Snorlax comme base pour le développement du 
 
 **link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]** +
 **link:https://p-trans.univ-nantes.io/projet/[Sujet Projet]**
+**link:https://e206597m.univ-nantes.io/trivial_pursuit_full_stack/[Git Page]**
