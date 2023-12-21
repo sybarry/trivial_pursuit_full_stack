@@ -37,9 +37,11 @@ pages:
   script:
     - cd trivial_pursuit_server
     - mvn clean package
-    - cd trivialPursuitServer-core/target
+    - cd trivialPursuitServer-api/target
     - ls -a
+    - mv trivialPursuitServer-api-1.0-SNAPSHOT.jar ../../trivialPursuitServer-core/target
     #- mvn jacoco:prepare-agent 
+    - cd ../../trivialPursuitServer-core
     - mvn install
     - mvn jacoco:report
     - rm -rf public
