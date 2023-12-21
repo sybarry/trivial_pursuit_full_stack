@@ -6,7 +6,6 @@ variables:
 
 stages:
   - test
-  - coverage
   - deploy
 
 services:
@@ -34,7 +33,6 @@ pages:
   stage: deploy
   dependencies:
     - unit-test
-    - jacoco-pitest
   interruptible: true
   script:
     - cd trivial_pursuit_server
