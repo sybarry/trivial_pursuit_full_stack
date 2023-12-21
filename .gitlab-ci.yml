@@ -37,27 +37,21 @@ pages:
   script:
     - cd trivial_pursuit_server
     - mvn clean package
-#    - cd trivialPursuitServer-api/target
-#    - ls -a
-#    - mv trivialPursuitServer-api-1.0-SNAPSHOT.jar ../../trivialPursuitServer-core/target
-    #- mvn jacoco:prepare-agent
-#    - cd ../../trivialPursuitServer-core
-#    - cd ../../trivialPursuitServer-core/target
-#    - ls -a
-#    - cd ..
+
     - mvn jacoco:prepare-agent install jacoco:report
-#    - mvn install
-#    - mvn jacoco:report
 
     - rm -rf public
     - mkdir public
     - ls -a
-    - mv trivialPursuitServer-core/target/site/jacoco/* public
-#    - cd ../trivialPursuitServer-websocket-controller
-#    - mvn clean jacoco:prepare-agent install jacoco:report
-#    - rm -rf public
-#    - mkdir public
-#    - mv target/site/* public
+    - cd trivialPursuitServer-core
+    - ls -a
+    - cd target
+    - ls -a
+    - cd site
+    - ls -a
+    - cd ../../..
+    - mv /builds/E206597M/trivial_pursuit_full_stack/trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public
+
   artifacts:
     paths:
       - public
