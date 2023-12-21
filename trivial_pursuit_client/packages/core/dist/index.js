@@ -17,5 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("@trivial-pursuit-client/api");
 require("@trivial-pursuit-client/websocket");
 __exportStar(require("./core-facade"), exports);
-console.log("Salut de la part de Core !");
+// console.log("Salut de la part de Core !");
 //# sourceMappingURL=index.js.map

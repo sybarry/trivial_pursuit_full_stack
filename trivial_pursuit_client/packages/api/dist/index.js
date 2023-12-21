@@ -15,5 +15,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./server"), exports);
-console.log("Salut de la part d'API !");
+//console.log("Salut de la part d'API !");
 //# sourceMappingURL=index.js.map

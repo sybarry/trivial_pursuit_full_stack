@@ -1,8 +1,8 @@
-/*C56*/SET SCHEMA PUBLIC
+/*C38*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C57*/SET SCHEMA PUBLIC
+/*C39*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C58*/SET SCHEMA PUBLIC
+/*C40*/SET SCHEMA PUBLIC
 drop table if exists DEPARTMENT cascade 
 drop table if exists EMPLOYEE cascade 
 drop table if exists USER cascade 
@@ -10,7 +10,7 @@ drop sequence DEPARTMENT_SEQ if exists
 drop sequence EMP_SEQ if exists
 drop sequence EMPLOYEE_SEQ if exists
 DISCONNECT
-/*C59*/SET SCHEMA PUBLIC
+/*C41*/SET SCHEMA PUBLIC
 create sequence DEPARTMENT_SEQ start with 1 increment by 50
 create sequence EMP_SEQ start with 1 increment by 50
 create sequence EMPLOYEE_SEQ start with 1 increment by 50
@@ -19,130 +19,19 @@ create table EMPLOYEE (department_id bigint, id bigint not null, name varchar(25
 create table USER (id bigint not null, name varchar(255), password varchar(255), primary key (id))
 alter table EMPLOYEE add constraint FKgh5ho7v59ojrdrcb00nqq4sgb foreign key (department_id) references DEPARTMENT
 DISCONNECT
-/*C60*/SET SCHEMA PUBLIC
+/*C42*/SET SCHEMA PUBLIC
 ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 51
 ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 51
 DISCONNECT
-/*C61*/SET SCHEMA PUBLIC
+/*C43*/SET SCHEMA PUBLIC
 ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 101
 ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 101
 DISCONNECT
-/*C62*/SET SCHEMA PUBLIC
+/*C44*/SET SCHEMA PUBLIC
 ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 51
 DISCONNECT
-/*C63*/SET SCHEMA PUBLIC
+/*C45*/SET SCHEMA PUBLIC
 ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 101
 DISCONNECT
-/*C64*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C65*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C66*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C67*/SET SCHEMA PUBLIC
-drop table if exists DEPARTMENT cascade 
-drop table if exists EMPLOYEE cascade 
-drop table if exists USER cascade 
-drop sequence DEPARTMENT_SEQ if exists
-drop sequence EMP_SEQ if exists
-drop sequence EMPLOYEE_SEQ if exists
-DISCONNECT
-/*C68*/SET SCHEMA PUBLIC
-create sequence DEPARTMENT_SEQ start with 1 increment by 50
-create sequence EMP_SEQ start with 1 increment by 50
-create sequence EMPLOYEE_SEQ start with 1 increment by 50
-create table DEPARTMENT (id bigint not null, NAME varchar(255), primary key (id))
-create table EMPLOYEE (department_id bigint, id bigint not null, name varchar(255), primary key (id))
-create table USER (id bigint not null, name varchar(255), password varchar(255), primary key (id))
-alter table EMPLOYEE add constraint FKgh5ho7v59ojrdrcb00nqq4sgb foreign key (department_id) references DEPARTMENT
-DISCONNECT
-/*C69*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 51
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 51
-DISCONNECT
-/*C70*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 101
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 101
-DISCONNECT
-/*C71*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 51
-DISCONNECT
-/*C72*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 101
-DISCONNECT
-/*C73*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C74*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C75*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C76*/SET SCHEMA PUBLIC
-drop table if exists DEPARTMENT cascade 
-drop table if exists EMPLOYEE cascade 
-drop table if exists USER cascade 
-drop sequence DEPARTMENT_SEQ if exists
-drop sequence EMP_SEQ if exists
-drop sequence EMPLOYEE_SEQ if exists
-DISCONNECT
-/*C77*/SET SCHEMA PUBLIC
-create sequence DEPARTMENT_SEQ start with 1 increment by 50
-create sequence EMP_SEQ start with 1 increment by 50
-create sequence EMPLOYEE_SEQ start with 1 increment by 50
-create table DEPARTMENT (id bigint not null, NAME varchar(255), primary key (id))
-create table EMPLOYEE (department_id bigint, id bigint not null, name varchar(255), primary key (id))
-create table USER (id bigint not null, name varchar(255), password varchar(255), primary key (id))
-alter table EMPLOYEE add constraint FKgh5ho7v59ojrdrcb00nqq4sgb foreign key (department_id) references DEPARTMENT
-DISCONNECT
-/*C78*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 51
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 51
-DISCONNECT
-/*C79*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 101
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 101
-DISCONNECT
-/*C80*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 51
-DISCONNECT
-/*C81*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 101
-DISCONNECT
-/*C82*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C83*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C84*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C85*/SET SCHEMA PUBLIC
-drop table if exists DEPARTMENT cascade 
-drop table if exists EMPLOYEE cascade 
-drop table if exists USER cascade 
-drop sequence DEPARTMENT_SEQ if exists
-drop sequence EMP_SEQ if exists
-drop sequence EMPLOYEE_SEQ if exists
-DISCONNECT
-/*C86*/SET SCHEMA PUBLIC
-create sequence DEPARTMENT_SEQ start with 1 increment by 50
-create sequence EMP_SEQ start with 1 increment by 50
-create sequence EMPLOYEE_SEQ start with 1 increment by 50
-create table DEPARTMENT (id bigint not null, NAME varchar(255), primary key (id))
-create table EMPLOYEE (department_id bigint, id bigint not null, name varchar(255), primary key (id))
-create table USER (id bigint not null, name varchar(255), password varchar(255), primary key (id))
-alter table EMPLOYEE add constraint FKgh5ho7v59ojrdrcb00nqq4sgb foreign key (department_id) references DEPARTMENT
-DISCONNECT
-/*C87*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 51
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 51
-DISCONNECT
-/*C88*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.DEPARTMENT_SEQ RESTART WITH 101
-ALTER SEQUENCE PUBLIC.EMPLOYEE_SEQ RESTART WITH 101
-DISCONNECT
-/*C89*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 51
-DISCONNECT
-/*C90*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.EMP_SEQ RESTART WITH 101
-DISCONNECT
-/*C91*/SET SCHEMA PUBLIC
+/*C46*/SET SCHEMA PUBLIC
 DISCONNECT
