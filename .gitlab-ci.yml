@@ -15,6 +15,7 @@ services:
 cache:
   paths:
     - .m2/repository/
+    - trivial_pursuit_server/.m2/repository
 
 unit-test:
   stage: test
@@ -36,7 +37,7 @@ pages:
   interruptible: true
   script:
     - cd trivial_pursuit_server
-    - mvn jacoco:prepare-agent jacoco:report
+    - mvn jacoco:prepare-agent install jacoco:report
 
     - cd ..
     - rm -rf public
@@ -54,7 +55,6 @@ pages:
     - mv trivial_pursuit_server/trivialPursuitServer-data/target/site/jacoco/* public/data
     - mv trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site/jacoco/* public/websocket
 
-    - cd ..
   artifacts:
     paths:
       - public
