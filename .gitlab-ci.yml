@@ -48,7 +48,7 @@ pages:
     - mkdir websocket
 
     - cd ..
-    - mv index.html public
+    - mv trivial_pursuit_server/index.html public
     - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api
     - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public/core
     - mv trivial_pursuit_server/trivialPursuitServer-data/target/site/jacoco/* public/data
