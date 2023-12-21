@@ -19,6 +19,7 @@ cache:
 unit-test:
   stage: test
   script:
+    - cd trivial_pursuit_server
     - mvn $MAVEN_CLI_OPTS test
   artifacts:
     when: always
@@ -34,7 +35,7 @@ pages:
     - unit-test
   interruptible: true
   script:
-#    - cd trivial_pursuit_server
+    - cd trivial_pursuit_server
     - mvn clean package
 #    - cd trivialPursuitServer-api/target
 #    - ls -a
