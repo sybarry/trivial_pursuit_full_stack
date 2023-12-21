@@ -14,7 +14,6 @@ services:
 
 cache:
   paths:
-    - .m2/repository/
     - trivial_pursuit_server/.m2/repository
 
 unit-test:
@@ -22,12 +21,6 @@ unit-test:
   script:
     - cd trivial_pursuit_server
     - mvn $MAVEN_CLI_OPTS test
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - ./target/surefire-reports/TEST-*.xml
-        - ./target/failsafe-reports/TEST-*.xml
 
 
 pages:
