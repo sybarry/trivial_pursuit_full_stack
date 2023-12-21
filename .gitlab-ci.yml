@@ -41,7 +41,9 @@ pages:
     - ls -a
     - mv trivialPursuitServer-api-1.0-SNAPSHOT.jar ../../trivialPursuitServer-core/target
     #- mvn jacoco:prepare-agent 
-    - cd ../../trivialPursuitServer-core
+    - cd ../../trivialPursuitServer-core/target
+    - ls -a
+    - cd ..
     - mvn install
     - mvn jacoco:report
     - rm -rf public
