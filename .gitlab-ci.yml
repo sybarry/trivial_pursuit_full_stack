@@ -40,17 +40,11 @@ pages:
 
     - mvn jacoco:prepare-agent install jacoco:report
 
+    - cd ..
     - rm -rf public
     - mkdir public
-    - ls -a
-    - cd trivialPursuitServer-core
-    - ls -a
-    - cd target
-    - ls -a
-    - cd site
-    - ls -a
-    - cd ../../..
-    - mv /builds/E206597M/trivial_pursuit_full_stack/trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public
+
+    - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public
 
   artifacts:
     paths:
