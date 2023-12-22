@@ -2,6 +2,8 @@ package fr.alma.TrivialPursuitServer.core;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "USER")
 public class User {
@@ -38,5 +40,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isThePlayer(String password, String name){
+        return Objects.equals(password, this.password) && Objects.equals(name, this.name);
     }
 }

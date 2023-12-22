@@ -39,6 +39,13 @@ class UserRepositoryTest {
         Assertions.assertEquals("bonjour", userRepository.findAll().get(0).getName());
         Assertions.assertEquals("toi", userRepository.findAll().get(0).getPassword());
         Assertions.assertEquals(1,userRepository.count());
+
+        Optional<User> user = userRepository.findAll()
+                .stream()
+                .filter(us-> us.getPassword().equals("toi") && us.getName().equals("bonjour"))
+                .findFirst();
+
+        Assertions.assertTrue(user.isPresent());
     }
 
     @Test

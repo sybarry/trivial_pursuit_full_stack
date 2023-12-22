@@ -31,3 +31,9 @@ test.script
 
 
 lib/
+/trivialPursuitServer-data/trivialPursuitServer-data.iml
+/trivialPursuitServer-core/trivialPursuitServer-core.iml
+/trivialPursuitServer-api/trivialPursuitServer-api.iml
+/trivialPursuitServer-websocket-controller/trivialPursuitServer-websocket-controller.iml
+/trivialPursuitServer.iml
+/trivial_pursuit_server.iml
