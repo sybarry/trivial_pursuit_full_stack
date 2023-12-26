@@ -28,6 +28,8 @@ unit-test:
 
 coverage-jacoco:
   stage: test
+  needs:
+    - unit-test
   script:
     - cd trivial_pursuit_server
     - mvn clean jacoco:prepare-agent package jacoco:report
@@ -43,6 +45,8 @@ coverage-jacoco:
 
 mutation-pit:
   stage: test
+  needs:
+    - unit-test
   script:
     - cd trivial_pursuit_server
     - mvn clean package pitest:mutationCoverage
@@ -59,9 +63,9 @@ mutation-pit:
 pages:
   stage: deploy
   needs:
-    - job: unit-test
-    - job: coverage-jacoco
-    - job: mutation-pit
+    - unit-test
+    - coverage-jacoco
+    - mutation-pit
   interruptible: true
   script:
     - rm -rf public
