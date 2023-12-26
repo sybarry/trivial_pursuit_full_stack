@@ -30,7 +30,7 @@ coverage-jacoco:
   stage: test
   script:
     - cd trivial_pursuit_server
-    - mvn clean jacoco:prepare-agent install jacoco:report
+    - mvn clean jacoco:prepare-agent package jacoco:report
   artifacts:
     when: always
     paths:
@@ -71,14 +71,14 @@ pages:
     - rm -rf public
     - mkdir public
     - cd public
-    - mkdir api/jacoco
-    - mkdir api/pit
-    - mkdir core/jacoco
-    - mkdir core/pit
-    - mkdir data/jacoco
-    - mkdir data/pit
-    - mkdir websocket/jacoco
-    - mkdir websocket/pit
+    - mkdir -p api/{jacoco,pit}
+#    - mkdir api/pit
+    - mkdir -p core/{jacoco,pit}
+#    - mkdir core/pit
+    - mkdir -p data/{jacoco,pit}
+#    - mkdir data/pit
+    - mkdir -p websocket/{jacoco,pit}
+#    - mkdir websocket/pit
 
     - cd ..
     - mv trivial_pursuit_server/index.html public
