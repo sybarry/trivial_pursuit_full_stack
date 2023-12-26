@@ -58,10 +58,10 @@ mutation-pit:
 
 pages:
   stage: deploy
-  dependencies:
-    - unit-test
-    - coverage-jacoco
-    - mutation-pit
+  needs:
+    - job: unit-test
+    - job: coverage-jacoco
+    - job: mutation-pit
   interruptible: true
   script:
     - rm -rf public
