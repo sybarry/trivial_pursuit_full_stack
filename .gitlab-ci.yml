@@ -64,21 +64,16 @@ pages:
     - mutation-pit
   interruptible: true
   script:
-#    - cd trivial_pursuit_server
-#    - mvn jacoco:prepare-agent install jacoco:report
-
-#    - cd ..
     - rm -rf public
     - mkdir public
     - cd public
     - mkdir -p api/{jacoco,pit}
-#    - mkdir api/pit
+
     - mkdir -p core/{jacoco,pit}
-#    - mkdir core/pit
+
     - mkdir -p data/{jacoco,pit}
-#    - mkdir data/pit
+
     - mkdir -p websocket/{jacoco,pit}
-#    - mkdir websocket/pit
 
     - cd ..
     - mv trivial_pursuit_server/index.html public
