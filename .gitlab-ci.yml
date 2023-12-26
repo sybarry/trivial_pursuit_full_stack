@@ -45,7 +45,7 @@ mutation-pit:
   stage: test
   script:
     - cd trivial_pursuit_server
-    - mvn pitest:mutationCoverage
+    - mvn package pitest:mutationCoverage
   artifacts:
     when: always
     paths:
