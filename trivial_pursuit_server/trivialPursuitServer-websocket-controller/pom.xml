@@ -174,7 +174,7 @@
             <goals>
               <goal>mutationCoverage</goal>
             </goals>
-            <phase>package</phase>
+<!--            <phase>package</phase>-->
           </execution>
         </executions>
         <dependencies>

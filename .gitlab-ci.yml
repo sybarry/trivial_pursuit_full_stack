@@ -5,7 +5,8 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
 stages:
-  - test
+  - unit-test
+  - coverage
   - deploy
 
 services:
@@ -16,37 +17,83 @@ cache:
   paths:
     - trivial_pursuit_server/.m2/repository
 
-unit-test:
-  stage: test
+
+
+unit-test-mvn:
+  stage: unit-test
   script:
     - cd trivial_pursuit_server
     - mvn $MAVEN_CLI_OPTS test
 
 
-pages:
-  stage: deploy
-  dependencies:
-    - unit-test
-  interruptible: true
+
+coverage-jacoco:
+  stage: coverage
+  needs:
+    - unit-test-mvn
   script:
     - cd trivial_pursuit_server
-    - mvn jacoco:prepare-agent install jacoco:report
+    - mvn clean jacoco:prepare-agent package jacoco:report
+  artifacts:
+    when: always
+    paths:
+      - trivial_pursuit_server/trivialPursuitServer-api/target/site
+      - trivial_pursuit_server/trivialPursuitServer-core/target/site
+      - trivial_pursuit_server/trivialPursuitServer-data/target/site
+      - trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site
 
-    - cd ..
+
+
+mutation-pit:
+  stage: coverage
+  needs:
+    - unit-test-mvn
+  script:
+    - cd trivial_pursuit_server
+    - mvn clean package pitest:mutationCoverage
+  artifacts:
+    when: always
+    paths:
+      - trivial_pursuit_server/trivialPursuitServer-api/target/pit-reports
+      - trivial_pursuit_server/trivialPursuitServer-core/target/pit-reports
+      - trivial_pursuit_server/trivialPursuitServer-data/target/pit-reports
+      - trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/pit-reports
+
+
+
+pages:
+  stage: deploy
+  needs:
+    - unit-test-mvn
+    - coverage-jacoco
+    - mutation-pit
+  interruptible: true
+  script:
     - rm -rf public
     - mkdir public
     - cd public
-    - mkdir api
-    - mkdir core
-    - mkdir data
-    - mkdir websocket
+    - mkdir -p api/{jacoco,pit}
+
+    - mkdir -p core/{jacoco,pit}
+
+    - mkdir -p data/{jacoco,pit}
+
+    - mkdir -p websocket/{jacoco,pit}
 
     - cd ..
     - mv trivial_pursuit_server/index.html public
-    - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api
-    - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public/core
-    - mv trivial_pursuit_server/trivialPursuitServer-data/target/site/jacoco/* public/data
-    - mv trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site/jacoco/* public/websocket
+
+    - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api/jacoco
+    - mv trivial_pursuit_server/trivialPursuitServer-api/target/pit-reports/* public/api/pit
+
+    - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public/core/jacoco
+    - mv trivial_pursuit_server/trivialPursuitServer-core/target/pit-reports/* public/core/pit
+
+    - mv trivial_pursuit_server/trivialPursuitServer-data/target/site/jacoco/* public/data/jacoco
+    - mv trivial_pursuit_server/trivialPursuitServer-data/target/pit-reports/* public/data/pit
+
+    - mv trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site/jacoco/* public/websocket/jacoco
+    - mv trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/pit-reports/* public/websocket/pit
 
   artifacts:
     paths:
