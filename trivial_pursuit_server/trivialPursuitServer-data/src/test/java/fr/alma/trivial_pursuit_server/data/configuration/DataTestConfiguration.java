@@ -30,7 +30,7 @@ public class DataTestConfiguration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("jakarta.persistence.jdbc.driver")));
+        dataSource.setDriverClassName(env.getProperty("jakarta.persistence.jdbc.driver"));
         dataSource.setUrl(env.getProperty("jakarta.persistence.jdbc.url"));
         dataSource.setUsername(env.getProperty("jakarta.persistence.jdbc.user"));
         dataSource.setPassword(env.getProperty("jakarta.persistence.jdbc.password"));
