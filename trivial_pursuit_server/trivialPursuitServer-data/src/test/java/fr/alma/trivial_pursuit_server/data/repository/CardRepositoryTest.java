@@ -1,9 +1,12 @@
-package fr.alma.trivial_pursuit_server.data;
+package fr.alma.trivial_pursuit_server.data.repository;
 
 import fr.alma.trivial_pursuit_server.core.card.Answer;
 import fr.alma.trivial_pursuit_server.core.card.Card;
 import fr.alma.trivial_pursuit_server.core.card.Question;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
+import fr.alma.trivial_pursuit_server.data.repository.CardRepository;
+import fr.alma.trivial_pursuit_server.exception.CardException;
+import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -31,16 +34,27 @@ class CardRepositoryTest {
 
     @Test
     @DisplayName("test add")
-    void testInsertCard(){
+    void testInsertCard() throws CardException {
         //CONFIG
         Card card = new Card();
-        Question q = new Question("who i am", null);
-        Answer a = new Answer("hugo", q);
+        Question q = new Question("who i am", null, Theme.GEOGRAPHY, card);
+        Answer a = new Answer("hugo", q, Theme.GEOGRAPHY, card);
         q.setAnswer(a);
 
         List<Question> qq = new ArrayList<>();
         qq.add(q);
+        qq.add(q);
+        qq.add(q);
+        qq.add(q);
+        qq.add(q);
+        qq.add(q);
+
         List<Answer> aa = new ArrayList<>();
+        aa.add(a);
+        aa.add(a);
+        aa.add(a);
+        aa.add(a);
+        aa.add(a);
         aa.add(a);
 
         card.setAnswers(aa);
@@ -50,12 +64,14 @@ class CardRepositoryTest {
         cardRepository.save(card);
 
         //VERIFY
-        Assertions.assertTrue(cardRepository.findAll().contains(card));
-        Assertions.assertEquals(q, cardRepository.findAll().get(0).getQuestions().get(0));
-        Assertions.assertEquals(a, cardRepository.findAll().get(0).getAnswers().get(0));
+        Assertions.assertTrue(cardRepository.existsById(card.getId()));
+        Assertions.assertEquals(q, cardRepository.findById(card.getId()).get().getQuestions().get(0));
+        Assertions.assertEquals(a, cardRepository.findById(card.getId()).get().getAnswers().get(0));
+        Assertions.assertEquals(1, cardRepository.findAllCard().size());
         Assertions.assertEquals(1,cardRepository.count());
 
-        Optional<Card> user = cardRepository.findAll()
+
+        Optional<Card> user = cardRepository.findAllCard()
                 .stream()
                 .filter(us-> us.getQuestions().get(0).equals(q) && us.getAnswers().get(0).equals(a))
                 .findFirst();

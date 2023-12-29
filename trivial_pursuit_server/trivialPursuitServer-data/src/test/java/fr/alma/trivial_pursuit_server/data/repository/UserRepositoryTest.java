@@ -1,7 +1,8 @@
-package fr.alma.trivial_pursuit_server.data;
+package fr.alma.trivial_pursuit_server.data.repository;
 
 import fr.alma.trivial_pursuit_server.core.User;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
+import fr.alma.trivial_pursuit_server.data.repository.UserRepository;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;

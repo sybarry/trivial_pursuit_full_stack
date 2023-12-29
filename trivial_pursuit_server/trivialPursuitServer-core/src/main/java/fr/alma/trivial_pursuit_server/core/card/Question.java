@@ -1,21 +1,27 @@
 package fr.alma.trivial_pursuit_server.core.card;
 
+import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "QUESTION")
 public class Question {
 
-    private int id;
-
+    private Long id;
     private String questionText;
     private Answer answer;
+    private Theme theme;
+    private Card cardQuestion;
 
-    private Card card;
 
-    public Question(String questionText, Answer answer){
+    public Question() {
+    }
+
+    public Question(String questionText, Answer answer, Theme theme, Card card){
         this.questionText = questionText;
         this.answer = answer;
+        this.cardQuestion = card;
+        this.theme = theme;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -32,29 +38,33 @@ public class Question {
         this.questionText = questionText;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMP_SEQ")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getQuestionText() {
         return questionText;
     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMP_SEQ")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @ManyToOne
-    public Card getCard() {
-        return card;
+    public Card getCardQuestion() {
+        return cardQuestion;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardQuestion(Card cardQuestion) {
+        this.cardQuestion = cardQuestion;
     }
 
-    public Question() {
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 }
