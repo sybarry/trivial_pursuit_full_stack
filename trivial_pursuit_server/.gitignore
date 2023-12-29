@@ -23,12 +23,11 @@ buildNumber.properties
 .history/
 *.vsix
 
-
+## Trivial Server files
 test.lck
 test.log
 test.properties
 test.script
-
 
 lib/
 /trivialPursuitServer-data/trivialPursuitServer-data.iml

@@ -7,7 +7,9 @@
 - Eklo Afi Sabine
 
 == Accord sur le dévelopemment
-On choisit la conception du groupe Snorlax comme base pour le développement du logiciel
+On choisit la conception du groupe Snorlax comme base pour le développement du logiciel.
+
+L'ensemble de l'implémentation aura comme langue de référence l'anglais.
 
 == TODO
 [IMPORTANT]
