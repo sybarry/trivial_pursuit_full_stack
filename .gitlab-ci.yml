@@ -80,16 +80,7 @@ pages:
 
     - mkdir -p websocket/{jacoco,pit}
 
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/
-    - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target
-    - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target/site
-    - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco
-    - ls -a
-    - cd ../../../../..
-  
+    - cd ..
     - mv trivial_pursuit_server/index.html public
 
     - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api/jacoco
