@@ -659,18 +659,18 @@ body{
   $(document).ready(function () {
            $.get('https://e206597m.univ-nantes.io/trivial_pursuit_full_stack/websocket/jacoco/index.html',function(data){
              $('#divvvv').html(data);
-             document.getElementById('b3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[1].innerText ;
-             document.getElementById('c3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[2].innerText ;
-             document.getElementById('d3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[3].innerText ;
-             document.getElementById('e3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[4].innerText ;
-             document.getElementById('f3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[5].innerText ;
-             document.getElementById('g3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[6].innerText ;
-             document.getElementById('h3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[7].innerText ;
-             document.getElementById('i3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[8].innerText ;
-             document.getElementById('j3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[9].innerText ;
-             document.getElementById('k3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[10].innerText ;
-             document.getElementById('l3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[11].innerText ;
-             document.getElementById('m3').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[12].innerText ;
+             document.getElementById('b33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[1].innerText ;
+             document.getElementById('c33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[2].innerText ;
+             document.getElementById('d33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[3].innerText ;
+             document.getElementById('e33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[4].innerText ;
+             document.getElementById('f33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[5].innerText ;
+             document.getElementById('g33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[6].innerText ;
+             document.getElementById('h33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[7].innerText ;
+             document.getElementById('i33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[8].innerText ;
+             document.getElementById('j33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[9].innerText ;
+             document.getElementById('k33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[10].innerText ;
+             document.getElementById('l33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[11].innerText ;
+             document.getElementById('m33').innerHTML = $('#divvvv').find("tfoot")[0].firstChild.childNodes[12].innerText ;
 
 <!--TOTAL Compute-->
              //MissedInstructions
@@ -680,11 +680,11 @@ body{
              var temp4 = $('#div1').find("tfoot")[0].firstChild.childNodes[1].innerText;
              var totalInstrMissed = parseInt(temp1.substr(0,temp1.indexOf('o'))) + parseInt(temp2.substr(0,temp2.indexOf('o'))) + parseInt(temp3.substr(0,temp3.indexOf('o'))) + parseInt(temp4.substr(0,temp4.indexOf('o')));
              var totalInstr = parseInt(temp1.substr(temp1.indexOf('f')+1)) + parseInt(temp2.substr(temp2.indexOf('f')+1)) + parseInt(temp3.substr(temp3.indexOf('f')+1)) + parseInt(temp4.substr(temp4.indexOf('f')+1));
-             document.getElementById('b4').innerHTML = totalInstrMissed + " of " + totalInstr;
+             document.getElementById('b44').innerHTML = totalInstrMissed + " of " + totalInstr;
 
              //Instruction Coverage
              totalInstrMissed = Math.abs(totalInstrMissed - totalInstr);
-             document.getElementById('c4').innerHTML = Math.floor(totalInstrMissed * 100 / totalInstr) + "%";
+             document.getElementById('c44').innerHTML = Math.floor(totalInstrMissed * 100 / totalInstr) + "%";
 
              //Missed Branches
              var temp5 = $('#divvvv').find("tfoot")[0].firstChild.childNodes[3].innerText;
@@ -693,35 +693,36 @@ body{
              var temp8 = $('#div1').find("tfoot")[0].firstChild.childNodes[3].innerText;
              var totalBrMissed = parseInt(temp5.substr(0,temp5.indexOf('o'))) + parseInt(temp6.substr(0,temp6.indexOf('o'))) + parseInt(temp7.substr(0,temp7.indexOf('o'))) + parseInt(temp8.substr(0,temp8.indexOf('o')));
              var totalBr = parseInt(temp5.substr(temp5.indexOf('f')+1)) + parseInt(temp6.substr(temp6.indexOf('f')+1)) + parseInt(temp7.substr(temp7.indexOf('f')+1)) + parseInt(temp8.substr(temp8.indexOf('f')+1));
-             document.getElementById('d4').innerHTML = totalBrMissed + " of " + totalBr;
+             document.getElementById('d44').innerHTML = totalBrMissed + " of " + totalBr;
 
              //Branches Coverage
              totalBrMissed = Math.abs(totalBrMissed - totalBr);
-             document.getElementById('e4').innerHTML = Math.floor(totalBrMissed * 100 / totalBr) + "%";
+             document.getElementById('e44').innerHTML = Math.floor(totalBrMissed * 100 / totalBr) + "%";
 
              //MissedCxTy
-             document.getElementById('f4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[5].innerHTML);
+             document.getElementById('f44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[5].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[5].innerHTML);
 
              //CxTy
-              document.getElementById('g4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[6].innerHTML);
+              document.getElementById('g44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[6].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[6].innerHTML);
 
              //MissedLine
-             document.getElementById('h4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[7].innerHTML);
+             document.getElementById('h44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[7].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[7].innerHTML);
 
              //Line
-             document.getElementById('i4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[8].innerHTML);
+             document.getElementById('i44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[8].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[8].innerHTML);
 
              //MissedMethod
-             document.getElementById('j4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[9].innerHTML);
+             document.getElementById('j44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[9].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[9].innerHTML);
 
              //Methods
-             document.getElementById('k4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[10].innerHTML);
+             document.getElementById('k44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[10].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[10].innerHTML);
 
              //MissedClasses
-             document.getElementById('l4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[11].innerHTML);
+             document.getElementById('l44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[11].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[11].innerHTML);
 
              //Classes
-             document.getElementById('m4').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[12].innerHTML);
+             document.getElementById('m44').innerHTML = parseInt($('#divvvv').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#div1').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#divvv').find("tfoot")[0].firstChild.childNodes[12].innerHTML) + parseInt($('#divv').find("tfoot")[0].firstChild.childNodes[12].innerHTML);
+
            });
    		});
 </script>
@@ -758,18 +759,18 @@ body{
   <tfoot>
   <tr>
     <td>Total</td>
-    <td class="coverage_bar_colorPerso" id="b4">n/a</td>
-    <td class="ctr2" id="c4">n/a</td>
-    <td class="coverage_bar_colorPerso" id="d4">n/a</td>
-    <td class="ctr2" id="e4">n/a</td>
-    <td class="ctr1" id="f4">n/a</td>
-    <td class="ctr2" id="g4">n/a</td>
-    <td class="ctr1" id="h4">n/a</td>
-    <td class="ctr2" id="i4">n/a</td>
-    <td class="ctr1" id="j4">n/a</td>
-    <td class="ctr2" id="k4">n/a</td>
-    <td class="ctr1" id="l4">n/a</td>
-    <td class="ctr2" id="m4">n/a</td>
+    <td class="coverage_bar_colorPerso" id="b44">n/a</td>
+    <td class="ctr2" id="c44">n/a</td>
+    <td class="coverage_bar_colorPerso" id="d44">n/a</td>
+    <td class="ctr2" id="e44">n/a</td>
+    <td class="ctr1" id="f44">n/a</td>
+    <td class="ctr2" id="g44">n/a</td>
+    <td class="ctr1" id="h44">n/a</td>
+    <td class="ctr2" id="i44">n/a</td>
+    <td class="ctr1" id="j44">n/a</td>
+    <td class="ctr2" id="k44">n/a</td>
+    <td class="ctr1" id="l44">n/a</td>
+    <td class="ctr2" id="m44">n/a</td>
   </tr>
   </tfoot>
   <tbody>
@@ -824,18 +825,18 @@ body{
   <tr>
     <td id="a3"><a href="https://e206597m.univ-nantes.io/trivial_pursuit_full_stack/websocket/jacoco"
                    class="el_package">fr.alma.trivial_pursuit_server.trivialPursuitServer-websocket-controller</a></td>
-    <td class="coverage_bar_colorPerso" id="b3">n/a</td>
-    <td class="ctr2" id="c3">n/a</td>
-    <td class="coverage_bar_colorPerso" id="d3">n/a</td>
-    <td class="ctr2" id="e3">n/a</td>
-    <td class="ctr1" id="f3">n/a</td>
-    <td class="ctr2" id="g3">n/a</td>
-    <td class="ctr1" id="h3">n/a</td>
-    <td class="ctr2" id="i3">n/a</td>
-    <td class="ctr1" id="j3">n/a</td>
-    <td class="ctr2" id="k3">n/a</td>
-    <td class="ctr1" id="l3">n/a</td>
-    <td class="ctr2" id="m3">n/a</td>
+    <td class="coverage_bar_colorPerso" id="b33">n/a</td>
+    <td class="ctr2" id="c33">n/a</td>
+    <td class="coverage_bar_colorPerso" id="d33">n/a</td>
+    <td class="ctr2" id="e33">n/a</td>
+    <td class="ctr1" id="f33">n/a</td>
+    <td class="ctr2" id="g33">n/a</td>
+    <td class="ctr1" id="h33">n/a</td>
+    <td class="ctr2" id="i33">n/a</td>
+    <td class="ctr1" id="j33">n/a</td>
+    <td class="ctr2" id="k33">n/a</td>
+    <td class="ctr1" id="l33">n/a</td>
+    <td class="ctr2" id="m33">n/a</td>
   </tr>
   </tbody>
 </table>
@@ -850,7 +851,7 @@ body{
 </div>
 <div id="div7" style="display:none">
 </div>
-<div id="div8" style="display:none">
+<div ID="div8" style="display:none">
 </div>
 <!--API scraping-->
 <script type="text/javascript">
