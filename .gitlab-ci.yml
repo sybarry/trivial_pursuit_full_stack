@@ -82,11 +82,11 @@ pages:
 
     - cd ../trivial_pursuit_server/trivialPursuitServer-core/
     - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target
+    - cd target
     - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target/site
+    - cd site
     - ls -a
-    - cd ../trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco
+    - cd jacoco
     - ls -a
     - cd ../../../../..
   
