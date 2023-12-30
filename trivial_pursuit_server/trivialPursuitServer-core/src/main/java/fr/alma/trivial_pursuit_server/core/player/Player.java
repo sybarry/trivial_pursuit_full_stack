@@ -2,16 +2,19 @@ package fr.alma.trivial_pursuit_server.core.player;
 
 import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.game.Party;
+import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "PLAYER")
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Player {
 
     @Id
@@ -20,21 +23,20 @@ public class Player {
     private Color pawn;
     private int nbTriangle;
     @Embedded
-    private Case actualCase;
+    private Case actualCase = null;
     @ManyToOne
     private Party party;
+    private Boolean ready = false;
 
 
     public Player(Color pawn){
         this.pawn = pawn;
         this.nbTriangle = 0;
-        this.actualCase = null;
         this.party = null;
     }
-    public Player(Color pawn, Case actualCase, Party party) {
+    public Player(Color pawn, Party party) {
         this.pawn = pawn;
         this.nbTriangle = 0;
-        this.actualCase = actualCase;
         this.party = party;
     }
 
@@ -44,12 +46,12 @@ public class Player {
      * @param party to set for the player
      * @throws PlayerException if the party is null
      */
-    public void setParty(Party party) throws PlayerException {
+    public void setParty(Party party) throws PlayerException, PartyException {
         if(party != null) {
             this.party = party;
             party.addPlayer(this);
         }else{
-            throw new PlayerException();
+            throw new PlayerException("party can't be set because it's null");
         }
     }
 }

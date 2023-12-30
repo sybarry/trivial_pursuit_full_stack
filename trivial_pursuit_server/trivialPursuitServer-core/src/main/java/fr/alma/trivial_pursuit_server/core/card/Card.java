@@ -48,7 +48,7 @@ public class Card {
                 q.setQuestionCard(this);
             }
         }else{
-            throw new CardException();
+            throw new CardException("questions can't be set because it size doesn't match or it's null");
         }
     }
 
@@ -65,7 +65,7 @@ public class Card {
                 a.setAnswerCard(this);
             }
         }else{
-            throw new CardException();
+            throw new CardException("answers can't be set because it size doesn't match or it's null");
         }
     }
 
@@ -82,7 +82,7 @@ public class Card {
               return q.getQuestionText();
           }
       }
-      throw new CardException();
+      throw new CardException("question text don't exist for the theme send");
     }
 
     /**
@@ -98,7 +98,7 @@ public class Card {
             question.setQuestionCard(this);
             question.getAnswer().setAnswerCard(this);
         }else{
-            throw new CardException();
+            throw new CardException("question can't be added because already exist or no space left or it's null");
         }
     }
 
@@ -115,7 +115,7 @@ public class Card {
             answer.setAnswerCard(this);
             answer.getQuestion().setQuestionCard(this);
         }else{
-            throw new CardException();
+            throw new CardException("answer can't be added because already exist or no space left or it's null");
         }
     }
 }

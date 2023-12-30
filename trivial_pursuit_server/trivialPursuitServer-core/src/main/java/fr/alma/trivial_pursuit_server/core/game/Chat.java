@@ -13,16 +13,18 @@ import java.util.List;
 @Setter
 public class Chat {
 
-    @OneToOne(mappedBy = "chat", cascade = CascadeType.ALL)
-    private Party party;
     @Id
     @GeneratedValue
     private Long id;
+    @OneToOne(mappedBy = "chat", cascade = CascadeType.ALL)
+    private Party party;
     private List<String> messages = new ArrayList<>();
+
 
     public Chat(Party party){
         this.party = party;
     }
+
 
     public boolean addMsg(String msg){
         return messages.add(msg);

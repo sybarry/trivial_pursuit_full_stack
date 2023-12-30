@@ -1,13 +1,12 @@
 package fr.alma.trivial_pursuit_server.data.repository;
 
-import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.game.Chat;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
 import fr.alma.trivial_pursuit_server.exception.CaseException;
+import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.util.Color;
-import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +18,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
@@ -35,12 +33,10 @@ class ChatRepositoryTest {
     private Party party;
 
     @BeforeEach
-    void setUp() throws CaseException {
+    void setUp() throws PartyException {
         party = new Party();
-        SimpleCase simpleCase = new SimpleCase("case1", Color.BLUE, Theme.GEOGRAPHY);
-        simpleCase.setNeighbors(Arrays.asList("case2","case3"));
-        Player player = new Player(Color.GREEN, simpleCase, null);
-        Player player2 = new Player(Color.GREEN, simpleCase, null);
+        Player player = new Player(Color.GREEN, null);
+        Player player2 = new Player(Color.GREEN, null);
         party.addPlayer(player);
         party.addPlayer(player2);
     }
