@@ -1,15 +1,10 @@
 package fr.alma.trivial_pursuit_server.data.repository;
 
-import fr.alma.trivial_pursuit_server.core.card.Answer;
-import fr.alma.trivial_pursuit_server.core.card.Card;
-import fr.alma.trivial_pursuit_server.core.card.Question;
-import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
+import fr.alma.trivial_pursuit_server.core.game.Chat;
+import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
-import fr.alma.trivial_pursuit_server.data.repository.CardRepository;
-import fr.alma.trivial_pursuit_server.data.repository.PlayerRepository;
-import fr.alma.trivial_pursuit_server.exception.CardException;
 import fr.alma.trivial_pursuit_server.exception.CaseException;
 import fr.alma.trivial_pursuit_server.util.Color;
 import fr.alma.trivial_pursuit_server.util.Theme;
@@ -24,48 +19,57 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(
         classes = {DataTestConfiguration.class},
         loader = AnnotationConfigContextLoader.class)
 @Transactional
-class PlayerRepositoryTest {
+class ChatRepositoryTest {
 
     @Resource
-    private PlayerRepository playerRepository;
+    private ChatRepository chatRepository;
 
-    private Player player;
-    private SimpleCase simpleCase;
+    private Party party;
 
     @BeforeEach
     void setUp() throws CaseException {
-        simpleCase = new SimpleCase("case1", Color.BLUE, Theme.GEOGRAPHY);
+        party = new Party();
+        SimpleCase simpleCase = new SimpleCase("case1", Color.BLUE, Theme.GEOGRAPHY);
         simpleCase.setNeighbors(Arrays.asList("case2","case3"));
-        player = new Player(Color.GREEN, simpleCase, null);
+        Player player = new Player(Color.GREEN, simpleCase, null);
+        Player player2 = new Player(Color.GREEN, simpleCase, null);
+        party.addPlayer(player);
+        party.addPlayer(player2);
     }
 
     @Test
     @DisplayName("test add")
-    void testInsertPlayer() throws CaseException {
+    void testInsertChat() {
         //CONFIG
+        Chat chat = new Chat();
+        chat.addMsg("cc");
+
+        chat.setParty(party);
 
         //ACTION
-        playerRepository.save(player);
+        chatRepository.save(chat);
 
         //VERIFY
-        Assertions.assertTrue(playerRepository.existsById(player.getId()));
-        Assertions.assertEquals(simpleCase, playerRepository.find(player).getActualCase());
-        Assertions.assertEquals(1, playerRepository.findAll().size());
-        Assertions.assertEquals(1,playerRepository.count());
+        Assertions.assertTrue(chatRepository.existsById(chat.getId()));
+        Assertions.assertTrue(chatRepository.find(chat).getMessages().contains("cc"));
+        Assertions.assertEquals(party, chatRepository.find(chat).getParty());
+        Assertions.assertEquals(1, chatRepository.findAll().size());
+        Assertions.assertEquals(1,chatRepository.count());
 
 
-        Optional<Player> playerr = playerRepository.findAll()
+        Optional<Chat> chatt = chatRepository.findAll()
                 .stream()
-                .filter(ply-> ply.getActualCase().equals(simpleCase) && ply.getPawn().equals(Color.GREEN))
+                .filter(cht-> cht.getMessages().contains("cc"))
                 .findFirst();
 
-        Assertions.assertTrue(playerr.isPresent());
+        Assertions.assertTrue(chatt.isPresent());
     }
 }
