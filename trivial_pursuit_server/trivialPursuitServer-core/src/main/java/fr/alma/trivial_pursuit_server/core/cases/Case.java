@@ -2,54 +2,35 @@ package fr.alma.trivial_pursuit_server.core.cases;
 
 import fr.alma.trivial_pursuit_server.exception.CaseException;
 import fr.alma.trivial_pursuit_server.util.Color;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.*;
 
 import java.util.List;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter(AccessLevel.PROTECTED)
+//@Setter(AccessLevel.PROTECTED)
 public class Case {
 
+    @Column(name = "case_name")
     private String name;
     private Color color;
-
     private List<String> neighbors;
 
-    protected Case(){}
-
-    protected Case(String name, Color color, List<String> neighbors) {
-        this.name = name;
-        this.color = color;
-        this.neighbors = neighbors;
-    }
-
-    protected String getName() {
-        return this.name;
-    }
-
-    protected Color getColor(){
-        return this.color;
-    }
-
-    public List<String> getNeighbors() {
-        return neighbors;
-    }
-
+    /**
+     * Setter on the field neighbors.
+     * Check if the parameter contains the correct number of neighbors possible and that it's not null
+     * @param neighbors the list of neighbors
+     * @throws CaseException if neighbors doesn't respect the specification
+     */
     public void setNeighbors(List<String> neighbors) throws CaseException {
-        if(neighbors != null){
-            if(neighbors.size()>=2 && neighbors.size()<=6)
-                this.neighbors = neighbors;
-            else
-                throw new CaseException();
+        if(neighbors != null && neighbors.size()>=2 && neighbors.size()<=6){
+            this.neighbors = neighbors;
         }else{
-            throw new CaseException();
+            throw new CaseException("neighbors can't be set because it size doesn't match or it's null");
         }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 }
