@@ -2,69 +2,33 @@ package fr.alma.trivial_pursuit_server.core.card;
 
 import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "QUESTION")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Question {
 
-    private Long id;
-    private String questionText;
-    private Answer answer;
-    private Theme theme;
-    private Card cardQuestion;
-
-
-    public Question() {
-    }
-
-    public Question(String questionText, Answer answer, Theme theme, Card card){
-        this.questionText = questionText;
-        this.answer = answer;
-        this.cardQuestion = card;
-        this.theme = theme;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "answer_id", referencedColumnName = "id")
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMP_SEQ")
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    private Long id;
+    private String questionText;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "answer_id", referencedColumnName = "id")
+    private Answer answer;
+    private Theme theme;
     @ManyToOne
-    public Card getCardQuestion() {
-        return cardQuestion;
-    }
+    private Card questionCard;
 
-    public void setCardQuestion(Card cardQuestion) {
-        this.cardQuestion = cardQuestion;
-    }
 
-    public Theme getTheme() {
-        return theme;
-    }
-
-    public void setTheme(Theme theme) {
+    public Question(String questionText, Answer answer, Theme theme){
+        this.questionText = questionText;
+        this.answer = answer;
         this.theme = theme;
+        this.questionCard = null;
     }
 }

@@ -5,6 +5,7 @@ import fr.alma.trivial_pursuit_server.util.Theme;
 
 import java.util.List;
 
+
 public class HeadQuarter extends Case{
 
     private final Theme theme;
