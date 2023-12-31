@@ -678,6 +678,12 @@ body{
              var temp2 = $('#divvv').find("tfoot")[0].firstChild.childNodes[1].innerText;
              var temp3 = $('#divv').find("tfoot")[0].firstChild.childNodes[1].innerText;
              var temp4 = $('#div1').find("tfoot")[0].firstChild.childNodes[1].innerText;
+
+             temp1 = temp1.replaceAll(",", "");
+             temp2 = temp2.replaceAll(",", "");
+             temp3 = temp3.replaceAll(",", "");
+             temp4 = temp4.replaceAll(",", "");
+
              var totalInstrMissed = parseInt(temp1.substr(0,temp1.indexOf('o'))) + parseInt(temp2.substr(0,temp2.indexOf('o'))) + parseInt(temp3.substr(0,temp3.indexOf('o'))) + parseInt(temp4.substr(0,temp4.indexOf('o')));
              var totalInstr = parseInt(temp1.substr(temp1.indexOf('f')+1)) + parseInt(temp2.substr(temp2.indexOf('f')+1)) + parseInt(temp3.substr(temp3.indexOf('f')+1)) + parseInt(temp4.substr(temp4.indexOf('f')+1));
              document.getElementById('b44').innerHTML = totalInstrMissed + " of " + totalInstr;
@@ -691,6 +697,13 @@ body{
              var temp6 = $('#divvv').find("tfoot")[0].firstChild.childNodes[3].innerText;
              var temp7 = $('#divv').find("tfoot")[0].firstChild.childNodes[3].innerText;
              var temp8 = $('#div1').find("tfoot")[0].firstChild.childNodes[3].innerText;
+
+             temp5 = temp5.replaceAll(",", "");
+             temp6 = temp6.replaceAll(",", "");
+             temp7 = temp7.replaceAll(",", "");
+             temp8 = temp8.replaceAll(",", "");
+
+
              var totalBrMissed = parseInt(temp5.substr(0,temp5.indexOf('o'))) + parseInt(temp6.substr(0,temp6.indexOf('o'))) + parseInt(temp7.substr(0,temp7.indexOf('o'))) + parseInt(temp8.substr(0,temp8.indexOf('o')));
              var totalBr = parseInt(temp5.substr(temp5.indexOf('f')+1)) + parseInt(temp6.substr(temp6.indexOf('f')+1)) + parseInt(temp7.substr(temp7.indexOf('f')+1)) + parseInt(temp8.substr(temp8.indexOf('f')+1));
              document.getElementById('d44').innerHTML = totalBrMissed + " of " + totalBr;
