@@ -4,8 +4,8 @@ import fr.alma.trivial_pursuit_server.core.game.Chat;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
-import fr.alma.trivial_pursuit_server.exception.CaseException;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
+import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
@@ -33,10 +33,10 @@ class ChatRepositoryTest {
     private Party party;
 
     @BeforeEach
-    void setUp() throws PartyException {
+    void setUp() throws PartyException, PlayerException {
         party = new Party();
-        Player player = new Player(Color.GREEN, null);
-        Player player2 = new Player(Color.GREEN, null);
+        Player player = new Player(Color.GREEN);
+        Player player2 = new Player(Color.GREEN);
         party.addPlayer(player);
         party.addPlayer(player2);
     }

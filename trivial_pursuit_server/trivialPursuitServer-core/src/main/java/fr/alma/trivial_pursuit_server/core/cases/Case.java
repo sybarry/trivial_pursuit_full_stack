@@ -10,7 +10,7 @@ import java.util.List;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter(AccessLevel.PROTECTED)
 //@Setter(AccessLevel.PROTECTED)
 public class Case {

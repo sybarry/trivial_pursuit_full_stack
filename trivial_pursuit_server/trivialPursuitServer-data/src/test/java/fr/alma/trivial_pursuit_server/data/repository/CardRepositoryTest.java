@@ -1,10 +1,12 @@
 package fr.alma.trivial_pursuit_server.data.repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.alma.trivial_pursuit_server.core.card.Answer;
 import fr.alma.trivial_pursuit_server.core.card.Card;
 import fr.alma.trivial_pursuit_server.core.card.Question;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
-import fr.alma.trivial_pursuit_server.data.repository.CardRepository;
 import fr.alma.trivial_pursuit_server.exception.CardException;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.annotation.Resource;
@@ -18,8 +20,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,20 +43,20 @@ class CardRepositoryTest {
     private Answer a;
 
     @BeforeEach
-    void setUp() throws CardException {
+    void setUp() throws CardException, IOException {
         card = new Card();
         q = new Question("who i am", null, Theme.GEOGRAPHY);
-        Question qq = new Question("how old i am", null, Theme.GEOGRAPHY);
-        Question qqq = new Question("who i am", null, Theme.GEOGRAPHY);
-        Question qqqq = new Question("who i am", null, Theme.GEOGRAPHY);
-        Question q5 = new Question("who i am", null, Theme.GEOGRAPHY);
-        Question q6 = new Question("who i am", null, Theme.GEOGRAPHY);
-        a = new Answer("hugo", q, Theme.GEOGRAPHY);
-        Answer a2 = new Answer("hugo", q, Theme.GEOGRAPHY);
-        Answer a3 = new Answer("hugo", q, Theme.GEOGRAPHY);
-        Answer a4 = new Answer("hugo", q, Theme.GEOGRAPHY);
-        Answer a5 = new Answer("hugo", q, Theme.GEOGRAPHY);
-        Answer a6 = new Answer("hugo", q, Theme.GEOGRAPHY);
+        Question qq = new Question("how old i am", null, Theme.ENTERTAINMENT);
+        Question qqq = new Question("who i am", null, Theme.ARTS_LITERATURE);
+        Question qqqq = new Question("who i am", null, Theme.SCIENCE_NATURE);
+        Question q5 = new Question("who i am", null, Theme.SPORTS_LEISURE);
+        Question q6 = new Question("who i am", null, Theme.HISTORY);
+        a = new Answer("hugo", Theme.GEOGRAPHY);
+        Answer a2 = new Answer("hugo", Theme.ENTERTAINMENT);
+        Answer a3 = new Answer("hugo", Theme.ARTS_LITERATURE);
+        Answer a4 = new Answer("hugo", Theme.SCIENCE_NATURE);
+        Answer a5 = new Answer("hugo", Theme.SPORTS_LEISURE);
+        Answer a6 = new Answer("hugo", Theme.HISTORY);
 
         q.setAnswer(a);
         qq.setAnswer(a2);
@@ -69,11 +73,21 @@ class CardRepositoryTest {
 //        card.addQuestion(qqqq);
 //        card.addQuestion(q5);
 //        card.addQuestion(q6);
+
+        //JSON TEST
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String actual = ow.writeValueAsString(Collections.singletonList(card));
+        System.out.println(actual);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/data/util/cards.json"), new TypeReference<List<Card>>(){});
+        String after = ow.writeValueAsString(jacksonList);
+        System.out.println(after);
     }
 
     @Test
     @DisplayName("test add")
-    void testInsertCard() throws CardException {
+    void testInsertCard() {
         //CONFIG
 
         //ACTION

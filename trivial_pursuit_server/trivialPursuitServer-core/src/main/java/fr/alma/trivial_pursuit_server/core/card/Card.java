@@ -20,20 +20,24 @@ public class Card {
     @Id
     @GeneratedValue
     private Long id;
-
     @OneToMany(mappedBy = "questionCard", cascade = CascadeType.PERSIST)
     private List<Question> questions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "answerCard", cascade = CascadeType.PERSIST)
+    @ElementCollection
     private List<Answer> answers = new ArrayList<>();
     private Boolean isPicked = false;
 
 
+    /**
+     * Constructor of a Card.
+     * Set isPicked to false.
+     * @param questions questions field
+     * @param answers answers field
+     * @throws CardException if the parameter are incorrectly build
+     */
     public Card(List<Question> questions, List<Answer> answers) throws CardException {
         setQuestions(questions);
         setAnswers(answers);
     }
-
 
     /**
      * Setter on the field questions.
@@ -54,21 +58,22 @@ public class Card {
 
     /**
      * Setter on the field answers.
-     * Check if the parameter is not null and that it contain exactly 6 answers
+     * Check if the parameter is not null and that it contain exactly 6 answers.
+     * Set the question with the new answer in the order of the parameter list
      * @param answers the list of six elements
      * @throws CardException if the parameter does not respect the specification
      */
     public void setAnswers(List<Answer> answers) throws CardException {
         if(answers != null && answers.size() == 6){
             this.answers = answers;
-            for(Answer a : answers){
-                a.setAnswerCard(this);
+            int i=0;
+            for(Question q : questions){
+                q.setAnswer(this.answers.get(i++));
             }
         }else{
             throw new CardException("answers can't be set because it size doesn't match or it's null");
         }
     }
-
 
     /**
      * Get the question for the theme passed
@@ -96,26 +101,8 @@ public class Card {
             questions.add(question);
             answers.add(question.getAnswer());
             question.setQuestionCard(this);
-            question.getAnswer().setAnswerCard(this);
         }else{
             throw new CardException("question can't be added because already exist or no space left or it's null");
-        }
-    }
-
-    /**
-     * Add the answer with it question to the corresponding list of the card.
-     * Set the answerCard and questionCard with this.
-     * @param answer the answer to be added with it question already defined
-     * @throws CardException if answer is null or already in the card or if there is no space left in the card
-     */
-    public void addAnswer(Answer answer) throws CardException {
-        if(answer != null && answers.size()<6 && !answers.contains(answer) && !questions.contains(answer.getQuestion())){
-            answers.add(answer);
-            questions.add(answer.getQuestion());
-            answer.setAnswerCard(this);
-            answer.getQuestion().setQuestionCard(this);
-        }else{
-            throw new CardException("answer can't be added because already exist or no space left or it's null");
         }
     }
 }

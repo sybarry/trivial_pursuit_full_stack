@@ -2,6 +2,7 @@ package fr.alma.trivial_pursuit_server.core.game;
 
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
+import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,33 @@ public class Party {
     private Board board;
     private int maxCapacityPlayer = 6;
 
-
-    public Party(String name, List<Player> playerList, Chat chat, Board board) {
-        this.playerList = playerList;
+    /**
+     * Constructor of a Party.
+     * maxCapacityPlayer is set to 6.
+     * @param name name field
+     * @param playerList playerList field
+     * @param chat chat field
+     * @param board board field
+     * @throws PartyException if all the player in the list cannot be added
+     * @throws PlayerException if the party cannot be set to a player
+     */
+    public Party(String name, List<Player> playerList, Chat chat, Board board) throws PartyException, PlayerException {
+        for(Player p : playerList){
+            this.addPlayer(p);
+        }
         this.name = name;
         this.chat = chat;
         this.board = board;
     }
 
+    /**
+     * Constructor of a Party.
+     * maxCapacityPlayer is set to nbPlayer.
+     * chat is set to null as for board.
+     * playerList is initialized with an initial capacity of nbPlayer.
+     * @param name name field
+     * @param nbPlayer maxCapacityPlayer field
+     */
     public Party(String name, int nbPlayer){
         this.playerList = new ArrayList<>(nbPlayer);
         this.maxCapacityPlayer = nbPlayer;
@@ -47,6 +67,11 @@ public class Party {
         this.board = null;
     }
 
+    /**
+     * Setter on the field playerList
+     * @param playerList parameter to be set to playerList field
+     * @throws PartyException if the size of playerList is incorrect or playerList is null
+     */
     public void setPlayerList(List<Player> playerList) throws PartyException {
         if(playerList != null && playerList.size()>=2 && playerList.size()<=maxCapacityPlayer){
             this.playerList = playerList;
@@ -54,20 +79,38 @@ public class Party {
             throw new PartyException("playerList can't be set because it size doesn't match or it's null");
         }
     }
-    public void addPlayer(Player player) throws PartyException {
+
+    /**
+     * Add a player to the list
+     * @param player new player to add
+     * @throws PartyException if there are no space left to add player
+     * @throws PlayerException if the party cannot be set to te new player
+     */
+    public void addPlayer(Player player) throws PartyException, PlayerException {
         if(playerList.size()<maxCapacityPlayer){
             playerList.add(player);
+            player.setParty(this);
         }else{
             throw new PartyException("player can't be added, there is no space left");
         }
     }
 
+    /**
+     * Remove a player from the list
+     * @param player player to be removed
+     * @throws PartyException if the list is empty
+     */
     public void removePlayer(Player player) throws PartyException {
         if(!playerList.isEmpty()){
             playerList.remove(player);
         }
         throw new PartyException("player can't be remove because the playerList is empty");
     }
+
+    /**
+     * Verify if all the player are ready in the party
+     * @return true if that's the case, false otherwise
+     */
     public Boolean checkPlayersReady(){
         for(Player p : playerList){
             if(Boolean.FALSE.equals(p.getReady())){
