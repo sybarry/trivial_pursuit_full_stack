@@ -41,7 +41,8 @@ public class Card {
 
     /**
      * Setter on the field questions.
-     * Check if the parameter is not null and that it contain exactly 6 questions
+     * Check if the parameter is not null and that it contain exactly 6 questions.
+     * Also set the questionCard field for each question of the list.
      * @param questions the list of six elements
      * @throws CardException if the parameter does not respect the specification
      */
@@ -81,7 +82,7 @@ public class Card {
      * @return the question text
      * @throws CardException if there is no theme corresponding
      */
-    public String getQuestion(Theme theme) throws CardException {
+    public String getQuestionText(Theme theme) throws CardException {
       for( Question q : questions){
           if(q.getTheme() == theme){
               return q.getQuestionText();

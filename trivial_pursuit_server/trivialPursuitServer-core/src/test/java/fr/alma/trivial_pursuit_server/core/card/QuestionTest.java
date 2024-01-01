@@ -14,7 +14,7 @@ class QuestionTest {
     @BeforeEach
     void setUp(){
         question = new Question();
-        answer = new Answer();
+        answer = new Answer("this is the response", Theme.GEOGRAPHY);
     }
 
     @Test
@@ -25,19 +25,22 @@ class QuestionTest {
         question.setQuestionText("this is the question");
         question.setTheme(Theme.GEOGRAPHY);
         question.setQuestionCard(card);
+        question.setAnswer(answer);
+        question.setId(1L);
 
         //ACTION
         //VERIFY
         Assertions.assertEquals("this is the question", question.getQuestionText());
         Assertions.assertEquals(Theme.GEOGRAPHY, question.getTheme());
         Assertions.assertEquals(card, question.getQuestionCard());
+        Assertions.assertEquals(answer, question.getAnswer());
+        Assertions.assertEquals(1L, question.getId());
     }
 
     @Test
     @DisplayName("test parametrized constructor")
     void testParametrizedConstructor(){
         //CONFIG
-        answer = new Answer("this is the response", Theme.GEOGRAPHY);
         question = new Question("this is the question", answer, Theme.GEOGRAPHY);
 
         //ACTION
