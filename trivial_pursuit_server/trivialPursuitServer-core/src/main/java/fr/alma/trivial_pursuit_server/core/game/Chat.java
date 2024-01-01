@@ -20,16 +20,29 @@ public class Chat {
     private Party party;
     private List<String> messages = new ArrayList<>();
 
-
+    /**
+     * Constructor for a Chat.
+     * messages is initialized with an empty list.
+     * @param party party field
+     */
     public Chat(Party party){
         this.party = party;
     }
 
-
+    /**
+     * Method to add a message to the chat
+     * @param msg message to be added
+     * @return true if it has be added, false otherwise
+     */
     public boolean addMsg(String msg){
         return messages.add(msg);
     }
 
+    /**
+     * Method to remove a message from the chat
+     * @param msg message to be removed
+     * @return  true if it has be removed, false otherwise
+     */
     public boolean removeMsg(String msg){
         return messages.remove(msg);
     }

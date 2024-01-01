@@ -5,6 +5,7 @@ import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.data.configuration.DataTestConfiguration;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
+import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
@@ -33,11 +34,11 @@ class PartyRepositoryTest {
     private Player player2;
 
     @BeforeEach
-    void setUp() throws PartyException {
+    void setUp() throws PartyException, PlayerException {
         party = new Party();
 
-        player1 = new Player(Color.GREEN, null);
-        player2 = new Player(Color.GREEN, null);
+        player1 = new Player(Color.GREEN);
+        player2 = new Player(Color.GREEN);
 
         party.addPlayer(player1);
         party.addPlayer(player2);
