@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -93,7 +94,7 @@ class CardTest {
     @DisplayName("Test question setter method with incorrect sized list")
     void testQuestionSetterSizeListIncorrect() {
         //CONFIG
-        questionList.remove(0);
+        questionList = new ArrayList<>();
 
         //ACTION
         //VERIFY
