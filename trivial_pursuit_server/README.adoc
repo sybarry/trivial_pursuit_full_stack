@@ -9,7 +9,7 @@
 - [x] : Implémenter classes métier dans CORE
 - [x] : Implémenter JpaRepository dans DATA et services de ces Repository
 - [x] : Implémentation des interfaces Façades dans API
-- [] : Création de la liste de 400 cartes dans le fichier *card.json*
+- [] : Création de la liste de 400 cartes dans le fichier *card.json*  *// Comme données de tests on peut se limiter à 20*
 - [] : Test dans CORE module ou il y a des *//TODO*
 - [] : Test dans DATA module pour améliorer les tests d'utilisations des repository
 - [] : Création des classes controller dans websocket en accord avec les interfaces de la conception
