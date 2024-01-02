@@ -324,8 +324,8 @@ class CardTest {
     @DisplayName("test add question until there is no space left")
     void testAddQuestionUntilNoSpaceLeft(){
         //CONFIG
-        Answer newAnswer = new Answer("youuuu", Theme.GEOGRAPHY);
-        Question newQuestion = new Question("who i ammmmmmmm", newAnswer, Theme.GEOGRAPHY);
+        Answer newAnswer = new Answer("youuuu", null);
+        Question newQuestion = new Question("who i ammmmmmmm", newAnswer, null);
 
         //ACTION
         for(Question q : questionList){

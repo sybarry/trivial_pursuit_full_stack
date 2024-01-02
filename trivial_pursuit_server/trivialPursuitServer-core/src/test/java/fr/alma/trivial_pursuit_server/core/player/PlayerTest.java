@@ -12,18 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    //TODO
-
-//    Patron de test
-//    @Test
-//    @DisplayName("describingText")
-//    void test(){
-//        //CONFIG
-//
-//        //ACTION
-//
-//        //VERIFY
-//    }
 
     private Player player;
 

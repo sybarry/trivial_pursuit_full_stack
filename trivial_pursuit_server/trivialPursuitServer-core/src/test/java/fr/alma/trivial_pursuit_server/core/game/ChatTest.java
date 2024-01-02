@@ -75,6 +75,7 @@ class ChatTest {
         Assertions.assertTrue(chat.getMessages().contains("coucou"));
         Assertions.assertTrue(result);
     }
+
     @Test
     @DisplayName("test remove message on chat")
     void testRemoveMessageOnChat(){
