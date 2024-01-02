@@ -98,12 +98,32 @@ public class Card {
      * @throws CardException if question is null or already in the card or if there is no space left in the card
      */
     public void addQuestion(Question question) throws CardException {
-        if(question != null && questions.size()<6 && !questions.contains(question) && !answers.contains(question.getAnswer())){
+        if(question != null
+                && questions.size()<6
+                && !questions.contains(question)
+                && !answers.contains(question.getAnswer())
+                && question.getAnswer()!=null
+                && themeNotPickedYet(question.getTheme())
+        ){
             questions.add(question);
             answers.add(question.getAnswer());
             question.setQuestionCard(this);
         }else{
-            throw new CardException("question can't be added because already exist or no space left or it's null");
+            throw new CardException("question can't be added because already exist or no space left or it's null or not build well or question theme already pick");
         }
+    }
+
+    /**
+     * Check if a theme already exist in the question list
+     * @param theme theme to be checked
+     * @return true if that's the case, false otherwise
+     */
+    private boolean themeNotPickedYet(Theme theme) {
+        for(Question q : questions){
+            if(q.getTheme() == theme){
+                return false;
+            }
+        }
+        return true;
     }
 }

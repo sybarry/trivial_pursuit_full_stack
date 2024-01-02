@@ -59,16 +59,6 @@ class CardRepositoryTest {
 
         card.setQuestions(Arrays.asList(q,q2,q3,q4,q5,q6));
         card.setAnswers(Arrays.asList(a,a2,a3,a4,a5,a6));
-
-//        JSON TEST
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//        String actual = ow.writeValueAsString(Collections.singletonList(card));
-//        System.out.println(actual);
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/data/util/cards.json"), new TypeReference<List<Card>>(){});
-//        String after = ow.writeValueAsString(jacksonList);
-//        System.out.println(after);
     }
 
     @Test
