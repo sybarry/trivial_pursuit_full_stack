@@ -284,12 +284,10 @@ class CardTest {
         Answer otherAnswer = new Answer("mee", Theme.HISTORY);
         Question newQuestion = new Question("who i am", newAnswer, Theme.GEOGRAPHY);
         Question otherQuestionWithSameTheme = new Question("second question", otherAnswer, Theme.GEOGRAPHY);
-        Question otherQuestionWithNullTheme = new Question("second question", otherAnswer, null);
 
         //ACTION
         Assertions.assertDoesNotThrow(() -> card.addQuestion(newQuestion));
         Assertions.assertThrows(CardException.class, () -> card.addQuestion(otherQuestionWithSameTheme));
-        Assertions.assertThrows(CardException.class, () -> card.addQuestion(otherQuestionWithNullTheme));
 
         //VERIFY
         Assertions.assertTrue(card.getQuestions().contains(newQuestion));

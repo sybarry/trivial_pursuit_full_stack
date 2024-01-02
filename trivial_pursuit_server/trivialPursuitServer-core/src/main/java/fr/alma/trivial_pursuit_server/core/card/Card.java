@@ -99,7 +99,7 @@ public class Card {
      */
     public void addQuestion(Question question) throws CardException {
         if(question != null
-                && questions.size()<6
+                && questions.size()<=5
                 && !questions.contains(question)
                 && !answers.contains(question.getAnswer())
                 && question.getAnswer()!=null
