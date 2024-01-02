@@ -51,7 +51,7 @@ public class BoardFactory {
      * @throws BoardException if a problem occur during stocking
      */
     public static void addCardToJsonFile(Card card) throws BoardException {
-        Path path = Paths.get("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json");
+        Path path = Paths.get("C:\\Users\\Hugo\\Documents\\Univ\\M1_ALMA_semestre_1\\Projet_Transversal\\trivial_pursuit_full_stack\\trivial_pursuit_server\\trivialPursuitServer-core\\src\\main\\java\\fr\\alma\\trivial_pursuit_server\\util\\cards.json");
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
         try(FileReader ff = new FileReader(path.toString())){
@@ -71,7 +71,6 @@ public class BoardFactory {
             }
             try (FileWriter fff = new FileWriter(path.toString(), false)) {
                 BufferedWriter bufferedWriter = new BufferedWriter(fff);
-
                 bbb.append(ow.writeValueAsString(card)).append("]");
                 bufferedWriter.write(bbb.toString());
                 bufferedWriter.close();

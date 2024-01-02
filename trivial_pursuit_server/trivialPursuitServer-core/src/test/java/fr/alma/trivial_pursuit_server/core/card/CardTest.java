@@ -50,6 +50,8 @@ class CardTest {
 
         questionList = Arrays.asList(q,q2,q3,q4,q5,q6);
         answerList = Arrays.asList(a,a2,a3,a4,a5,a6);
+
+        Assertions.assertFalse(card.getIsPicked());
     }
 
     @Test
