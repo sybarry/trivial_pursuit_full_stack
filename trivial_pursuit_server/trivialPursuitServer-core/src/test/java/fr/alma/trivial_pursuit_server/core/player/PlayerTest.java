@@ -1,8 +1,11 @@
 package fr.alma.trivial_pursuit_server.core.player;
 
+import fr.alma.trivial_pursuit_server.core.cases.Case;
+import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
+import fr.alma.trivial_pursuit_server.util.Theme;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,5 +104,24 @@ class PlayerTest {
 
         //VERIFY
         Assertions.assertNull(player.getParty());
+    }
+
+    @Test
+    @DisplayName("test lombok setter")
+    void testLombokSetter(){
+        //CONFIG
+        Case aCase = new SimpleCase("case1", Color.PINK, Theme.ARTS_LITERATURE);
+
+        //ACTION
+        player.setPawn(Color.YELLOW);
+        player.setNbTriangle(5);
+        player.setReady(true);
+        player.setActualCase(aCase);
+
+        //VERIFY
+        Assertions.assertTrue(player.getReady());
+        Assertions.assertEquals(5, player.getNbTriangle());
+        Assertions.assertEquals(Color.YELLOW, player.getPawn());
+        Assertions.assertEquals(aCase, player.getActualCase());
     }
 }

@@ -67,12 +67,13 @@ class CardTest {
         //CONFIG
         //ACTION
         Assertions.assertDoesNotThrow(() -> card = new Card(questionList, answerList));
+        card.setIsPicked(true);
 
         //VERIFY
         Assertions.assertEquals(questionList, card.getQuestions());
         Assertions.assertEquals(answerList, card.getAnswers());
         Assertions.assertNull(card.getId());
-        Assertions.assertFalse(card.getIsPicked());
+        Assertions.assertTrue(card.getIsPicked());
     }
 
     @Test
@@ -117,14 +118,19 @@ class CardTest {
     void testAnswerSetterCorrect() {
         //CONFIG
         int i=0;
-
+        List<Answer> answers = Arrays.asList(new Answer("hugo", Theme.GEOGRAPHY),
+                new Answer("secret", Theme.ENTERTAINMENT),
+                new Answer("not me", Theme.ARTS_LITERATURE),
+                new Answer("yeah so much", Theme.SCIENCE_NATURE),
+                new Answer("i don't know", Theme.SPORTS_LEISURE),
+                new Answer("bye bye", Theme.HISTORY));
         //ACTION
         Assertions.assertDoesNotThrow(() -> card.setQuestions(questionList));
-        Assertions.assertDoesNotThrow(() -> card.setAnswers(answerList));
+        Assertions.assertDoesNotThrow(() -> card.setAnswers(answers));
 
         //VERIFY
-        Assertions.assertEquals(answerList, card.getAnswers());
-        for(Answer a : answerList){
+        Assertions.assertEquals(answers, card.getAnswers());
+        for(Answer a : answers){
             Assertions.assertEquals(card.getQuestions().get(i++).getAnswer(), a);
         }
     }
@@ -278,10 +284,12 @@ class CardTest {
         Answer otherAnswer = new Answer("mee", Theme.HISTORY);
         Question newQuestion = new Question("who i am", newAnswer, Theme.GEOGRAPHY);
         Question otherQuestionWithSameTheme = new Question("second question", otherAnswer, Theme.GEOGRAPHY);
+        Question otherQuestionWithNullTheme = new Question("second question", otherAnswer, null);
 
         //ACTION
         Assertions.assertDoesNotThrow(() -> card.addQuestion(newQuestion));
         Assertions.assertThrows(CardException.class, () -> card.addQuestion(otherQuestionWithSameTheme));
+        Assertions.assertThrows(CardException.class, () -> card.addQuestion(otherQuestionWithNullTheme));
 
         //VERIFY
         Assertions.assertTrue(card.getQuestions().contains(newQuestion));
@@ -310,5 +318,26 @@ class CardTest {
         Assertions.assertFalse(card.getQuestions().contains(otherQuestionWitExistingAnswer));
         Assertions.assertEquals(card, newQuestion.getQuestionCard());
         Assertions.assertEquals(1, card.getQuestions().size());
+    }
+
+    @Test
+    @DisplayName("test add question until there is no space left")
+    void testAddQuestionUntilNoSpaceLeft(){
+        //CONFIG
+        Answer newAnswer = new Answer("youuuu", Theme.GEOGRAPHY);
+        Question newQuestion = new Question("who i ammmmmmmm", newAnswer, Theme.GEOGRAPHY);
+
+        //ACTION
+        for(Question q : questionList){
+            Assertions.assertDoesNotThrow(() -> card.addQuestion(q));
+        }
+
+        //VERIFY
+        Assertions.assertThrows(CardException.class, () -> card.addQuestion(newQuestion));
+        Assertions.assertFalse(card.getQuestions().contains(newQuestion));
+        Assertions.assertFalse(card.getAnswers().contains(newAnswer));
+        Assertions.assertEquals(questionList, card.getQuestions());
+        Assertions.assertEquals(answerList, card.getAnswers());
+        Assertions.assertEquals(6, card.getQuestions().size());
     }
 }

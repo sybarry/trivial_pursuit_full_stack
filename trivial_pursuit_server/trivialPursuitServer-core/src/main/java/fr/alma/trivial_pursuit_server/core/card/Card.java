@@ -120,7 +120,7 @@ public class Card {
      */
     private boolean themeNotPickedYet(Theme theme) {
         for(Question q : questions){
-            if(q.getTheme() == theme){
+            if(q.getTheme() == theme || theme==null){
                 return false;
             }
         }
