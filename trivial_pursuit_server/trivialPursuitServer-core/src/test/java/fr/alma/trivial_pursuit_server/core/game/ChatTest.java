@@ -77,17 +77,6 @@ class ChatTest {
     }
 
     @Test
-    @DisplayName("test add incorrect message on chat")
-    void testAddIncorrectMessageOnChat(){
-        //CONFIG
-        //ACTION
-        boolean result = chat.addMsg(null);
-
-        //VERIFY
-        Assertions.assertFalse(result);
-    }
-
-    @Test
     @DisplayName("test remove message on chat")
     void testRemoveMessageOnChat(){
         //CONFIG

@@ -28,11 +28,27 @@ class BoardTest {
     private List<Case> caseList;
     private Case initialCase;
     private List<Player> playerList;
-    private Card card;
+    private List<Question> questionList;
+    private List<Answer> answerList;
 
     @BeforeEach
     void setUp() throws CardException {
         board = new Board();
+        //List setup
+        questionList = Arrays.asList(
+                new Question("who i am", null, Theme.GEOGRAPHY),
+                new Question("how old i am", null, Theme.ENTERTAINMENT),
+                new Question("who has this idea", null, Theme.ARTS_LITERATURE),
+                new Question("is it fun", null, Theme.SCIENCE_NATURE),
+                new Question("will you appreciate it", null, Theme.SPORTS_LEISURE),
+                new Question("anyway bye", null, Theme.HISTORY));
+        answerList = Arrays.asList(
+                new Answer("hugo", Theme.GEOGRAPHY),
+                new Answer("secret", Theme.ENTERTAINMENT),
+                new Answer("not me", Theme.ARTS_LITERATURE),
+                new Answer("yeah so much", Theme.SCIENCE_NATURE),
+                new Answer("i don't know", Theme.SPORTS_LEISURE),
+                new Answer("bye bye", Theme.HISTORY));
 
         //PlayerList setup
         Party party = new Party();
@@ -46,23 +62,7 @@ class BoardTest {
         ));
 
         //CardList setup
-        card = new Card(
-                Arrays.asList(
-                    new Question("who i am", null, Theme.GEOGRAPHY),
-                    new Question("how old i am", null, Theme.ENTERTAINMENT),
-                    new Question("who has this idea", null, Theme.ARTS_LITERATURE),
-                    new Question("is it fun", null, Theme.SCIENCE_NATURE),
-                    new Question("will you appreciate it", null, Theme.SPORTS_LEISURE),
-                    new Question("anyway bye", null, Theme.HISTORY)
-                ),Arrays.asList(
-                    new Answer("hugo", Theme.GEOGRAPHY),
-                    new Answer("secret", Theme.ENTERTAINMENT),
-                    new Answer("not me", Theme.ARTS_LITERATURE),
-                    new Answer("yeah so much", Theme.SCIENCE_NATURE),
-                    new Answer("i don't know", Theme.SPORTS_LEISURE),
-                    new Answer("bye bye", Theme.HISTORY)
-                )
-        );
+        Card card = new Card(questionList, answerList);
         cardList = new ArrayList<>();
         for(int i = 0; i<400;i++){
             cardList.add(card);
@@ -145,6 +145,7 @@ class BoardTest {
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListOfMoreThan6Elm));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfHeadquarter, playerList));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfSimpleCase, playerList));
+        Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardListOfLessThan400Elm, caseListWithInitialCaseIn, initialCase, playerList));
 
     }
 
@@ -155,6 +156,7 @@ class BoardTest {
         List<Case> caseListWith5HeadquarterAnd67SimpleCase = caseList;
 
         //ACTION
+        System.out.println(caseList.get(0).toString());
         caseListWith5HeadquarterAnd67SimpleCase.remove(0);
         caseListWith5HeadquarterAnd67SimpleCase.add(new SimpleCase("initialSimpleCase", Color.PINK, Arrays.asList("case1", "case2"), Theme.GEOGRAPHY));
 
@@ -169,40 +171,27 @@ class BoardTest {
         List<Card> cardListWithOneCardAlreadyPicked = cardList;
         List<Card> cardListWithOneCardWithOnly1Question = cardList;
         List<Card> cardListWithOneCardWithOnly1Answer = cardList;
-        List<Card> cardListWithOneCardWhereAnAnswerIsNotInQuestionList = cardList;
+        List<Card> cardListWithOneCardWhereAnAnswerIsNotInQuestionList = new ArrayList<>();
 
         //Represent the card with one question
         Card cardWithOneQuestionAnd6Answers = new Card();
         cardWithOneQuestionAnd6Answers.addQuestion(new Question("question", new Answer("answer", Theme.ARTS_LITERATURE), Theme.ARTS_LITERATURE));
-        cardWithOneQuestionAnd6Answers.setAnswers(Arrays.asList(
-                new Answer("hugo", Theme.GEOGRAPHY),
-                new Answer("secret", Theme.ENTERTAINMENT),
-                new Answer("not me", Theme.ARTS_LITERATURE),
-                new Answer("yeah so much", Theme.SCIENCE_NATURE),
-                new Answer("i don't know", Theme.SPORTS_LEISURE),
-                new Answer("bye bye", Theme.HISTORY)
-        ));
+        cardWithOneQuestionAnd6Answers.setAnswers(answerList);
 
         //Represent the card with one answer
         Card cardWithOneAnswerAnd6Questions= new Card();
         cardWithOneAnswerAnd6Questions.addQuestion(new Question("question", new Answer("answer", Theme.ARTS_LITERATURE), Theme.ARTS_LITERATURE));
-        cardWithOneAnswerAnd6Questions.setQuestions(Arrays.asList(
+        cardWithOneAnswerAnd6Questions.setQuestions(questionList);
+
+        //Represent the card with incorrect link between a question and an answer
+        Card cardWithIncorrectLinkBetweenQuestionAndAnswer = new Card(questionList,answerList);
+        cardWithIncorrectLinkBetweenQuestionAndAnswer.setQuestions(Arrays.asList(
                 new Question("who i am", null, Theme.GEOGRAPHY),
                 new Question("how old i am", null, Theme.ENTERTAINMENT),
                 new Question("who has this idea", null, Theme.ARTS_LITERATURE),
                 new Question("is it fun", null, Theme.SCIENCE_NATURE),
                 new Question("will you appreciate it", null, Theme.SPORTS_LEISURE),
                 new Question("anyway bye", null, Theme.HISTORY)
-        ));
-
-        //Represent the card with incorrect link between a question and an answer
-        card.setQuestions(Arrays.asList(
-                new Question("who i am", new Answer("hugo", Theme.GEOGRAPHY), Theme.GEOGRAPHY),
-                new Question("how old i am", new Answer("secret", Theme.ENTERTAINMENT), Theme.ENTERTAINMENT),
-                new Question("who has this idea", new Answer("not me", Theme.ARTS_LITERATURE), Theme.ARTS_LITERATURE),
-                new Question("is it fun", new Answer("wrong answer", Theme.SCIENCE_NATURE), Theme.SCIENCE_NATURE),
-                new Question("will you appreciate it", new Answer("i don't know", Theme.SPORTS_LEISURE), Theme.SPORTS_LEISURE),
-                new Question("anyway bye", new Answer("bye bye", Theme.HISTORY), Theme.HISTORY)
         ));
 
         //ACTION
@@ -214,9 +203,10 @@ class BoardTest {
         cardListWithOneCardWithOnly1Answer.remove(0);
         cardListWithOneCardWithOnly1Answer.add(cardWithOneAnswerAnd6Questions);
 
-        cardListWithOneCardWhereAnAnswerIsNotInQuestionList.remove(0);
-        cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(card);
-
+        cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
+        while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<400) {
+            cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
+        }
 
         //VERIFY
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardListWithOneCardAlreadyPicked, caseList, initialCase, playerList));
@@ -230,9 +220,9 @@ class BoardTest {
     void testVerifyPlayer(){
         //CONFIG
         List<Player> playerListWithOnePLayerWhoDontHaveTheSameParty = playerList;
-        List<Player> playerListWithOnePLayerWhoDontZeroNbTriangle = playerList;
-        List<Player> playerListWithOnePLayerWhoHaveAColorPawnThatItsAlreadyPicked = playerList;
-        List<Player> playerListWithOnePLayerWhoHaveAnActualCaseNull = playerList;
+        List<Player> playerListWithOnePLayerWhoDontZeroNbTriangle = new ArrayList<>(playerList);
+        List<Player> playerListWithOnePLayerWhoHaveAColorPawnThatItsAlreadyPicked = new ArrayList<>(playerList);
+        List<Player> playerListWithOnePLayerWhoHaveAnActualCaseNull = new ArrayList<>(playerList);
 
         Color playerRemoveColor = playerList.get(0).getPawn();
         Party partyOfAPlayer = playerList.get(0).getParty();
@@ -241,7 +231,7 @@ class BoardTest {
         newPlayerWithNbTriangleNotZeroAndIncorrectColor.setNbTriangle(2);
 
         Player newPlayerWithNUllActualCase = new Player(playerRemoveColor, partyOfAPlayer);
-        newPlayerWithNUllActualCase.setActualCase(null);
+        newPlayerWithNUllActualCase.setActualCase(new Case("name",Color.PINK,Arrays.asList("case1","case2")));
 
         //ACTION
         playerListWithOnePLayerWhoDontHaveTheSameParty.remove(0);
@@ -251,40 +241,52 @@ class BoardTest {
         playerListWithOnePLayerWhoDontZeroNbTriangle.add(newPlayerWithNbTriangleNotZeroAndIncorrectColor);
 
         playerListWithOnePLayerWhoHaveAColorPawnThatItsAlreadyPicked.remove(0);
-        newPlayerWithNbTriangleNotZeroAndIncorrectColor.setNbTriangle(0);
         playerListWithOnePLayerWhoHaveAColorPawnThatItsAlreadyPicked.add(newPlayerWithNbTriangleNotZeroAndIncorrectColor);
 
         playerListWithOnePLayerWhoHaveAnActualCaseNull.remove(0);
         playerListWithOnePLayerWhoHaveAnActualCaseNull.add(newPlayerWithNUllActualCase);
+//        for(Player p : playerListWithOnePLayerWhoDontZeroNbTriangle){
+//            System.out.println(p.getNbTriangle()+" "+p);
+//        }
 
         //VERIFY
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListWithOnePLayerWhoDontHaveTheSameParty));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListWithOnePLayerWhoDontZeroNbTriangle));
+        newPlayerWithNbTriangleNotZeroAndIncorrectColor.setNbTriangle(0);
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListWithOnePLayerWhoHaveAColorPawnThatItsAlreadyPicked));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListWithOnePLayerWhoHaveAnActualCaseNull));
     }
 
     @Test
-    @DisplayName("test getACard method first pick")
+    @DisplayName("test getACard method first pick stay true with a second pick")
     void testGetCardMethodFirstPick() throws BoardException {
         //CONFIG
         board = new Board(cardList, caseList, initialCase, playerList);
 
         //ACTION
         Card cardPicked = board.getACard();
+        Card cardPickedSecondTime = board.getACard();
 
         //VERIFY
-        Assertions.assertEquals(1, board.getActualCardNotPicked());
+        Assertions.assertEquals(2, board.getActualCardNotPicked());
         Assertions.assertTrue(cardPicked.getIsPicked());
+        Assertions.assertTrue(cardPickedSecondTime.getIsPicked());
         Assertions.assertEquals(cardPicked, board.getCards().get(0));
+        Assertions.assertEquals(cardPickedSecondTime, board.getCards().get(1));
         Assertions.assertTrue(board.getCards().get(0).getIsPicked());
+        Assertions.assertTrue(board.getCards().get(1).getIsPicked());
     }
 
     @Test
     @DisplayName("test getACard method 401 pick")
-    void testGetCardMethod401Pick() throws BoardException {
+    void testGetCardMethod401Pick() throws BoardException, CardException {
         //CONFIG
-        board = new Board(cardList, caseList, initialCase, playerList);
+        List<Card> cardListWithTwoDifferentCard = cardList;
+        Card newCard = new Card(questionList,answerList);
+        cardListWithTwoDifferentCard.remove(0);
+        cardListWithTwoDifferentCard.add(newCard);
+
+        board = new Board(cardListWithTwoDifferentCard, caseList, initialCase, playerList);
 
         Card cardPicked;
         for(Card ignored : board.getCards()){
@@ -299,6 +301,7 @@ class BoardTest {
         Assertions.assertTrue(cardPicked.getIsPicked());
         Assertions.assertEquals(cardPicked, board.getCards().get(0));
         Assertions.assertTrue(board.getCards().get(0).getIsPicked());
+        Assertions.assertFalse(board.getCards().get(board.getCards().size()-1).getIsPicked());
     }
 
     @Test

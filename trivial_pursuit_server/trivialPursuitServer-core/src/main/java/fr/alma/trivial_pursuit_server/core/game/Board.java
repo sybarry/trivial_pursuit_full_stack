@@ -93,10 +93,10 @@ public class Board {
         for(Case c : cases){
             if(c instanceof SimpleCase)
                 nbSimpleCase++;
-            else if(c instanceof HeadQuarter)
+            else
                 nbHeadQuarter++;
         }
-        if(nbHeadQuarter!=6 && nbSimpleCase!=66){
+        if(nbHeadQuarter!=6 || nbSimpleCase!=66){
             throw new BoardException("list of cases got the wrong number of each subClasse of Case");
         }
     }
