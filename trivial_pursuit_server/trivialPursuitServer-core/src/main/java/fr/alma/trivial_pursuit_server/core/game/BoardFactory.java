@@ -103,7 +103,7 @@ public class BoardFactory {
      * It fulfills specification of a board cases.
      * @return List of 72 Cases
      */
-    private static List<Case> buildCases() {
+    public static List<Case> buildCases() {
         List<Case> result = new ArrayList<>();
         Theme[] themes = {Theme.GEOGRAPHY, Theme.HISTORY, Theme.ARTS_LITERATURE, Theme.ENTERTAINMENT, Theme.SCIENCE_NATURE, Theme.SPORTS_LEISURE};
         Color[] colors = {Color.BLUE, Color.YELLOW, Color.PINK, Color.PURPLE, Color.GREEN, Color.ORANGE};
