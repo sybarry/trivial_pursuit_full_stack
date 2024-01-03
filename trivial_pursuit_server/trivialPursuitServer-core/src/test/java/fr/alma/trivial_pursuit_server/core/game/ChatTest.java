@@ -77,6 +77,17 @@ class ChatTest {
     }
 
     @Test
+    @DisplayName("test add incorrect message on chat")
+    void testAddIncorrectMessageOnChat(){
+        //CONFIG
+        //ACTION
+        boolean result = chat.addMsg(null);
+
+        //VERIFY
+        Assertions.assertFalse(result);
+    }
+
+    @Test
     @DisplayName("test remove message on chat")
     void testRemoveMessageOnChat(){
         //CONFIG
@@ -88,5 +99,21 @@ class ChatTest {
         Assertions.assertFalse(chat.getMessages().contains("coucou"));
         Assertions.assertTrue(resultAdd);
         Assertions.assertTrue(resultRemove);
+    }
+
+    @Test
+    @DisplayName("test remove incorrect message on chat")
+    void testRemoveIncorrectMessageOnChat(){
+        //CONFIG
+        //ACTION
+        boolean resultAdd = chat.addMsg("coucou");
+        boolean resultRemove = chat.removeMsg("cc");
+        boolean resultRemoveNull = chat.removeMsg(null);
+
+        //VERIFY
+        Assertions.assertTrue(chat.getMessages().contains("coucou"));
+        Assertions.assertTrue(resultAdd);
+        Assertions.assertFalse(resultRemove);
+        Assertions.assertFalse(resultRemoveNull);
     }
 }

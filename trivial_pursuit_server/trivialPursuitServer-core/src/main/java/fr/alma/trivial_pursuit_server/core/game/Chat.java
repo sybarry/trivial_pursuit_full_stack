@@ -35,7 +35,11 @@ public class Chat {
      * @return true if it has be added, false otherwise
      */
     public boolean addMsg(String msg){
-        return messages.add(msg);
+        if(msg != null)
+            return messages.add(msg);
+        else{
+            return false;
+        }
     }
 
     /**
