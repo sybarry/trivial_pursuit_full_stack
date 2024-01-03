@@ -20,18 +20,18 @@ public class App
 //        System.out.println( "Hello World!" );
         Card card = new Card();
 
-        Question q = new Question("Qu'est-ce qui est obligatoire sur la route depuis 1973 et, en ville, depuis 1984 ?", null, Theme.GEOGRAPHY);
-        Question q2 = new Question("Qui était la fiancé de Tarzan?", null, Theme.ENTERTAINMENT);
-        Question q3 = new Question("Qu'a introduit Jean Nicot en France?", null, Theme.HISTORY);
-        Question q4 = new Question("Quelle commune voit son calme troublé par les expériences du Comte ami de Spirou et Fantasio ?", null, Theme.ARTS_LITERATURE);
-        Question q5 = new Question("De quel insecte l'asticot est-il la larve ?", null, Theme.SCIENCE_NATURE);
-        Question q6 = new Question("Avec quoi joue-t-on au 421 ?", null, Theme.SPORTS_LEISURE);
-        Answer a = new Answer("Le port de la ceinture de securité", Theme.GEOGRAPHY);
-        Answer a2 = new Answer("Jane", Theme.ENTERTAINMENT);
-        Answer a3 = new Answer("Le tabac", Theme.HISTORY);
-        Answer a4 = new Answer("Champignac", Theme.ARTS_LITERATURE);
-        Answer a5 = new Answer("De la mouche", Theme.SCIENCE_NATURE);
-        Answer a6 = new Answer("Avec des dés", Theme.SPORTS_LEISURE);
+        Question q = new Question("Dans quelle ville circule-t-on sur des gondoles ?", null, Theme.GEOGRAPHY);
+        Question q2 = new Question("Quel bonhomme de neige qui ne fond jamais est héros des dessins animés ?", null, Theme.ENTERTAINMENT);
+        Question q3 = new Question("Qu'était Bucéphale pour Alexandre le Grand?", null, Theme.HISTORY);
+        Question q4 = new Question("De Rintintin, Flipper ou Skippy, qui a eu un oscar ?", null, Theme.ARTS_LITERATURE);
+        Question q5 = new Question("Qu'étudient les sismologues ?", null, Theme.SCIENCE_NATURE);
+        Question q6 = new Question("Quel maillot porte le vainqueur du Tour de France ?", null, Theme.SPORTS_LEISURE);
+        Answer a = new Answer("Venise", Theme.GEOGRAPHY);
+        Answer a2 = new Answer("Bouli", Theme.ENTERTAINMENT);
+        Answer a3 = new Answer("Son cheval", Theme.HISTORY);
+        Answer a4 = new Answer("Flipper", Theme.ARTS_LITERATURE);
+        Answer a5 = new Answer("Les tremblements de terre", Theme.SCIENCE_NATURE);
+        Answer a6 = new Answer("Le maillot jaune", Theme.SPORTS_LEISURE);
 
         q.setAnswer(a);
         q2.setAnswer(a2);
