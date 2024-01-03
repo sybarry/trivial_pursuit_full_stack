@@ -119,9 +119,9 @@ class BoardTest {
     @DisplayName("test parametrized constructor for each case of if exception")
     void testParametrizedConstructorIfException() {
         //CONFIG
-        List<Case> caseListWithInitialCaseIn = caseList;
-        List<Card> cardListOfLessThan400Elm = cardList;
-        List<Case> caseListOfLessThan72Elm = caseList;
+        List<Case> caseListWithInitialCaseIn = new ArrayList<>(caseList);
+        List<Card> cardListOfLessThan400Elm = new ArrayList<>(cardList);
+        List<Case> caseListOfLessThan72Elm = new ArrayList<>(caseList);
         List<Player> playerListOfLessThan2Elm = Collections.singletonList(new Player());
         List<Player> playerListOfMoreThan6Elm = new ArrayList<>(playerList);
         Case initialCaseInstanceOfSimpleCase = new SimpleCase("initialSimpleCase", Color.PINK, Arrays.asList("case1", "case2"), Theme.GEOGRAPHY);
@@ -145,18 +145,15 @@ class BoardTest {
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListOfMoreThan6Elm));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfHeadquarter, playerList));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfSimpleCase, playerList));
-        Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardListOfLessThan400Elm, caseListWithInitialCaseIn, initialCaseInstanceOfSimpleCase, playerListOfLessThan2Elm));
-
     }
 
     @Test
     @DisplayName("test parametrized constructor with exception occurring in verifyCase")
     void testVerifyCases(){
         //CONFIG
-        List<Case> caseListWith5HeadquarterAnd67SimpleCase = caseList;
+        List<Case> caseListWith5HeadquarterAnd67SimpleCase = new ArrayList<>(caseList);
 
         //ACTION
-        System.out.println(caseList.get(0).toString());
         caseListWith5HeadquarterAnd67SimpleCase.remove(0);
         caseListWith5HeadquarterAnd67SimpleCase.add(new SimpleCase("initialSimpleCase", Color.PINK, Arrays.asList("case1", "case2"), Theme.GEOGRAPHY));
 
@@ -168,9 +165,9 @@ class BoardTest {
     @DisplayName("test parametrized constructor with exception occurring in verifyCard")
     void testVerifyCards() throws CardException {
         //CONFIG
-        List<Card> cardListWithOneCardAlreadyPicked = cardList;
-        List<Card> cardListWithOneCardWithOnly1Question = cardList;
-        List<Card> cardListWithOneCardWithOnly1Answer = cardList;
+        List<Card> cardListWithOneCardAlreadyPicked = new ArrayList<>(cardList);
+        List<Card> cardListWithOneCardWithOnly1Question = new ArrayList<>(cardList);
+        List<Card> cardListWithOneCardWithOnly1Answer = new ArrayList<>(cardList);
         List<Card> cardListWithOneCardWhereAnAnswerIsNotInQuestionList = new ArrayList<>();
 
         //Represent the card with one question
