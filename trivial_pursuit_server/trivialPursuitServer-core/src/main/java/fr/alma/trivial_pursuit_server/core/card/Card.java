@@ -26,6 +26,10 @@ public class Card {
     private List<Answer> answers = new ArrayList<>();
     private Boolean isPicked = false;
 
+    //A ne pas persist
+    @Transient
+    public static final int nb_quest_per_card = 6;
+
 
     /**
      * Constructor of a Card.
@@ -47,7 +51,7 @@ public class Card {
      * @throws CardException if the parameter does not respect the specification
      */
     public void setQuestions(List<Question> questions) throws CardException {
-        if(questions != null && questions.size() == 6){
+        if(questions != null && questions.size() == nb_quest_per_card){
             this.questions = questions;
             for(Question q : questions){
                 q.setQuestionCard(this);

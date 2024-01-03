@@ -30,4 +30,10 @@ public class Answer {
         this.theme = theme;
     }
 
+    public Answer(String answer, Theme theme, Question question) {
+        this.answerText = answer;
+        this.theme = theme;
+        this.question = question;
+    }
+
 }
