@@ -145,7 +145,7 @@ class BoardTest {
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListOfMoreThan6Elm));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfHeadquarter, playerList));
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCaseInstanceOfSimpleCase, playerList));
-        Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardListOfLessThan400Elm, caseListWithInitialCaseIn, initialCase, playerList));
+        Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardListOfLessThan400Elm, caseListWithInitialCaseIn, initialCaseInstanceOfSimpleCase, playerListOfLessThan2Elm));
 
     }
 

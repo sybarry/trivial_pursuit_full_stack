@@ -41,7 +41,13 @@ public class Board {
      * @throws BoardException if the needed parameters are incorrect
      */
     public Board(List<Card> cards, List<Case> cases, Case initialCase, List<Player> playerList) throws BoardException {
-        if(cases.contains(initialCase) || cards.size() != 400 || cases.size() != 72 || playerList.size()<2 || playerList.size()>6 || initialCase instanceof SimpleCase || initialCase instanceof HeadQuarter){
+        if(cases.contains(initialCase)
+                || cards.size() != 400
+                || cases.size() != 72
+                || playerList.size()<2
+                || playerList.size()>6
+                || initialCase instanceof SimpleCase
+                || initialCase instanceof HeadQuarter){
             throw new BoardException("constructor parameters doesn't match to the specification");
         }
         verifyCases(cases);
@@ -109,9 +115,7 @@ public class Board {
      */
     private void verifyCard(List<Card> cards) throws BoardException {
         for(Card c : cards){
-            if(Boolean.TRUE.equals(c.getIsPicked()
-                    || c.getAnswers().size() != 6
-                    || c.getQuestions().size() != 6))
+            if(Boolean.TRUE.equals(c.getIsPicked() || c.getAnswers().size() != 6 || c.getQuestions().size() != 6))
             {
                 throw new BoardException("list of cards is incorrect");
             }

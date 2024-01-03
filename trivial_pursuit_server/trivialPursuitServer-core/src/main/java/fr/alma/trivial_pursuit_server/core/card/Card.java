@@ -119,8 +119,11 @@ public class Card {
      * @return true if that's the case, false otherwise
      */
     private boolean themeNotPickedYet(Theme theme) {
+        if(theme == null){
+            return false;
+        }
         for(Question q : questions){
-            if(q.getTheme() == theme || theme==null){
+            if(q.getTheme() == theme){
                 return false;
             }
         }
