@@ -102,7 +102,8 @@ public class Board {
             else
                 nbHeadQuarter++;
         }
-        if(nbHeadQuarter!=6 || nbSimpleCase!=66){
+        if(nbHeadQuarter!=6
+                || nbSimpleCase!=66){
             throw new BoardException("list of cases got the wrong number of each subClasse of Case");
         }
     }

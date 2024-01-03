@@ -166,8 +166,8 @@ class BoardTest {
     void testVerifyCards() throws CardException {
         //CONFIG
         List<Card> cardListWithOneCardAlreadyPicked = new ArrayList<>(cardList);
-        List<Card> cardListWithOneCardWithOnly1Question = new ArrayList<>(cardList);
-        List<Card> cardListWithOneCardWithOnly1Answer = new ArrayList<>(cardList);
+        List<Card> cardListWithOneCardWithOnly1Question = new ArrayList<>();
+        List<Card> cardListWithOneCardWithOnly1Answer = new ArrayList<>();
         List<Card> cardListWithOneCardWhereAnAnswerIsNotInQuestionList = new ArrayList<>();
 
         //Represent the card with one question
@@ -194,15 +194,16 @@ class BoardTest {
         //ACTION
         cardListWithOneCardAlreadyPicked.get(0).setIsPicked(true);
 
-        cardListWithOneCardWithOnly1Question.remove(0);
         cardListWithOneCardWithOnly1Question.add(cardWithOneQuestionAnd6Answers);
 
-        cardListWithOneCardWithOnly1Answer.remove(0);
         cardListWithOneCardWithOnly1Answer.add(cardWithOneAnswerAnd6Questions);
 
         cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
+
         while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<400) {
             cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
+            cardListWithOneCardWithOnly1Answer.add(cardWithOneAnswerAnd6Questions);
+            cardListWithOneCardWithOnly1Question.add(cardWithOneQuestionAnd6Answers);
         }
 
         //VERIFY
