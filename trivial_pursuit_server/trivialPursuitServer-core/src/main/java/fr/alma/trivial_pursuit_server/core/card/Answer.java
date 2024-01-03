@@ -15,6 +15,9 @@ public class Answer {
     private String answerText;
     @Column(name = "answer_theme")
     private Theme theme;
+    @OneToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
 
 
     /**
