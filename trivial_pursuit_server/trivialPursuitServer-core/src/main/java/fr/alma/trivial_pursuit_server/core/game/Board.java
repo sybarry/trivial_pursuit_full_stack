@@ -95,16 +95,12 @@ public class Board {
      */
     private void verifyCases(List<Case> cases) throws BoardException {
         int nbSimpleCase = 0;
-        int nbHeadQuarter = 0;
         for(Case c : cases){
             if(c instanceof SimpleCase)
                 nbSimpleCase++;
-            else
-                nbHeadQuarter++;
         }
-        if(nbHeadQuarter!=6
-                || nbSimpleCase!=66){
-            throw new BoardException("list of cases got the wrong number of each subClasse of Case");
+        if(nbSimpleCase!=66){
+            throw new BoardException("list of cases got the wrong number of each subClasses of Case");
         }
     }
 
