@@ -35,6 +35,29 @@ class PartyTest {
     }
 
     @Test
+    @DisplayName("test setter")
+    void testSetter() throws PartyException {
+        //CONFIG
+        party = new Party();
+
+        //ACTION
+        party.setChat(new Chat());
+        party.setId(1L);
+        party.setPlayerList(playerList);
+        party.setName("partySet");
+        party.setBoard(new Board());
+        party.setMaxCapacityPlayer(5);
+
+        //VERIFY
+        Assertions.assertNotNull(party.getChat());
+        Assertions.assertNotNull(party.getBoard());
+        Assertions.assertEquals(5, party.getMaxCapacityPlayer());
+        Assertions.assertEquals(1L, party.getId());
+        Assertions.assertEquals("partySet", party.getName());
+        Assertions.assertEquals(playerList, party.getPlayerList());
+    }
+
+    @Test
     @DisplayName("test default constructor")
     void testDefaultConstructor(){
         //CONFIG
