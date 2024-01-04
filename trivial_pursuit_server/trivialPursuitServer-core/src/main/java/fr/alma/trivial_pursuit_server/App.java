@@ -33,11 +33,6 @@ public class App
         Answer a5 = new Answer("De la mouche", Theme.SCIENCE_NATURE);
         Answer a6 = new Answer("Avec des dés", Theme.SPORTS_LEISURE);
 
-        //Constructeur avec question pour answer
-        Question qa = new Question("Qu'est-ce qui est obligatoire sur la route depuis 1973 et, en ville, depuis 1984 ?", null, Theme.GEOGRAPHY);
-        Answer aa = new Answer("Le port de la ceinture de securité", Theme.GEOGRAPHY, qa);
-        qa.setAnswer(aa);
-
         q.setAnswer(a);
         q2.setAnswer(a2);
         q3.setAnswer(a3);
