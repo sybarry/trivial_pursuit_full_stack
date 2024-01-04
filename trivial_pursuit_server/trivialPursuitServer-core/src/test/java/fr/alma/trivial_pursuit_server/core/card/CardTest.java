@@ -338,4 +338,19 @@ class CardTest {
         Assertions.assertEquals(answerList, card.getAnswers());
         Assertions.assertEquals(6, card.getQuestions().size());
     }
+
+    @Test
+    @DisplayName("Test add correct question with null theme")
+    void testAddQuestionThemeNull() {
+        //CONFIG
+        Answer newAnswer = new Answer("me", null);
+        Question newQuestion = new Question("who i am", newAnswer, null);
+
+        //ACTION
+        Assertions.assertThrows(CardException.class, () -> card.addQuestion(newQuestion));
+
+        //VERIFY
+        Assertions.assertFalse(card.getQuestions().contains(newQuestion));
+        Assertions.assertEquals(0, card.getQuestions().size());
+    }
 }

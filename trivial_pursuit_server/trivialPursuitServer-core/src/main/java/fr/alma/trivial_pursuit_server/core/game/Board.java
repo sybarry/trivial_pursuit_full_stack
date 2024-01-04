@@ -11,27 +11,26 @@ import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Embeddable
 @NoArgsConstructor
-//@Getter
-//@Setter
+@Getter
 public class Board {
 
     @ElementCollection
-    private List<Card> cards = Arrays.asList(new Card[400]);
+    private List<Card> cards;
     @ElementCollection
-    private List<Case> cases = Arrays.asList(new Case[72]);
+    private List<Case> cases;
     private Case initialCase;
     @ElementCollection
     private List<Player> playerList;
     @Transient
-    private int actualCardNotPicked = 0;
+    private int actualCardNotPicked;
 
     /**
      * Constructor with all the needed parameters already initialize and fill correctly
@@ -42,7 +41,13 @@ public class Board {
      * @throws BoardException if the needed parameters are incorrect
      */
     public Board(List<Card> cards, List<Case> cases, Case initialCase, List<Player> playerList) throws BoardException {
-        if(cases.contains(initialCase) || cards.size() != 400 || cases.size() != 72 || playerList.size()<2 || playerList.size()>6 || initialCase instanceof SimpleCase || initialCase instanceof HeadQuarter){
+        if(cases.contains(initialCase)
+                || cards.size() != 400
+                || cases.size() != 72
+                || playerList.size()<2
+                || playerList.size()>6
+                || initialCase instanceof SimpleCase
+                || initialCase instanceof HeadQuarter){
             throw new BoardException("constructor parameters doesn't match to the specification");
         }
         verifyCases(cases);
@@ -55,6 +60,7 @@ public class Board {
         for(Player p : this.playerList){
             p.setActualCase(initialCase);
         }
+        this.actualCardNotPicked = 0;
     }
 
     /**
@@ -89,15 +95,12 @@ public class Board {
      */
     private void verifyCases(List<Case> cases) throws BoardException {
         int nbSimpleCase = 0;
-        int nbHeadQuarter = 0;
         for(Case c : cases){
             if(c instanceof SimpleCase)
                 nbSimpleCase++;
-            else if(c instanceof HeadQuarter)
-                nbHeadQuarter++;
         }
-        if(nbSimpleCase+nbHeadQuarter!=72 && nbHeadQuarter!=6 && nbSimpleCase!=66){
-            throw new BoardException("list of cases got the wrong number of each subClasse of Case");
+        if(nbSimpleCase!=66){
+            throw new BoardException("list of cases got the wrong number of each subClasses of Case");
         }
     }
 
@@ -109,7 +112,10 @@ public class Board {
      */
     private void verifyCard(List<Card> cards) throws BoardException {
         for(Card c : cards){
-            if(Boolean.TRUE.equals(c.getIsPicked() || c.getAnswers().size() != 6 || c.getQuestions().size() != 6)){
+            if(Boolean.TRUE.equals(c.getIsPicked()
+                    || c.getAnswers().size() != 6
+                    || c.getQuestions().size() != 6))
+            {
                 throw new BoardException("list of cards is incorrect");
             }
             for(Question q : c.getQuestions()){
