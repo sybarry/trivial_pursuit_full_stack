@@ -74,7 +74,9 @@ public class Party implements IParty {
      * @throws PartyException if the size of playerList is incorrect or playerList is null
      */
     public void setPlayerList(List<Player> playerList) throws PartyException {
-        if(playerList != null && playerList.size()>=2 && playerList.size()<=maxCapacityPlayer){
+        if(playerList != null
+                && playerList.size()>=2
+                && playerList.size()<=maxCapacityPlayer){
             this.playerList = playerList;
         }else{
             throw new PartyException("playerList can't be set because it size doesn't match or it's null");
@@ -104,8 +106,9 @@ public class Party implements IParty {
     public void removePlayer(Player player) throws PartyException {
         if(!playerList.isEmpty()){
             playerList.remove(player);
+        }else{
+            throw new PartyException("player can't be remove because the playerList is empty");
         }
-        throw new PartyException("player can't be remove because the playerList is empty");
     }
 
     /**

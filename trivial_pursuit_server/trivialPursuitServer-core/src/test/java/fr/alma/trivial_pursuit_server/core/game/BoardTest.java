@@ -79,8 +79,6 @@ class BoardTest {
     @DisplayName("test default constructor")
     void testDefaultConstructor(){
         //CONFIG
-        board = new Board();
-
         //ACTION
         //VERIFY
         Assertions.assertEquals(0, board.getActualCardNotPicked());
