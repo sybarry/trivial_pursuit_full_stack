@@ -54,4 +54,18 @@ class PlayerRepositoryTest {
 
         Assertions.assertTrue(playerr.isPresent());
     }
+
+    @Test
+    @DisplayName("test remove player")
+    void testDeletePlayer(){
+        //CONFIG
+
+        //ACTION
+        playerRepository.save(player);
+        playerRepository.delete(player);
+
+        //VERIFY
+        Assertions.assertFalse(playerRepository.existsById(player.getId()));
+    }
+
 }

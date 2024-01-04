@@ -1,10 +1,14 @@
 package fr.alma.trivial_pursuit_server.lobby;
 
+import fr.alma.trivial_pursuit_server.kind.IBoard;
+import fr.alma.trivial_pursuit_server.kind.IParty;
+
+import java.util.List;
+
 public interface ILobby extends Lobby {
-//    impossible since there is no dependency between core module and api
-//    Board giveBoard();
-//    List<Party> partyHistory(String user);
-//    Party createGame(String gameName, int nbPlayers);
+    IBoard giveBoard();
+    List<IParty> partyHistory(String user);
+    IParty createGame(String gameName, int nbPlayers);
     Boolean checkPlayersReady(String partyId);
     Boolean joinGame(String user, String party);
     Boolean startGame(String gameName);

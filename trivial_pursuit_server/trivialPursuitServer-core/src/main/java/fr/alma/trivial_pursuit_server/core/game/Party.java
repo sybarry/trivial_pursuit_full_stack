@@ -3,6 +3,7 @@ package fr.alma.trivial_pursuit_server.core.game;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
+import fr.alma.trivial_pursuit_server.kind.IParty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Party {
+public class Party implements IParty {
 
     @Id
     @GeneratedValue

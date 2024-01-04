@@ -3,6 +3,7 @@ package fr.alma.trivial_pursuit_server.core.player;
 import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
+import fr.alma.trivial_pursuit_server.kind.IPlayer;
 import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Player {
+public class Player implements IPlayer {
 
     @Id
     @GeneratedValue

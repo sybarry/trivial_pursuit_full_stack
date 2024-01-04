@@ -7,9 +7,11 @@ import fr.alma.trivial_pursuit_server.core.cases.HeadQuarter;
 import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.BoardException;
+import fr.alma.trivial_pursuit_server.kind.IBoard;
 import fr.alma.trivial_pursuit_server.util.Color;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +22,13 @@ import java.util.List;
 @Embeddable
 @NoArgsConstructor
 @Getter
-public class Board {
+public class Board implements IBoard {
 
     @ElementCollection
     private List<Card> cards;
     @ElementCollection
     private List<Case> cases;
+    @Embedded
     private Case initialCase;
     @ElementCollection
     private List<Player> playerList;
