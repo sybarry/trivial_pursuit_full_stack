@@ -4,6 +4,7 @@ import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.kind.IParty;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,11 +32,11 @@ public class Party implements IParty {
     private Chat chat;
     @Embedded
     private Board board;
-    private int maxCapacityPlayer = 6;
+    private int maxCapacityPlayer = Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE;
 
     /**
      * Constructor of a Party.
-     * maxCapacityPlayer is set to 6.
+     * maxCapacityPlayer is set to playerList size.
      * @param name name field
      * @param playerList playerList field
      * @param chat chat field
@@ -50,6 +51,7 @@ public class Party implements IParty {
         this.name = name;
         this.chat = chat;
         this.board = board;
+        this.maxCapacityPlayer = playerList.size();
     }
 
     /**
@@ -74,7 +76,9 @@ public class Party implements IParty {
      * @throws PartyException if the size of playerList is incorrect or playerList is null
      */
     public void setPlayerList(List<Player> playerList) throws PartyException {
-        if(playerList != null && playerList.size()>=2 && playerList.size()<=maxCapacityPlayer){
+        if(playerList != null
+                && playerList.size()>= Constant.BOARD_AND_PARTY_PLAYER_LIST_MIN_SIZE
+                && playerList.size()<=maxCapacityPlayer){
             this.playerList = playerList;
         }else{
             throw new PartyException("playerList can't be set because it size doesn't match or it's null");
@@ -104,8 +108,9 @@ public class Party implements IParty {
     public void removePlayer(Player player) throws PartyException {
         if(!playerList.isEmpty()){
             playerList.remove(player);
+        }else{
+            throw new PartyException("player can't be remove because the playerList is empty");
         }
-        throw new PartyException("player can't be remove because the playerList is empty");
     }
 
     /**

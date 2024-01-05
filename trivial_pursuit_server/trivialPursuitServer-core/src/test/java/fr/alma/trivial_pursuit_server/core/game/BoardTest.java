@@ -10,6 +10,7 @@ import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.BoardException;
 import fr.alma.trivial_pursuit_server.exception.CardException;
 import fr.alma.trivial_pursuit_server.util.Color;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +65,7 @@ class BoardTest {
         //CardList setup
         Card card = new Card(questionList, answerList);
         cardList = new ArrayList<>();
-        for(int i = 0; i<400;i++){
+        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE; i++){
             cardList.add(card);
         }
 
@@ -79,8 +80,6 @@ class BoardTest {
     @DisplayName("test default constructor")
     void testDefaultConstructor(){
         //CONFIG
-        board = new Board();
-
         //ACTION
         //VERIFY
         Assertions.assertEquals(0, board.getActualCardNotPicked());
@@ -200,7 +199,7 @@ class BoardTest {
 
         cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
 
-        while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<400) {
+        while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<Constant.BOARD_CARD_LIST_SIZE) {
             cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
             cardListWithOneCardWithOnly1Answer.add(cardWithOneAnswerAnd6Questions);
             cardListWithOneCardWithOnly1Question.add(cardWithOneQuestionAnd6Answers);
@@ -243,9 +242,6 @@ class BoardTest {
 
         playerListWithOnePLayerWhoHaveAnActualCaseNull.remove(0);
         playerListWithOnePLayerWhoHaveAnActualCaseNull.add(newPlayerWithNUllActualCase);
-//        for(Player p : playerListWithOnePLayerWhoDontZeroNbTriangle){
-//            System.out.println(p.getNbTriangle()+" "+p);
-//        }
 
         //VERIFY
         Assertions.assertThrows(BoardException.class, () ->  board = new Board(cardList, caseList, initialCase, playerListWithOnePLayerWhoDontHaveTheSameParty));
@@ -276,7 +272,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("test getACard method 401 pick")
+    @DisplayName("test getACard method re-deck all cards and pick")
     void testGetCardMethod401Pick() throws BoardException, CardException {
         //CONFIG
         List<Card> cardListWithTwoDifferentCard = cardList;
