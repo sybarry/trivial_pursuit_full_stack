@@ -1,5 +1,8 @@
 package fr.alma.trivial_pursuit_server.core.player;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.game.Party;
@@ -16,7 +19,7 @@ class PlayerTest {
     private Player player;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         player = new Player();
         player.setId(1L);
     }
@@ -35,6 +38,7 @@ class PlayerTest {
         Assertions.assertEquals(0, player.getNbTriangle());
         Assertions.assertFalse(player.getReady());
         Assertions.assertNull(player.getPawn());
+        Assertions.assertNull(player.getUser());
     }
 
     @Test
@@ -48,21 +52,24 @@ class PlayerTest {
         Assertions.assertNull(player.getParty());
         Assertions.assertNull(player.getActualCase());
         Assertions.assertNull(player.getId());
+        Assertions.assertNull(player.getUser());
         Assertions.assertEquals(0, player.getNbTriangle());
         Assertions.assertFalse(player.getReady());
         Assertions.assertEquals(Color.GREEN, player.getPawn());
     }
 
     @Test
-    @DisplayName("test player constructor with Color and party parameters")
-    void testConstructorColorAndPartyParameter(){
+    @DisplayName("test player constructor with Color, User and party parameters")
+    void testConstructorColorUserAndPartyParameter(){
         //CONFIG
         Party party = new Party();
-        player = new Player(Color.GREEN, party);
+        User user = new User();
+        player = new Player(Color.GREEN, party, user);
 
         //ACTION
         //VERIFY
         Assertions.assertEquals(party, player.getParty());
+        Assertions.assertEquals(user, player.getUser());
         Assertions.assertNull(player.getActualCase());
         Assertions.assertNull(player.getId());
         Assertions.assertEquals(0, player.getNbTriangle());
@@ -105,11 +112,14 @@ class PlayerTest {
         player.setNbTriangle(5);
         player.setReady(true);
         player.setActualCase(aCase);
+        player.setUser(new User("username", "password"));
 
         //VERIFY
         Assertions.assertTrue(player.getReady());
         Assertions.assertEquals(5, player.getNbTriangle());
         Assertions.assertEquals(Color.YELLOW, player.getPawn());
         Assertions.assertEquals(aCase, player.getActualCase());
+        Assertions.assertEquals("username", player.getUser().getUsername());
+        Assertions.assertEquals("password", player.getUser().getPassword());
     }
 }

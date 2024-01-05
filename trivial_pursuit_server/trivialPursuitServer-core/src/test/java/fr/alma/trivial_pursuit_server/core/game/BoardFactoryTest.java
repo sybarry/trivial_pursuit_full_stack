@@ -112,13 +112,13 @@ class BoardFactoryTest {
         Assertions.assertEquals("case37", simpleCaseWithBottomHeadQuarterCaseNeighbor.getName());
         Assertions.assertEquals(Color.PINK, simpleCaseWithBottomHeadQuarterCaseNeighbor.getColor());
         Assertions.assertEquals(Theme.ARTS_LITERATURE, simpleCaseWithBottomHeadQuarterCaseNeighbor.getTheme());
-        Assertions.assertTrue(caseList.get(indice) instanceof SimpleCase);
+        Assertions.assertTrue(caseList.get(indice+6) instanceof SimpleCase);
 
         Assertions.assertEquals(Arrays.asList("headquarter3", "case41"),simpleCaseWithTopHeadQuarterCaseNeighbor.getNeighbors());
         Assertions.assertEquals("case42", simpleCaseWithTopHeadQuarterCaseNeighbor.getName());
         Assertions.assertEquals(Color.PURPLE, simpleCaseWithTopHeadQuarterCaseNeighbor.getColor());
         Assertions.assertEquals(Theme.ENTERTAINMENT, simpleCaseWithTopHeadQuarterCaseNeighbor.getTheme());
-        Assertions.assertTrue(caseList.get(indice+4) instanceof SimpleCase);
+        Assertions.assertTrue(caseList.get(indice+11) instanceof SimpleCase);
 
         Assertions.assertEquals(Arrays.asList("case31", "case33"),simpleCaseWithJustSimpleCaseNeighbor.getNeighbors());
         Assertions.assertEquals("case32", simpleCaseWithJustSimpleCaseNeighbor.getName());

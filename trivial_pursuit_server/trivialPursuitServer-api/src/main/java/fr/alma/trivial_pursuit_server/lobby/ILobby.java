@@ -9,8 +9,8 @@ public interface ILobby extends Lobby {
     IBoard giveBoard();
     List<IParty> partyHistory(String user);
     IParty createGame(String gameName, int nbPlayers);
-    Boolean checkPlayersReady(String partyId);
-    Boolean joinGame(String user, String party);
-    Boolean startGame(String gameName);
+    boolean checkPlayersReady(String partyId);
+    boolean joinGame(String user, String party);
+    boolean startGame(String gameName);
     void ready(String user);
 }

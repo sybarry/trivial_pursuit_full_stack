@@ -1,14 +1,16 @@
 = Problèmes Actuelles
 
 - [x] : Re-definition des interfaces si ce sont les controllers utilisé dans WebSocket-Controller pour exposer les endpoints utiles au front ?
-- [] : Comment relier websocket au code des autres modules pour utiliser les types et les transférer via les controllers au front ?
+- [x] : Comment relier websocket au code des autres modules pour utiliser les types et les transférer via les controllers au front ?
+- [] : Front method handling in interface
 
 == TODO BACK
 
 - [x] : Implémenter classes métier dans CORE
 - [x] : Implémenter JpaRepository dans DATA et services de ces Repository
 - [x] : Implémentation des interfaces Façades dans API
-- [] : Test dans CORE module ou il y a des *//TODO*
+- [x] : Test dans CORE module où il y a des *//TODO*
 - [] : Test dans DATA module pour améliorer les tests d'utilisations des repository
 - [] : Création des classes controller dans websocket en accord avec les interfaces de la conception
 - [] : Test de ces controller comme la classe RSocketController
+- [] : Check Javadoc

@@ -4,12 +4,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
-public class TemplateServerApplication {
+public class TrivialPursuitServerApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder()
-                .main(TemplateServerApplication.class)
-                .sources(TemplateServerApplication.class)
+                .main(TrivialPursuitServerApplication.class)
+                .sources(TrivialPursuitServerApplication.class)
                 .profiles("server")
                 .run(args);
     }

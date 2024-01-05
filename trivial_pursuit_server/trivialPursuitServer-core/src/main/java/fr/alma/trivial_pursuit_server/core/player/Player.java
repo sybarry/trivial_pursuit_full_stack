@@ -27,6 +27,9 @@ public class Player implements IPlayer {
     @ManyToOne
     private Party party;
     private Boolean ready = false;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 
     /**
@@ -35,6 +38,7 @@ public class Player implements IPlayer {
      * actualCase is set to null.
      * party is set to null.
      * nbTriangle is set to 0.
+     * user is set to null.
      * @param pawn pawn field
      */
     public Player(Color pawn){
@@ -47,6 +51,7 @@ public class Player implements IPlayer {
      * ready field is set to false.
      * actualCase is set to null.
      * nbTriangle is set to 0.
+     * user is set to null.
      * @param pawn pawn field
      * @param party party field
      */
@@ -55,6 +60,20 @@ public class Player implements IPlayer {
         this.party = party;
     }
 
+    /**
+     * Constructor of a Player
+     * ready field is set to false.
+     * actualCase is set to null.
+     * nbTriangle is set to 0.
+     * @param pawn pawn field
+     * @param party party field
+     * @param user user field
+     */
+    public Player(Color pawn, Party party, User user) {
+        this.pawn = pawn;
+        this.party = party;
+        this.user = user;
+    }
 
     /**
      * Set the party of the player and add the player to the party list
