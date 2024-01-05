@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.core.card;
 
 import fr.alma.trivial_pursuit_server.exception.CardException;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,7 +110,7 @@ class CardTest {
         //ACTION
         //VERIFY
         Assertions.assertThrows(CardException.class, () -> card.setQuestions(questionList));
-        Assertions.assertNotEquals(6, questionList.size());
+        Assertions.assertNotEquals(Constant.CARD_NB_QUESTIONS, questionList.size());
         Assertions.assertTrue(card.getQuestions().isEmpty());
     }
 
@@ -154,7 +155,7 @@ class CardTest {
         //ACTION
         //VERIFY
         Assertions.assertThrows(CardException.class, () -> card.setAnswers(answerList));
-        Assertions.assertNotEquals(6, answerList.size());
+        Assertions.assertNotEquals(Constant.CARD_NB_ANSWERS, answerList.size());
         Assertions.assertTrue(card.getAnswers().isEmpty());
     }
 
@@ -255,7 +256,7 @@ class CardTest {
 
         //VERIFY
         Assertions.assertFalse(card.getQuestions().contains(newQuestion));
-        Assertions.assertEquals(6, card.getQuestions().size());
+        Assertions.assertEquals(Constant.CARD_NB_QUESTIONS, card.getQuestions().size());
     }
 
     @Test
@@ -336,7 +337,7 @@ class CardTest {
         Assertions.assertFalse(card.getAnswers().contains(newAnswer));
         Assertions.assertEquals(questionList, card.getQuestions());
         Assertions.assertEquals(answerList, card.getAnswers());
-        Assertions.assertEquals(6, card.getQuestions().size());
+        Assertions.assertEquals(Constant.CARD_NB_QUESTIONS, card.getQuestions().size());
     }
 
     @Test

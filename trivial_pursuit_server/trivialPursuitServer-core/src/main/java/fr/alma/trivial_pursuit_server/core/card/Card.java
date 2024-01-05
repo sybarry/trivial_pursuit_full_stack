@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.core.card;
 
 import fr.alma.trivial_pursuit_server.exception.CardException;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,10 +27,6 @@ public class Card {
     private List<Answer> answers = new ArrayList<>();
     private Boolean isPicked = false;
 
-    //A ne pas persisté
-    @Transient
-    public static final int NB_QUEST_PER_CARD = 6;
-
 
 
     /**
@@ -52,7 +49,7 @@ public class Card {
      * @throws CardException if the parameter does not respect the specification
      */
     public void setQuestions(List<Question> questions) throws CardException {
-        if(questions != null && questions.size() == NB_QUEST_PER_CARD){
+        if(questions != null && questions.size() == Constant.CARD_NB_QUESTIONS){
             this.questions = questions;
             for(Question q : questions){
                 q.setQuestionCard(this);
@@ -70,7 +67,7 @@ public class Card {
      * @throws CardException if the parameter does not respect the specification
      */
     public void setAnswers(List<Answer> answers) throws CardException {
-        if(answers != null && answers.size() == NB_QUEST_PER_CARD){
+        if(answers != null && answers.size() == Constant.CARD_NB_ANSWERS){
             this.answers = answers;
             int i=0;
             for(Question q : questions){
@@ -104,7 +101,7 @@ public class Card {
      */
     public void addQuestion(Question question) throws CardException {
         if(question != null
-                && questions.size()<=NB_QUEST_PER_CARD-1
+                && questions.size()<=Constant.CARD_NB_QUESTIONS-1
                 && !questions.contains(question)
                 && !answers.contains(question.getAnswer())
                 && question.getAnswer()!=null

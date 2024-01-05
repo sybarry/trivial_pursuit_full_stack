@@ -37,7 +37,6 @@ class PlayerRepositoryTest {
     @DisplayName("test add")
     void testInsertPlayer() {
         //CONFIG
-
         //ACTION
         playerRepository.save(player);
 
@@ -59,7 +58,6 @@ class PlayerRepositoryTest {
     @DisplayName("test remove player")
     void testDeletePlayer(){
         //CONFIG
-
         //ACTION
         playerRepository.save(player);
         playerRepository.delete(player);

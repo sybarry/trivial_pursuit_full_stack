@@ -4,6 +4,7 @@ import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -69,7 +70,7 @@ class PartyTest {
         Assertions.assertNull(party.getChat());
         Assertions.assertNull(party.getName());
         Assertions.assertNull(party.getBoard());
-        Assertions.assertEquals(6, party.getMaxCapacityPlayer());
+        Assertions.assertEquals(Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE, party.getMaxCapacityPlayer());
         Assertions.assertTrue(party.getPlayerList().isEmpty());
     }
 
@@ -105,7 +106,7 @@ class PartyTest {
         Assertions.assertEquals(chat, party.getChat());
         Assertions.assertEquals("party", party.getName());
         Assertions.assertEquals(board, party.getBoard());
-        Assertions.assertEquals(6, party.getMaxCapacityPlayer());
+        Assertions.assertEquals(playerList.size(), party.getMaxCapacityPlayer());
         Assertions.assertFalse(party.getPlayerList().isEmpty());
         for(Player p : playerList){
             Assertions.assertTrue(party.getPlayerList().contains(p));
@@ -128,7 +129,7 @@ class PartyTest {
         Assertions.assertNotEquals(chat, party.getChat());
         Assertions.assertNotEquals("partyyy", party.getName());
         Assertions.assertNotEquals(board, party.getBoard());
-        Assertions.assertEquals(6, party.getMaxCapacityPlayer());
+        Assertions.assertEquals(Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE, party.getMaxCapacityPlayer());
         Assertions.assertNotEquals(playerList, party.getPlayerList());
     }
 
