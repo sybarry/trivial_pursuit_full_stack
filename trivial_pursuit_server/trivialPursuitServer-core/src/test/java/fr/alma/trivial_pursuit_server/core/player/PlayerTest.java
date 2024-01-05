@@ -56,6 +56,23 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("test player constructor with Color and party parameters")
+    void testConstructorColorAndPartyParameter() {
+        //CONFIG
+        Party party = new Party();
+        player = new Player(Color.GREEN, party);
+
+        //ACTION
+        //VERIFY
+        Assertions.assertEquals(party, player.getParty());
+        Assertions.assertNull(player.getActualCase());
+        Assertions.assertNull(player.getId());
+        Assertions.assertEquals(0, player.getNbTriangle());
+        Assertions.assertFalse(player.getReady());
+        Assertions.assertEquals(Color.GREEN, player.getPawn());
+    }
+
+    @Test
     @DisplayName("test player constructor with Color, User and party parameters")
     void testConstructorColorUserAndPartyParameter(){
         //CONFIG
