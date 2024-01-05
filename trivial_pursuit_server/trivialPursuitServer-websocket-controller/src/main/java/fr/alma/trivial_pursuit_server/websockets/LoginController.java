@@ -1,6 +1,5 @@
 package fr.alma.trivial_pursuit_server.websockets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
 import fr.alma.trivial_pursuit_server.lobby.ILogin;

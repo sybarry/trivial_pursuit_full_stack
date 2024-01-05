@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,6 +67,7 @@ class UserServiceImplTest {
     void testResetAndChangePassword(){
         //CONFIG
         when(userRepository.findByUserName(user.getUsername())).thenReturn(user);
+        when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
 
         //ACTION
         Boolean result = userService.resetPassword(user.getUsername());
@@ -81,9 +81,13 @@ class UserServiceImplTest {
 
         //ACTION
         resultFalse = userService.changePassword(user.getUsername(), "newPassword");
+        result = userService.changePassword("userNotInBase", "password");
 
         //VERIFY
         Assertions.assertTrue(resultFalse);
+        Assertions.assertFalse(result);
         Assertions.assertEquals("newPassword", user.getPassword());
+        Assertions.assertTrue(userService.isInRepository(user));
+        Assertions.assertFalse(userService.isInRepository(new User("user","password")));
     }
 }
