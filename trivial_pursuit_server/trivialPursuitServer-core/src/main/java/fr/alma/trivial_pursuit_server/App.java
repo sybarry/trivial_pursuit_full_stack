@@ -20,18 +20,18 @@ public class App
 //        System.out.println( "Hello World!" );
         Card card = new Card();
 
-        Question q = new Question("Dans quelle ville circule-t-on sur des gondoles ?", null, Theme.GEOGRAPHY);
-        Question q2 = new Question("Quel bonhomme de neige qui ne fond jamais est héros des dessins animés ?", null, Theme.ENTERTAINMENT);
-        Question q3 = new Question("Qu'était Bucéphale pour Alexandre le Grand?", null, Theme.HISTORY);
-        Question q4 = new Question("De Rintintin, Flipper ou Skippy, qui a eu un oscar ?", null, Theme.ARTS_LITERATURE);
-        Question q5 = new Question("Qu'étudient les sismologues ?", null, Theme.SCIENCE_NATURE);
-        Question q6 = new Question("Quel maillot porte le vainqueur du Tour de France ?", null, Theme.SPORTS_LEISURE);
-        Answer a = new Answer("Venise", Theme.GEOGRAPHY);
-        Answer a2 = new Answer("Bouli", Theme.ENTERTAINMENT);
-        Answer a3 = new Answer("Son cheval", Theme.HISTORY);
-        Answer a4 = new Answer("Flipper", Theme.ARTS_LITERATURE);
-        Answer a5 = new Answer("Les tremblements de terre", Theme.SCIENCE_NATURE);
-        Answer a6 = new Answer("Le maillot jaune", Theme.SPORTS_LEISURE);
+        Question q = new Question("Quel est le dernier mot d'un message télégraphié en morse ?", null, Theme.GEOGRAPHY);
+        Question q2 = new Question("De quel instrument jouait Ringo Starr avec les Beatles ?", null, Theme.ENTERTAINMENT);
+        Question q3 = new Question("Quel pays européen a voté non au traité de Maastricht en 1992 ?", null, Theme.HISTORY);
+        Question q4 = new Question("Quelle est la bien-aiméé de Popeye ?", null, Theme.ARTS_LITERATURE);
+        Question q5 = new Question("Dans quel pays poussait le papyrus ?", null, Theme.SCIENCE_NATURE);
+        Question q6 = new Question("Dans quel pays Alain Prost remporta-t-il sa première course en F1: France, Allemagne ou Italie ?", null, Theme.SPORTS_LEISURE);
+        Answer a = new Answer("Stop", Theme.GEOGRAPHY);
+        Answer a2 = new Answer("De la batterie", Theme.ENTERTAINMENT);
+        Answer a3 = new Answer("Le Danemark", Theme.HISTORY);
+        Answer a4 = new Answer("Olive", Theme.ARTS_LITERATURE);
+        Answer a5 = new Answer("L'Egypte", Theme.SCIENCE_NATURE);
+        Answer a6 = new Answer("En France", Theme.SPORTS_LEISURE);
 
         q.setAnswer(a);
         q2.setAnswer(a2);
