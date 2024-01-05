@@ -102,22 +102,22 @@ class BoardFactoryTest {
     void testBuildCasesSimpleCaseExteriorCircle(){
         //CONFIG
         indice = 36;
-        SimpleCase simpleCaseWithBottomHeadQuarterCaseNeighbor = (SimpleCase) caseList.get(indice);
-        SimpleCase simpleCaseWithTopHeadQuarterCaseNeighbor = (SimpleCase) caseList.get(indice+5);
+        SimpleCase simpleCaseWithBottomHeadQuarterCaseNeighbor = (SimpleCase) caseList.get(indice+6);
+        SimpleCase simpleCaseWithTopHeadQuarterCaseNeighbor = (SimpleCase) caseList.get(indice+11);
         SimpleCase simpleCaseWithJustSimpleCaseNeighbor = (SimpleCase) caseList.get(indice+1);
 
         //ACTION
         //VERIFY
-        Assertions.assertEquals(Arrays.asList("headquarter1", "case32"),simpleCaseWithBottomHeadQuarterCaseNeighbor.getNeighbors());
-        Assertions.assertEquals("case31", simpleCaseWithBottomHeadQuarterCaseNeighbor.getName());
-        Assertions.assertEquals(Color.GREEN, simpleCaseWithBottomHeadQuarterCaseNeighbor.getColor());
-        Assertions.assertEquals(Theme.SCIENCE_NATURE, simpleCaseWithBottomHeadQuarterCaseNeighbor.getTheme());
+        Assertions.assertEquals(Arrays.asList("headquarter2", "case38"),simpleCaseWithBottomHeadQuarterCaseNeighbor.getNeighbors());
+        Assertions.assertEquals("case37", simpleCaseWithBottomHeadQuarterCaseNeighbor.getName());
+        Assertions.assertEquals(Color.PINK, simpleCaseWithBottomHeadQuarterCaseNeighbor.getColor());
+        Assertions.assertEquals(Theme.ARTS_LITERATURE, simpleCaseWithBottomHeadQuarterCaseNeighbor.getTheme());
         Assertions.assertTrue(caseList.get(indice) instanceof SimpleCase);
 
-        Assertions.assertEquals(Arrays.asList("headquarter2", "case35"),simpleCaseWithTopHeadQuarterCaseNeighbor.getNeighbors());
-        Assertions.assertEquals("case36", simpleCaseWithTopHeadQuarterCaseNeighbor.getName());
-        Assertions.assertEquals(Color.PINK, simpleCaseWithTopHeadQuarterCaseNeighbor.getColor());
-        Assertions.assertEquals(Theme.ARTS_LITERATURE, simpleCaseWithTopHeadQuarterCaseNeighbor.getTheme());
+        Assertions.assertEquals(Arrays.asList("headquarter3", "case41"),simpleCaseWithTopHeadQuarterCaseNeighbor.getNeighbors());
+        Assertions.assertEquals("case42", simpleCaseWithTopHeadQuarterCaseNeighbor.getName());
+        Assertions.assertEquals(Color.PURPLE, simpleCaseWithTopHeadQuarterCaseNeighbor.getColor());
+        Assertions.assertEquals(Theme.ENTERTAINMENT, simpleCaseWithTopHeadQuarterCaseNeighbor.getTheme());
         Assertions.assertTrue(caseList.get(indice+4) instanceof SimpleCase);
 
         Assertions.assertEquals(Arrays.asList("case31", "case33"),simpleCaseWithJustSimpleCaseNeighbor.getNeighbors());
