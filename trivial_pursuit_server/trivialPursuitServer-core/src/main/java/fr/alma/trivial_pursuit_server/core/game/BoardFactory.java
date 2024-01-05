@@ -36,8 +36,6 @@ public class BoardFactory {
      * @throws BoardException if the board is not correctly design within the method.
      */
     public static Board createBoard(List<Player> playerList) throws BoardException, IOException {
-        //TODO
-        // fill json with Constant.BOARD_CARD_LIST_SIZE cards well build
         List<Case> casesList = buildCases();
         List<Card> cardsList = getCardsFromJson();
         Case initialCase = new Case("initialCase", null, Arrays.asList("case1", "case6", "case11", "case16", "case21", "case26"));
@@ -92,7 +90,7 @@ public class BoardFactory {
         List<Card> result = new ArrayList<>();
         Random random = new Random(1);
 
-        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE; i++){
+        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE_IN_JSON; i++){
             Card card = jacksonList.get(random.nextInt(jacksonList.size()));
             result.add(card);
             jacksonList.remove(card);

@@ -1,7 +1,11 @@
 package fr.alma.trivial_pursuit_server.util;
 
-public class Constant {
-    public static final int BOARD_CARD_LIST_SIZE = 81;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class Constant {
+    public static final int BOARD_CARD_LIST_SIZE_IN_JSON = 100;
     public static final int CARD_NB_QUESTIONS = 6;
     public static final int CARD_NB_ANSWERS = 6;
     public static final int BOARD_CASE_LIST_SIZE = 72;

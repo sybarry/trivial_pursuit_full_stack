@@ -47,7 +47,7 @@ public class Board implements IBoard {
      */
     public Board(List<Card> cards, List<Case> cases, Case initialCase, List<Player> playerList) throws BoardException {
         if(cases.contains(initialCase)
-                || cards.size() != Constant.BOARD_CARD_LIST_SIZE
+                || cards.size() != Constant.BOARD_CARD_LIST_SIZE_IN_JSON
                 || cases.size() != Constant.BOARD_CASE_LIST_SIZE
                 || playerList.size()<Constant.BOARD_AND_PARTY_PLAYER_LIST_MIN_SIZE
                 || playerList.size()>Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE

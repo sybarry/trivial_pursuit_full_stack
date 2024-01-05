@@ -65,7 +65,7 @@ class BoardTest {
         //CardList setup
         Card card = new Card(questionList, answerList);
         cardList = new ArrayList<>();
-        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE; i++){
+        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE_IN_JSON; i++){
             cardList.add(card);
         }
 
@@ -199,7 +199,7 @@ class BoardTest {
 
         cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
 
-        while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<Constant.BOARD_CARD_LIST_SIZE) {
+        while (cardListWithOneCardWhereAnAnswerIsNotInQuestionList.size()<Constant.BOARD_CARD_LIST_SIZE_IN_JSON) {
             cardListWithOneCardWhereAnAnswerIsNotInQuestionList.add(cardWithIncorrectLinkBetweenQuestionAndAnswer);
             cardListWithOneCardWithOnly1Answer.add(cardWithOneAnswerAnd6Questions);
             cardListWithOneCardWithOnly1Question.add(cardWithOneQuestionAnd6Answers);
