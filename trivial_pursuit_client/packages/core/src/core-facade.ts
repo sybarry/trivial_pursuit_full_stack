@@ -1,8 +1,8 @@
-import { TemplateServer } from "@trivial-pursuit-client/api";
+import { TrivialPursuitServer } from "@trivial-pursuit-client/api";
 import { WebsocketServer } from "@trivial-pursuit-client/websocket";
 
 export class CoreFacade {
-    private server: TemplateServer;
+    private server: TrivialPursuitServer;
 
     constructor() {
         this.server = new WebsocketServer();
