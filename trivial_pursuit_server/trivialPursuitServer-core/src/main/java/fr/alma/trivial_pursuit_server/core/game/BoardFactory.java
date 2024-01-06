@@ -86,7 +86,7 @@ public class BoardFactory {
      */
     public static List<Card> getCardsFromJson() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Card> jacksonList = objectMapper.readValue(new File("C:\\Users\\Hugo\\Documents\\Univ\\M1_ALMA_semestre_1\\Projet_Transversal\\trivial_pursuit_full_stack\\trivial_pursuit_server\\trivialPursuitServer-core\\src\\main\\java\\fr\\alma\\trivial_pursuit_server\\util\\cards.json"), new TypeReference<List<Card>>(){});
+        List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json"), new TypeReference<List<Card>>(){});
         List<Card> result = new ArrayList<>();
         Random random = new Random(1);
 
