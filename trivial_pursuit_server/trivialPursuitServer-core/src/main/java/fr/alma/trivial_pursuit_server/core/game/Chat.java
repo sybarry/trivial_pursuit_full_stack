@@ -1,5 +1,6 @@
 package fr.alma.trivial_pursuit_server.core.game;
 
+import fr.alma.trivial_pursuit_server.kind.IChat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Chat {
+public class Chat implements IChat {
 
     @Id
     @GeneratedValue

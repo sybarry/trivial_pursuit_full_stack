@@ -47,14 +47,13 @@ class PartyRepositoryTest {
     @DisplayName("test add")
     void testInsertParty() {
         //CONFIG
-
         //ACTION
         partyRepository.save(party);
 
         //VERIFY
         Assertions.assertTrue(partyRepository.existsById(party.getId()));
         Assertions.assertTrue(partyRepository.find(party).getPlayerList().contains(player1));
-        Assertions.assertTrue(partyRepository.findById(party.getId()).get().getPlayerList().contains(player2));
+        Assertions.assertTrue(partyRepository.find(party).getPlayerList().contains(player2));
         Assertions.assertEquals(1, partyRepository.findAll().size());
         Assertions.assertEquals(1,partyRepository.count());
 

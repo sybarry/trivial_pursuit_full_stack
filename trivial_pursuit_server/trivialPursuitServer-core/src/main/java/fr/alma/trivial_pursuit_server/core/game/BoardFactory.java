@@ -10,6 +10,7 @@ import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.BoardException;
 import fr.alma.trivial_pursuit_server.util.Color;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -35,8 +36,6 @@ public class BoardFactory {
      * @throws BoardException if the board is not correctly design within the method.
      */
     public static Board createBoard(List<Player> playerList) throws BoardException, IOException {
-        //TODO
-        // fill json with 400 cards well build
         List<Case> casesList = buildCases();
         List<Card> cardsList = getCardsFromJson();
         Case initialCase = new Case("initialCase", null, Arrays.asList("case1", "case6", "case11", "case16", "case21", "case26"));
@@ -90,7 +89,8 @@ public class BoardFactory {
         List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json"), new TypeReference<List<Card>>(){});
         List<Card> result = new ArrayList<>();
         Random random = new Random(1);
-        for(int i=0;i<400;i++){
+
+        for(int i = 0; i< Constant.BOARD_CARD_LIST_SIZE_IN_JSON; i++){
             Card card = jacksonList.get(random.nextInt(jacksonList.size()));
             result.add(card);
             jacksonList.remove(card);

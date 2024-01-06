@@ -1,13 +1,14 @@
 package fr.alma.trivial_pursuit_server.gameplay;
 
+import fr.alma.trivial_pursuit_server.kind.IBoard;
+
 import java.util.ArrayList;
 
 public interface IBoardPlay extends GamePlay{
-//    impossible since there is no dependency between core module and api
-//    Board createBoard();
-    Boolean onlyOnePlayerIsPlaying();
+    IBoard createBoard();
+    boolean onlyOnePlayerIsPlaying();
     ArrayList<String> rollDiceAndGiveCaseToMove();
-    Boolean moveToCase(String player, String newCase);
+    boolean moveToCase(String player, String newCase);
     String pickCard();
-    Boolean analyseResponse(String cardId, String answer);
+    boolean analyseResponse(String cardId, String answer);
 }

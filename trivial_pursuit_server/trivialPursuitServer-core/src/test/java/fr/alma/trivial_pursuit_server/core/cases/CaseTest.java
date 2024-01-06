@@ -23,8 +23,6 @@ class CaseTest {
     @DisplayName("test default constructor")
     void testDefaultConstructor(){
         //CONFIG
-        aCase = new Case();
-
         //ACTION
         //VERIFY
         Assertions.assertNull(aCase.getColor());

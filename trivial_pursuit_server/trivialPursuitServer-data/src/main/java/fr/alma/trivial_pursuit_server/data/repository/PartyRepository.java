@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartyRepository extends JpaRepository<Party, Long> {
-
     @Query("SELECT p FROM Party p WHERE p=?1")
     Party find(Party party);
 }

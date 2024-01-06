@@ -65,7 +65,6 @@ class CardRepositoryTest {
     @DisplayName("test add")
     void testInsertCard() {
         //CONFIG
-
         //ACTION
         cardRepository.save(card);
 

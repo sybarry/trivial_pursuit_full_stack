@@ -21,8 +21,6 @@ class ChatTest {
     @DisplayName("test chat default constructor")
     void testDefaultConstructor(){
         //CONFIG
-        chat = new Chat();
-
         //ACTION
         //VERIFY
         Assertions.assertNull(chat.getParty());

@@ -7,9 +7,12 @@ import fr.alma.trivial_pursuit_server.core.cases.HeadQuarter;
 import fr.alma.trivial_pursuit_server.core.cases.SimpleCase;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.BoardException;
+import fr.alma.trivial_pursuit_server.kind.IBoard;
 import fr.alma.trivial_pursuit_server.util.Color;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,15 +20,17 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Embeddable
 @NoArgsConstructor
 @Getter
-public class Board {
+public class Board implements IBoard {
 
     @ElementCollection
     private List<Card> cards;
     @ElementCollection
     private List<Case> cases;
+    @Embedded
     private Case initialCase;
     @ElementCollection
     private List<Player> playerList;
@@ -42,10 +47,10 @@ public class Board {
      */
     public Board(List<Card> cards, List<Case> cases, Case initialCase, List<Player> playerList) throws BoardException {
         if(cases.contains(initialCase)
-                || cards.size() != 400
-                || cases.size() != 72
-                || playerList.size()<2
-                || playerList.size()>6
+                || cards.size() != Constant.BOARD_CARD_LIST_SIZE_IN_JSON
+                || cases.size() != Constant.BOARD_CASE_LIST_SIZE
+                || playerList.size()<Constant.BOARD_AND_PARTY_PLAYER_LIST_MIN_SIZE
+                || playerList.size()>Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE
                 || initialCase instanceof SimpleCase
                 || initialCase instanceof HeadQuarter){
             throw new BoardException("constructor parameters doesn't match to the specification");
@@ -99,7 +104,7 @@ public class Board {
             if(c instanceof SimpleCase)
                 nbSimpleCase++;
         }
-        if(nbSimpleCase!=66){
+        if(nbSimpleCase!=Constant.BOARD_CASE_LIST_NB_SIMPLE_CASE_INSTANCE){
             throw new BoardException("list of cases got the wrong number of each subClasses of Case");
         }
     }
@@ -113,8 +118,8 @@ public class Board {
     private void verifyCard(List<Card> cards) throws BoardException {
         for(Card c : cards){
             if(Boolean.TRUE.equals(c.getIsPicked()
-                    || c.getAnswers().size() != 6
-                    || c.getQuestions().size() != 6))
+                    || c.getAnswers().size() != Constant.CARD_NB_ANSWERS
+                    || c.getQuestions().size() != Constant.CARD_NB_QUESTIONS))
             {
                 throw new BoardException("list of cards is incorrect");
             }

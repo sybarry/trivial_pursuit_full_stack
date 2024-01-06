@@ -1,9 +1,12 @@
 package fr.alma.trivial_pursuit_server.gameplay;
 
-public interface IPartyPlay extends GamePlay{
-//    impossible since there is no dependency between core module and api
-//    Chat createChat(List<Player> playerList);
+import fr.alma.trivial_pursuit_server.kind.IChat;
+import fr.alma.trivial_pursuit_server.kind.IPlayer;
 
-    Boolean isWinning(String user);
+import java.util.List;
+
+public interface IPartyPlay extends GamePlay{
+    IChat createChat(List<IPlayer> playerList);
+    boolean isWinning(String user);
     void endGame();
 }
