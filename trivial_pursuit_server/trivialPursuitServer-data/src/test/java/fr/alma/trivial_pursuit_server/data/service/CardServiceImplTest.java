@@ -64,13 +64,13 @@ class CardServiceImplTest {
         card2.setId(2L);
 
         when(cardRepository.save(card)).thenReturn(card);
-        when(cardRepository.existsById(card.getId())).thenReturn(true);
-        when(cardRepository.existsById(card2.getId())).thenReturn(false);
+        when(cardRepository.existsById(card.getId())).thenReturn(false);
+        when(cardRepository.existsById(card2.getId())).thenReturn(true);
 
         //ACTION
+        Boolean resultNotExist = cardService.isInRepository(card);
         Card resultSave = cardService.saveCard(card);
-        Boolean resultExist = cardService.isInRepository(card);
-        Boolean resultNotExist = cardService.isInRepository(card2);
+        Boolean resultExist = cardService.isInRepository(card2);
 
         //VERIFY
         verify(cardRepository, atLeastOnce()).save(card);

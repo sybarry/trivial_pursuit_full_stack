@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IPartyPlay extends GamePlay{
     IChat createChat(List<IPlayer> playerList);
-    boolean isWinning(String user);
+    //front handling
+//    boolean isWinning(String user);
     void endGame();
 }

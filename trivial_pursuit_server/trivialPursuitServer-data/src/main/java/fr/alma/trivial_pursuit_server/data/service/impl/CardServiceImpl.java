@@ -26,6 +26,9 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Card saveCard(Card card){
+        if(Boolean.TRUE.equals(isInRepository(card))){
+            return null;
+        }
         return cardRepository.save(card);
     }
 

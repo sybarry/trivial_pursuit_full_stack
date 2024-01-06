@@ -1,9 +1,11 @@
 package fr.alma.trivial_pursuit_server.core.game;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.kind.IParty;
+import fr.alma.trivial_pursuit_server.util.Color;
 import fr.alma.trivial_pursuit_server.util.Constant;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -23,7 +26,8 @@ public class Party implements IParty {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(mappedBy = "party", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "party", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Player> playerList = new ArrayList<>();
     @Column(name = "party_name")
     private String name;
@@ -63,7 +67,7 @@ public class Party implements IParty {
      * @param nbPlayer maxCapacityPlayer field
      */
     public Party(String name, int nbPlayer){
-        this.playerList = new ArrayList<>(nbPlayer);
+        this.playerList = new ArrayList<>();
         this.maxCapacityPlayer = nbPlayer;
         this.name = name;
         this.chat = null;
@@ -114,7 +118,8 @@ public class Party implements IParty {
     }
 
     /**
-     * Verify if all the player are ready in the party
+     * Verify if all the player are ready in the party.
+     * If there are no player then it's false.
      * @return true if that's the case, false otherwise
      */
     public Boolean checkPlayersReady(){
@@ -123,9 +128,32 @@ public class Party implements IParty {
                 return false;
             }
         }
-        return true;
+        return !playerList.isEmpty();
     }
 
+    /**
+     * Check if tere is still some place for a new player in the party
+     * @return true if that's the case, false otherwise
+     */
+    public boolean playersCanJoin() {
+        return playerList.size()<maxCapacityPlayer;
+    }
+
+    /**
+     * Provide a new player that can be in this party and add it
+     * @return The player who fit
+     */
+    public Player buildAValidNewPlayer() {
+        ArrayList<Color> colors = new ArrayList<>(Arrays.asList(Color.PINK, Color.BLUE, Color.PURPLE, Color.ORANGE, Color.GREEN, Color.YELLOW));
+
+        for(Player p : playerList){
+            colors.remove(p.getPawn());
+        }
+        Player newPlayer = new Player(colors.get(0), this);
+        playerList.add(newPlayer);
+
+        return newPlayer;
+    }
 }
 
 

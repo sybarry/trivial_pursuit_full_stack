@@ -61,7 +61,7 @@ public class Board implements IBoard {
         this.cards = cards;
         this.cases = cases;
         this.initialCase = initialCase;
-        this.playerList = playerList;
+        this.playerList =  new ArrayList<>(playerList);
         for(Player p : this.playerList){
             p.setActualCase(initialCase);
         }

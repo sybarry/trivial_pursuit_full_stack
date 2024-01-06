@@ -38,13 +38,13 @@ class PlayerServiceImplTest {
         player2.setId(888L);
 
         when(playerRepository.save(player)).thenReturn(player);
-        when(playerRepository.existsById(player.getId())).thenReturn(true);
-        when(playerRepository.existsById(player2.getId())).thenReturn(false);
-
+        when(playerRepository.existsById(player.getId())).thenReturn(false);
+        when(playerRepository.existsById(player2.getId())).thenReturn(true);
+        playerRepository.flush();
         //ACTION
+        Boolean resultNotExist = playerService.isInRepository(player);
         Player resultSave = playerService.savePlayer(player);
-        Boolean resultExist = playerService.isInRepository(player);
-        Boolean resultNotExist = playerService.isInRepository(player2);
+        Boolean resultExist = playerService.isInRepository(player2);
 
         //VERIFY
         verify(playerRepository, atLeastOnce()).save(player);

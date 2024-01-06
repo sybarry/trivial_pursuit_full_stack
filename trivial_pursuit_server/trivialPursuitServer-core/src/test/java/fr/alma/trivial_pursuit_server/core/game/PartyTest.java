@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.core.game;
 
 import fr.alma.trivial_pursuit_server.core.player.Player;
+import fr.alma.trivial_pursuit_server.exception.BoardException;
 import fr.alma.trivial_pursuit_server.exception.PartyException;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
 import fr.alma.trivial_pursuit_server.util.Color;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +23,6 @@ class PartyTest {
 
     @BeforeEach
     void setUp() throws PartyException, PlayerException {
-        Board board = new Board();
         Chat chat = new Chat();
         playerList = new ArrayList<>(Arrays.asList(
                 new Player(Color.GREEN, party),
@@ -31,13 +32,13 @@ class PartyTest {
                 new Player(Color.ORANGE, party),
                 new Player(Color.PURPLE, party)
         ));
-
+        Board board = new Board();
         party = new Party("party", playerList, chat, board);
     }
 
     @Test
     @DisplayName("test setter")
-    void testSetter() throws PartyException {
+    void testSetter() throws PartyException, IOException, BoardException {
         //CONFIG
         party = new Party();
 
@@ -46,8 +47,9 @@ class PartyTest {
         party.setId(1L);
         party.setPlayerList(playerList);
         party.setName("partySet");
-        party.setBoard(new Board());
+        party.setBoard(BoardFactory.createBoard(playerList));
         party.setMaxCapacityPlayer(5);
+
 
         //VERIFY
         Assertions.assertNotNull(party.getChat());
@@ -77,7 +79,7 @@ class PartyTest {
 
     @Test
     @DisplayName("test constructor with name and nbPlayer")
-    void testConstructorWithNameAndNbPlayer(){
+    void testConstructorWithNameAndNbPlayer() {
         //CONFIG
         party = new Party("party", 4);
 

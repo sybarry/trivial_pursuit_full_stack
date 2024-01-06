@@ -14,3 +14,4 @@
 - [] : Création des classes controller dans websocket en accord avec les interfaces de la conception
 - [] : Test de ces controller comme la classe RSocketController
 - [] : Check Javadoc
+- [] : add json to websocket pour éviter le chemin absolue

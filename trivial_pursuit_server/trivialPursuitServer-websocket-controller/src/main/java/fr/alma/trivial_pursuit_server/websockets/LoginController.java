@@ -5,10 +5,7 @@ import fr.alma.trivial_pursuit_server.data.service.UserService;
 import fr.alma.trivial_pursuit_server.lobby.ILogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -27,13 +24,8 @@ public class LoginController implements ILogin {
     @ResponseStatus(HttpStatus.CREATED)
     public boolean createAccount(@PathVariable("username") String username, @PathVariable("password") String password) {
         User userCreated = new User(username,password);
-        userService.saveUser(userCreated);
-        return userService.isInRepository(userCreated);
-    }
-
-    @GetMapping(path = "findAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> findAllUser(){
-        return userService.findAll();
+        userCreated = userService.saveUser(userCreated);
+        return userCreated != null;
     }
 
     @Override

@@ -35,11 +35,13 @@ class UserServiceImplTest {
 
         when(userRepository.save(user)).thenReturn(user);
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
+        when(userRepository.findByUserName(user.getUsername())).thenReturn(null);
+        when(userRepository.findByUserName(user2.getUsername())).thenReturn(user2);
 
         //ACTION
+        Boolean resultNotExist = userService.isInRepository(user);
         User resultSave = userService.saveUser(user);
-        Boolean resultExist = userService.isInRepository(user);
-        Boolean resultNotExist = userService.isInRepository(user2);
+        Boolean resultExist = userService.isInRepository(user2);
 
         //VERIFY
         verify(userRepository, atLeastOnce()).save(user);
