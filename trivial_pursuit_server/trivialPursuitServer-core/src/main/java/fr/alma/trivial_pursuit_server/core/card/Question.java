@@ -40,4 +40,8 @@ public class Question {
         this.theme = theme;
         this.questionCard = null;
     }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 }

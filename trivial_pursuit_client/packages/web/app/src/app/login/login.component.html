@@ -1,0 +1,11 @@
+<div class="login-container">
+    <h2>Connexion</h2>
+    <form class="login-form" (ngSubmit)="onSubmit()" #playerForm="ngForm">
+      <input type="email" name="email" class="ng-untouched ng-pristine ng-valid" #mail="ngModel" placeholder="Your mail" [(ngModel)]="player.mail" name="mail" required>
+      <div [hidden]="mail.valid || mail.pristine" class="alert alert-danger">Email required</div>
+      <input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="player.password" required>
+      <!-- <button type="submit" (click)="newPlayer(); heroForm.reset()">Se Connecter</button> -->
+      <button type="submit" [disabled]="!playerForm.form.valid" (click)="connectPlayer(player.mail, player.password)">Se Connecter</button>
+    </form>
+    <p>Pas de compte ? Cliquez <a href="#"> ici </a>pour créer votre compte</p>
+  </div>
