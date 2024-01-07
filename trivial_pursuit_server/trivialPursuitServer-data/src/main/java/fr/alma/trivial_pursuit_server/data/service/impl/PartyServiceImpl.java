@@ -54,4 +54,9 @@ public class PartyServiceImpl implements PartyService {
     public void flush(){
         partyRepository.flush();
     }
+
+    @Override
+    public void delete(Party party){
+        partyRepository.delete(party);
+    }
 }

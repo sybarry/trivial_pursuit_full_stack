@@ -18,4 +18,6 @@ public interface PartyService {
     Party findById(String partyId);
 
     void flush();
+
+    void delete(Party party);
 }

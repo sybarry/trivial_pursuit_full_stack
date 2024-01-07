@@ -15,4 +15,6 @@ public interface PlayerService {
     List<Player> findAllPlayerByUser(User user);
 
     void flush();
+
+    void delete(Player player);
 }

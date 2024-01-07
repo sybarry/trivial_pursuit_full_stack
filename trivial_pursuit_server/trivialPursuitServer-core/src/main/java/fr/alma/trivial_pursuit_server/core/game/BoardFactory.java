@@ -112,7 +112,7 @@ public class BoardFactory {
         for(int i=0; i<6;i++){
             int constCaseNumber = 30;
             if(i==0){
-                constCaseNumber = 66;
+                constCaseNumber = Constant.BOARD_CASE_LIST_NB_SIMPLE_CASE_INSTANCE;
             }
             result.add(new HeadQuarter(HEADQUARTER+(i+1),colors[i],Arrays.asList("case"+((i+1)*5), "case"+(constCaseNumber+(i*6)), "case"+(30+(i*6)+1)),themes[i]));
         }
@@ -139,7 +139,7 @@ public class BoardFactory {
         themes = new Theme[]{Theme.SCIENCE_NATURE, Theme.HISTORY, Theme.SPORTS_LEISURE, Theme.GEOGRAPHY, Theme.ENTERTAINMENT, Theme.ARTS_LITERATURE};
         colors = new Color[]{Color.GREEN, Color.YELLOW, Color.ORANGE, Color.BLUE, Color.PURPLE, Color.PINK};
 
-        for(int i=30; i<66;i++){
+        for(int i=30; i<Constant.BOARD_CASE_LIST_NB_SIMPLE_CASE_INSTANCE;i++){
             int indiceThemeAndColor = (i-((i-30)/6))%6;
             switch (i%6){
                 case 0:

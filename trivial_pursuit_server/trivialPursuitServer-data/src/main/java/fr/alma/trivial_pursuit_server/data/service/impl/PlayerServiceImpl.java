@@ -45,4 +45,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void flush(){
         playerRepository.flush();
     }
+
+    @Override
+    public void delete(Player player){
+        playerRepository.delete(player);
+    }
 }
