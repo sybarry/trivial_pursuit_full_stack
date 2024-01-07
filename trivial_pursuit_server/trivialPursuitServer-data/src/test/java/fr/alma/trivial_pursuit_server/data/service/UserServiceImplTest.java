@@ -51,6 +51,29 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("test add but already added and check")
+    void testAddAlreadyAddedAndCheck() {
+        //CONFIG
+        User user2 = new User("username2", "password2");
+        user2.setId(888L);
+
+        when(userRepository.save(user)).thenReturn(null);
+        when(userRepository.findByUserName(user.getUsername())).thenReturn(user);
+        when(userRepository.findByUserName(user2.getUsername())).thenReturn(null);
+
+        //ACTION
+        Boolean resultExistAlready = userService.isInRepository(user);
+        User resultSave = userService.saveUser(user);
+        Boolean resultNotExist = userService.isInRepository(user2);
+
+        //VERIFY
+        verify(userRepository, never()).save(user);
+        Assertions.assertNull(resultSave);
+        Assertions.assertTrue(resultExistAlready);
+        Assertions.assertFalse(resultNotExist);
+    }
+
+    @Test
     @DisplayName("test find all")
     void testFindAll(){
         //CONFIG
@@ -80,6 +103,7 @@ class UserServiceImplTest {
         Assertions.assertTrue(result);
         Assertions.assertFalse(resultFalse);
         Assertions.assertNull(user.getPassword());
+        Assertions.assertNull(userRepository.findByUserName(user.getUsername()).getPassword());
 
         //ACTION
         resultFalse = userService.changePassword(user.getUsername(), "newPassword");
@@ -91,5 +115,7 @@ class UserServiceImplTest {
         Assertions.assertEquals("newPassword", user.getPassword());
         Assertions.assertTrue(userService.isInRepository(user));
         Assertions.assertFalse(userService.isInRepository(new User("user","password")));
+        Assertions.assertEquals("newPassword", userRepository.findByUserName(user.getUsername()).getPassword());
+
     }
 }

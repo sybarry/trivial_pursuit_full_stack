@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.data.service;
 
 import fr.alma.trivial_pursuit_server.core.player.Player;
+import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.data.repository.PlayerRepository;
 import fr.alma.trivial_pursuit_server.data.service.impl.PlayerServiceImpl;
 import fr.alma.trivial_pursuit_server.util.Color;
@@ -40,7 +41,7 @@ class PlayerServiceImplTest {
         when(playerRepository.save(player)).thenReturn(player);
         when(playerRepository.existsById(player.getId())).thenReturn(false);
         when(playerRepository.existsById(player2.getId())).thenReturn(true);
-        playerRepository.flush();
+
         //ACTION
         Boolean resultNotExist = playerService.isInRepository(player);
         Player resultSave = playerService.savePlayer(player);
@@ -54,16 +55,38 @@ class PlayerServiceImplTest {
     }
 
     @Test
-    @DisplayName("test find all")
+    @DisplayName("test find all and findAllByUser")
     void testFindAll(){
         //CONFIG
+        User user = new User();
         when(playerRepository.findAll()).thenReturn(Collections.singletonList(player));
+        when(playerRepository.findAllPlayerByUser(user)).thenReturn(Collections.singletonList(player));
 
         //ACTION
-        List<Player> result = playerService.findAll();
+        List<Player> resultAll = playerService.findAll();
+        List<Player> resultByUser = playerService.findAllPlayerByUser(user);
 
         //VERIFY
         verify(playerRepository, atLeastOnce()).findAll();
-        Assertions.assertEquals(Collections.singletonList(player), result);
+        verify(playerRepository, atLeastOnce()).findAllPlayerByUser(user);
+        Assertions.assertEquals(Collections.singletonList(player), resultAll);
+        Assertions.assertEquals(Collections.singletonList(player), resultByUser);
+    }
+
+    @Test
+    @DisplayName("test add and check")
+    void testDeleteAndCheck() {
+        //CONFIG
+        doNothing().when(playerRepository).delete(player);
+        when(playerRepository.existsById(player.getId())).thenReturn(false);
+
+        //ACTION
+        playerService.delete(player);
+        playerService.flush();
+        Boolean resultNotExist = playerService.isInRepository(player);
+
+        //VERIFY
+        verify(playerRepository, atLeastOnce()).delete(player);
+        Assertions.assertFalse(resultNotExist);
     }
 }

@@ -37,7 +37,7 @@ public class BoardFactory {
      */
     public static Board createBoard(List<Player> playerList) throws BoardException, IOException {
         List<Case> casesList = buildCases();
-        List<Card> cardsList = getCardsFromJson();
+        List<Card> cardsList = getCardsFromJson("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json");
         Case initialCase = new Case("initialCase", null, Arrays.asList("case1", "case6", "case11", "case16", "case21", "case26"));
 
         return new Board(cardsList, casesList, initialCase, playerList);
@@ -84,9 +84,9 @@ public class BoardFactory {
      * @return List of 400 Cards
      * @throws IOException if deserialization goes wrong.
      */
-    public static List<Card> getCardsFromJson() throws IOException {
+    public static List<Card> getCardsFromJson(String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json"), new TypeReference<List<Card>>(){});
+        List<Card> jacksonList = objectMapper.readValue(new File(path), new TypeReference<List<Card>>(){});
         List<Card> result = new ArrayList<>();
         Random random = new Random(1);
 
