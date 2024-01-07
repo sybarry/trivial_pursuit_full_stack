@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Player, User } from '../../../player';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
 
+  baseUrl = 'http://localhost:8081';
+
   private isAuth: boolean = false;
 
-  constructor() { }
+  constructor(private _http: HttpClient) { }
 
   login(){
     this.isAuth=true;
@@ -20,4 +25,17 @@ export class AuthentificationService {
   isAuthenticatedUser(): boolean {
     return this.isAuth;
   }
+
+  loginFromServer(player: Player): Observable<any>{
+    return this._http.post<any>(this.baseUrl, player);
+  }
+
+  loginUserFromServe(user: User): Observable<any>{
+    return this._http.post<any>(this.baseUrl+'/api/login', user);
+  }
+
+  registrationAccount(player: Player): Observable<any>{
+    return this._http.post<any>(this.baseUrl, player);
+  }
+
 }

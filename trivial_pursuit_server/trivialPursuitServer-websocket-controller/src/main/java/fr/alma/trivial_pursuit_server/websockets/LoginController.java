@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/api")
 public class LoginController implements ILogin {
@@ -18,10 +19,25 @@ public class LoginController implements ILogin {
     private UserService userService;
 
     @Override
-    @RequestMapping(path = "login/{username}/{password}")
+    @RequestMapping(path = "/login/{username}/{password}")
     public boolean login(@PathVariable("username") String username, @PathVariable("password") String password) {
         return userService.isInRepository(new User(username,password));
     }
+
+    @PostMapping(path = "/login")
+    public boolean login(@RequestBody User user) throws Exception {
+        User user1 = new User();
+        user1.setUsername("mohamed@gmail.com");
+        user1.setPassword("test");
+        userService.saveUser(user1);
+        System.out.println(user +" la requete est la");
+        boolean a = userService.isInRepository(user);
+        if (!a){
+            throw new Exception("Bad credential");
+        }
+        return userService.isInRepository(user);
+    }
+
     @Override
     @RequestMapping(path = "save/{username}/{password}")
     @ResponseStatus(HttpStatus.CREATED)
