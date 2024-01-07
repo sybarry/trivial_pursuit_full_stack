@@ -47,8 +47,8 @@ public class LobbyController implements ILobby {
         log.info("game history for user : "+username);
 
         if(Boolean.TRUE.equals(userService.isInRepository(new User(username, null)))){
-            User userFind = userService.findByUserName(username);
-            List<Player> userPlayers = playerService.findAllPlayerByUser(userFind);
+            User userFound = userService.findByUserName(username);
+            List<Player> userPlayers = playerService.findAllPlayerByUser(userFound);
             List<IParty> result = new ArrayList<>();
 
             for(Party p : partyService.findAllByPlayer(userPlayers)){
@@ -81,11 +81,11 @@ public class LobbyController implements ILobby {
     @GetMapping(path = "playersReady/{partyId}")
     public boolean checkPlayersReady(@PathVariable("partyId") String partyId) {
         log.info("checkPlayersReady for party : "+partyId);
-        Party partyFind = partyService.findById(partyId);
-        if(partyFind!=null){
-            return partyFind.checkPlayersReady();
+        Party partyFound = partyService.findById(partyId);
+        if(partyFound!=null){
+            return partyFound.checkPlayersReady();
         }else{
-            log.warn("partyFind is null, invalid partyId : "+partyId);
+            log.warn("partyFound is null, invalid partyId : "+partyId);
             return false;
         }
     }
@@ -96,19 +96,19 @@ public class LobbyController implements ILobby {
         log.info("joinGame for party : "+partyId+" and user : "+user);
 
         Party party = partyService.findById(partyId);
-        User userFind = userService.findByUserName(user);
+        User userFound = userService.findByUserName(user);
 
-        if(userFind!= null && party != null && party.playersCanJoin() && userFind.getUserPlayer() == null){
+        if(userFound!= null && party != null && party.playersCanJoin() && userFound.getUserPlayer() == null){
             Player playerCreated = party.buildAValidNewPlayer();
-            userFind.setUserPlayer(playerCreated);
+            userFound.setUserPlayer(playerCreated);
 
-            playerCreated.setUser(userFind);
+            playerCreated.setUser(userFound);
             playerService.savePlayer(playerCreated);
 
             partyService.flush();
             return true;
         }else{
-            log.warn("party : "+partyId+" is null or no player can join or user has already a player set or userFind is null");
+            log.warn("party : "+partyId+" is null or no player can join or user has already a player set or userFound is null");
             return false;
         }
     }
@@ -136,9 +136,9 @@ public class LobbyController implements ILobby {
     public void ready(@PathVariable("username") String user) {
         log.info("ready for user : "+user);
 
-        User userFind = userService.findByUserName(user);
-        if(userFind.getUserPlayer() != null){
-            userFind.getUserPlayer().setReady(!userFind.getUserPlayer().getReady());
+        User userFound = userService.findByUserName(user);
+        if(userFound.getUserPlayer() != null){
+            userFound.getUserPlayer().setReady(!userFound.getUserPlayer().getReady());
             partyService.flush();
         }
     }

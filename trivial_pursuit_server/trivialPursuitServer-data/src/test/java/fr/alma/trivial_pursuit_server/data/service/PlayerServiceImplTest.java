@@ -74,7 +74,7 @@ class PlayerServiceImplTest {
     }
 
     @Test
-    @DisplayName("test add and check")
+    @DisplayName("test delete and check")
     void testDeleteAndCheck() {
         //CONFIG
         doNothing().when(playerRepository).delete(player);

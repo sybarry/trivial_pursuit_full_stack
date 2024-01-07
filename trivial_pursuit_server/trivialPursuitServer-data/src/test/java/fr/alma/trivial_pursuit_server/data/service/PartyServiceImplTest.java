@@ -1,8 +1,10 @@
 package fr.alma.trivial_pursuit_server.data.service;
 
 import fr.alma.trivial_pursuit_server.core.game.Party;
+import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.data.repository.PartyRepository;
 import fr.alma.trivial_pursuit_server.data.service.impl.PartyServiceImpl;
+import fr.alma.trivial_pursuit_server.util.Color;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -53,16 +55,44 @@ class PartyServiceImplTest {
     }
 
     @Test
-    @DisplayName("test find all")
+    @DisplayName("test find all, find by id and find all by player")
     void testFindAll(){
         //CONFIG
+        Player player = new Player(Color.GREEN, party);
+        party.setId(1L);
+
         when(partyRepository.findAll()).thenReturn(Collections.singletonList(party));
+        when(partyRepository.findByIdNotOptional(party.getId())).thenReturn(party);
+        when(partyRepository.findAllByPlayer(player)).thenReturn(Collections.singletonList(party));
 
         //ACTION
-        List<Party> result = partyService.findAll();
+        List<Party> resultAll = partyService.findAll();
+        Party partyFind = partyService.findById(party.getId()+"");
+        List<Party> resultPlayer = partyService.findAllByPlayer(Collections.singletonList(player));
 
         //VERIFY
         verify(partyRepository, atLeastOnce()).findAll();
-        Assertions.assertEquals(Collections.singletonList(party), result);
+        verify(partyRepository, atLeastOnce()).findByIdNotOptional(party.getId());
+        verify(partyRepository, atLeastOnce()).findAllByPlayer(player);
+        Assertions.assertEquals(Collections.singletonList(party), resultAll);
+        Assertions.assertEquals(Collections.singletonList(party), resultPlayer);
+        Assertions.assertEquals(party, partyFind);
+    }
+
+    @Test
+    @DisplayName("test delete and check")
+    void testDeleteAndCheck() {
+        //CONFIG
+        doNothing().when(partyRepository).delete(party);
+        when(partyRepository.findByIdNotOptional(party.getId())).thenReturn(null);
+
+        //ACTION
+        partyService.delete(party);
+        partyService.flush();
+        Boolean resultNotExist = partyService.isInRepository(party);
+
+        //VERIFY
+        verify(partyRepository, atLeastOnce()).delete(party);
+        Assertions.assertFalse(resultNotExist);
     }
 }

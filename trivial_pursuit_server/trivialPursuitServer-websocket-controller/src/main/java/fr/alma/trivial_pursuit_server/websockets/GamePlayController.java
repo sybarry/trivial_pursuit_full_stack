@@ -49,13 +49,13 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     public boolean leaveGame(@PathVariable("username") String user) {
         log.info("leaveGame for "+user);
 
-        User userFind = userService.findByUserName(user);
-        if(userFind.getUserPlayer()!=null && userFind.getUserPlayer().getParty() != null){
-            Player playerOfUser = userFind.getUserPlayer();
-            Party partyFind = partyService.findById(String.valueOf(playerOfUser.getParty().getId()));
+        User userFound = userService.findByUserName(user);
+        if(userFound.getUserPlayer()!=null && userFound.getUserPlayer().getParty() != null){
+            Player playerOfUser = userFound.getUserPlayer();
+            Party partyFound = partyService.findById(String.valueOf(playerOfUser.getParty().getId()));
             try{
-                partyFind.removePlayer(playerOfUser);
-                userFind.setUserPlayer(null);
+                partyFound.removePlayer(playerOfUser);
+                userFound.setUserPlayer(null);
                 playerOfUser.setUser(null);
                 playerService.delete(playerOfUser);
                 playerService.flush();
@@ -64,7 +64,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
                 log.warn(e.getMessage() + " occur in leaveGame");
             }
         }else{
-            log.warn("userFind have no player or his party is not set");
+            log.warn("userFound have no player or his party is not set");
         }
         return false;
     }
@@ -87,8 +87,8 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         ObjectMapper objectMapper = new ObjectMapper();
         try{
             Case newCaseDeserialize = objectMapper.readValue(newCase, new TypeReference<>(){});
-            Player playerFind = userService.findByUserName(user).getUserPlayer();
-            playerFind.setActualCase(newCaseDeserialize);
+            Player playerFound = userService.findByUserName(user).getUserPlayer();
+            playerFound.setActualCase(newCaseDeserialize);
             playerService.flush();
         }catch (Exception e){
             log.warn(e.getMessage());
@@ -101,9 +101,9 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     public String pickCard(@PathVariable("partyId") String partyId,@PathVariable("questionTheme") String questionTheme) {
         log.info("pickCard for party : "+partyId+" and theme : "+questionTheme);
 
-        Party partyFind = partyService.findById(partyId);
-        if(partyFind != null && !partyFind.getBoard().getCards().isEmpty()){
-            Card card = partyFind.getBoard().getACard();
+        Party partyFound = partyService.findById(partyId);
+        if(partyFound != null && !partyFound.getBoard().getCards().isEmpty()){
+            Card card = partyFound.getBoard().getACard();
             partyService.flush();
             cardService.flush();
             try{
@@ -150,10 +150,10 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     public IChat createChat(@PathVariable("partyId") String partyId) {
         log.info("createChat for party : "+partyId);
 
-        Party partyFind = partyService.findById(partyId);
-        if(partyFind != null){
-            Chat chat = new Chat(partyFind);
-            partyFind.setChat(chat);
+        Party partyFound = partyService.findById(partyId);
+        if(partyFound != null){
+            Chat chat = new Chat(partyFound);
+            partyFound.setChat(chat);
             partyService.flush();
             return chat;
         }else{
@@ -167,14 +167,14 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     public void endGame(@PathVariable("partyId") String partyId) {
         log.info("endGame for party : "+partyId);
 
-        Party partyFind = partyService.findById(partyId);
-        if(partyFind!=null){
-            for(Player p : partyFind.getPlayerList()){
+        Party partyFound = partyService.findById(partyId);
+        if(partyFound!=null){
+            for(Player p : partyFound.getPlayerList()){
                 p.getUser().setUserPlayer(null);
                 p.setUser(null);
                 userService.flush();
             }
-            partyService.delete(partyFind);
+            partyService.delete(partyFound);
             partyService.flush();
         }
     }
