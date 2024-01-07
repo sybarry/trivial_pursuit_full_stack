@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.core.card;
 
 import fr.alma.trivial_pursuit_server.exception.CardException;
+import fr.alma.trivial_pursuit_server.kind.ICard;
 import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import jakarta.persistence.*;
@@ -16,12 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Card {
+public class Card implements ICard {
 
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(mappedBy = "questionCard", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "questionCard", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
     @ElementCollection
     private List<Answer> answers = new ArrayList<>();

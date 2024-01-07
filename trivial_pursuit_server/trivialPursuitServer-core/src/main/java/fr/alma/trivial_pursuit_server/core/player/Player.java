@@ -1,5 +1,7 @@
 package fr.alma.trivial_pursuit_server.core.player;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.exception.PlayerException;
@@ -25,10 +27,12 @@ public class Player implements IPlayer {
     @Embedded
     private Case actualCase = null;
     @ManyToOne
+    @JsonBackReference
     private Party party;
     private Boolean ready = false;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonManagedReference
     private User user;
 
 

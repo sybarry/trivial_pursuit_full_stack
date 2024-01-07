@@ -10,7 +10,8 @@
 - [x] : Implémenter JpaRepository dans DATA et services de ces Repository
 - [x] : Implémentation des interfaces Façades dans API
 - [x] : Test dans CORE module où il y a des *//TODO*
-- [] : Test dans DATA module pour améliorer les tests d'utilisations des repository
-- [] : Création des classes controller dans websocket en accord avec les interfaces de la conception
-- [] : Test de ces controller comme la classe RSocketController
+- [x] : Test dans DATA module pour améliorer les tests d'utilisations des repository
+- [x] : Création des classes controller dans websocket en accord avec les interfaces de la conception
+- [] : Test de ces controller comme la classe GamePlayControllerTest
 - [] : Check Javadoc
+- [] : add json to websocket pour éviter le chemin absolue

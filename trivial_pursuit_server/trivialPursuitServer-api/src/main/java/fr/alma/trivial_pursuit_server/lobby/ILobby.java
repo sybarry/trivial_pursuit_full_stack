@@ -1,12 +1,12 @@
 package fr.alma.trivial_pursuit_server.lobby;
 
-import fr.alma.trivial_pursuit_server.kind.IBoard;
 import fr.alma.trivial_pursuit_server.kind.IParty;
 
 import java.util.List;
 
 public interface ILobby extends Lobby {
-    IBoard giveBoard();
+    //useless because of BoardFactory
+//    IBoard giveBoard();
     List<IParty> partyHistory(String user);
     IParty createGame(String gameName, int nbPlayers);
     boolean checkPlayersReady(String partyId);
