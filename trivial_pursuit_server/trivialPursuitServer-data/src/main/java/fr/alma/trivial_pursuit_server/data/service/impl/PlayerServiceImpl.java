@@ -1,6 +1,7 @@
 package fr.alma.trivial_pursuit_server.data.service.impl;
 
 import fr.alma.trivial_pursuit_server.core.player.Player;
+import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.data.repository.PlayerRepository;
 import fr.alma.trivial_pursuit_server.data.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,20 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> findAll() {
         return playerRepository.findAll();
+    }
+
+    @Override
+    public List<Player> findAllPlayerByUser(User userfind) {
+        return playerRepository.findAllPlayerByUser(userfind);
+    }
+
+    @Override
+    public void flush(){
+        playerRepository.flush();
+    }
+
+    @Override
+    public void delete(Player player){
+        playerRepository.delete(player);
     }
 }

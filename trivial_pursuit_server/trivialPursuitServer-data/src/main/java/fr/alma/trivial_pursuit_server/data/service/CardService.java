@@ -10,4 +10,7 @@ public interface CardService {
     Card saveCard(Card card);
 
     List<Card> findAll();
+    void flush();
+
+    Card findById(String cardId);
 }

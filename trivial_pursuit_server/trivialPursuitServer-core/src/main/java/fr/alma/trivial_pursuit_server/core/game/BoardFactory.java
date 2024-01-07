@@ -37,7 +37,7 @@ public class BoardFactory {
      */
     public static Board createBoard(List<Player> playerList) throws BoardException, IOException {
         List<Case> casesList = buildCases();
-        List<Card> cardsList = getCardsFromJson();
+        List<Card> cardsList = getCardsFromJson("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json");
         Case initialCase = new Case("initialCase", null, Arrays.asList("case1", "case6", "case11", "case16", "case21", "case26"));
 
         return new Board(cardsList, casesList, initialCase, playerList);
@@ -84,9 +84,9 @@ public class BoardFactory {
      * @return List of 400 Cards
      * @throws IOException if deserialization goes wrong.
      */
-    private static List<Card> getCardsFromJson() throws IOException {
+    public static List<Card> getCardsFromJson(String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Card> jacksonList = objectMapper.readValue(new File("src/main/java/fr/alma/trivial_pursuit_server/util/cards.json"), new TypeReference<List<Card>>(){});
+        List<Card> jacksonList = objectMapper.readValue(new File(path), new TypeReference<List<Card>>(){});
         List<Card> result = new ArrayList<>();
         Random random = new Random(1);
 
@@ -112,7 +112,7 @@ public class BoardFactory {
         for(int i=0; i<6;i++){
             int constCaseNumber = 30;
             if(i==0){
-                constCaseNumber = 66;
+                constCaseNumber = Constant.BOARD_CASE_LIST_NB_SIMPLE_CASE_INSTANCE;
             }
             result.add(new HeadQuarter(HEADQUARTER+(i+1),colors[i],Arrays.asList("case"+((i+1)*5), "case"+(constCaseNumber+(i*6)), "case"+(30+(i*6)+1)),themes[i]));
         }
@@ -139,7 +139,7 @@ public class BoardFactory {
         themes = new Theme[]{Theme.SCIENCE_NATURE, Theme.HISTORY, Theme.SPORTS_LEISURE, Theme.GEOGRAPHY, Theme.ENTERTAINMENT, Theme.ARTS_LITERATURE};
         colors = new Color[]{Color.GREEN, Color.YELLOW, Color.ORANGE, Color.BLUE, Color.PURPLE, Color.PINK};
 
-        for(int i=30; i<66;i++){
+        for(int i=30; i<Constant.BOARD_CASE_LIST_NB_SIMPLE_CASE_INSTANCE;i++){
             int indiceThemeAndColor = (i-((i-30)/6))%6;
             switch (i%6){
                 case 0:

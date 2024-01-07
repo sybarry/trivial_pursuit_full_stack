@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "QUESTION")
 @NoArgsConstructor
@@ -43,5 +45,10 @@ public class Question {
 
     public void setAnswer(Answer answer) {
         this.answer = answer;
+    }
+
+    public boolean analyseAnswer(String answer) {
+        //TODO upgrade the way to validate an answer
+        return Objects.equals(this.answer.getAnswerText(), answer);
     }
 }

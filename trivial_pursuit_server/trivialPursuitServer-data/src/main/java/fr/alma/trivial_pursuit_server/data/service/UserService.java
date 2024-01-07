@@ -14,4 +14,8 @@ public interface UserService {
     Boolean resetPassword(String username);
 
     Boolean changePassword(String username, String password);
+
+    User findByUserName(String user);
+
+    void flush();
 }
