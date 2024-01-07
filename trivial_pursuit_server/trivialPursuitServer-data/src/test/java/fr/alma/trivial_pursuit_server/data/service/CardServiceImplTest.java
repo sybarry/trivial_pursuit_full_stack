@@ -94,6 +94,7 @@ class CardServiceImplTest {
         Boolean resultExistAlready = cardService.isInRepository(card);
         Card resultSave = cardService.saveCard(card);
         Boolean resultNotExist = cardService.isInRepository(card2);
+        cardService.flush();
 
         //VERIFY
         verify(cardRepository, never()).save(card);

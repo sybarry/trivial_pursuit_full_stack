@@ -19,11 +19,9 @@ import fr.alma.trivial_pursuit_server.kind.IChat;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -147,6 +145,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
 
     @Override
     @GetMapping(path = "createChat/{partyId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public IChat createChat(@PathVariable("partyId") String partyId) {
         log.info("createChat for party : "+partyId);
 
