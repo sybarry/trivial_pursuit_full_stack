@@ -164,16 +164,21 @@ class PartyTest {
 
     @Test
     @DisplayName("test check player ready false")
-    void testCheckPlayerReadyFalse(){
+    void testCheckPlayerReadyFalse() throws PartyException {
         //CONFIG
+        List<Player> playerListCopy = new ArrayList<>(playerList);
+
         //ACTION
-        Boolean result = party.checkPlayersReady();
+        boolean result = party.checkPlayersReady();
+
+        for(Player p : playerListCopy){
+            party.removePlayer(p);
+        }
+        boolean resultFalseBecauseListEmpty = party.checkPlayersReady();
 
         //VERIFY
         Assertions.assertFalse(result);
-        for(Player p : party.getPlayerList()){
-            Assertions.assertFalse(p.getReady());
-        }
+        Assertions.assertFalse(resultFalseBecauseListEmpty);
     }
 
     @Test
@@ -185,7 +190,7 @@ class PartyTest {
         }
 
         //ACTION
-        Boolean result = party.checkPlayersReady();
+        boolean result = party.checkPlayersReady();
 
         //VERIFY
         Assertions.assertTrue(result);
@@ -232,5 +237,45 @@ class PartyTest {
         Assertions.assertNotEquals(playerListOf1Elm, party.getPlayerList());
         Assertions.assertNotEquals(playerList, party.getPlayerList());
         Assertions.assertNotNull(party.getPlayerList());
+    }
+
+    @Test
+    @DisplayName("test can join method true")
+    void testPlayersCanJoinTrue() {
+        //CONFIG
+        party = new Party("party",4);
+
+        //ACTION
+        Assertions.assertDoesNotThrow(() -> party.addPlayer(new Player(Color.GREEN, party)));
+        boolean result = party.playersCanJoin();
+
+        //VERIFY
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("test can join method false")
+    void testPlayersCanJoinFalse() {
+        //CONFIG
+        //ACTION
+        boolean result = party.playersCanJoin();
+
+        //VERIFY
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("test build a valid player")
+    void testBuildAValidPlayer(){
+        //CONFIG
+        Assertions.assertThrows(IndexOutOfBoundsException.class, ()->party.buildAValidNewPlayer());
+        party = new Party();
+
+        //ACTION
+        Player playerBuild = party.buildAValidNewPlayer();
+
+        //VERIFY
+        Assertions.assertTrue(party.getPlayerList().contains(playerBuild));
+        Assertions.assertEquals(party, playerBuild.getParty());
     }
 }
