@@ -36,16 +36,10 @@ public class LobbyController implements ILobby {
     @Autowired
     private PartyService partyService;
 
-//    @Override
-//    public IBoard giveBoard() {
-//        return null;
-//    }
-
     @Override
     @GetMapping(path = "history/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<IParty> partyHistory(@PathVariable("username") String username) {
         log.info("game history for user : "+username);
-
         if(Boolean.TRUE.equals(userService.isInRepository(new User(username, null)))){
             User userFound = userService.findByUserName(username);
             List<Player> userPlayers = playerService.findAllPlayerByUser(userFound);

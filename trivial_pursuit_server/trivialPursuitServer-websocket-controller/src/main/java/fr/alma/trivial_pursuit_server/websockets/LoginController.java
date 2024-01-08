@@ -20,52 +20,36 @@ public class LoginController implements ILogin {
     private UserService userService;
 
     @Override
-    @RequestMapping(path = "/login/{username}/{password}")
     public boolean login(@PathVariable("username") String username, @PathVariable("password") String password) {
         log.info("login with username : "+username+" and password: "+password);
-
         return userService.isInRepository(new User(username,password));
     }
 
     @PostMapping(path = "/login")
-    public boolean login(@RequestBody User user) throws Exception {
-        User user1 = new User();
-        user1.setUsername("mohamed@gmail.com");
-        user1.setPassword("test");
-        userService.saveUser(user1);
-        System.out.println(user +" la requete est la");
-        boolean a = userService.isInRepository(user);
-        if (!a){
-            throw new Exception("Bad credential");
-        }
+    public boolean login(@RequestBody User user) {
+        log.info("login with username : "+user);
         return userService.isInRepository(user);
     }
 
+    @Override
+    public boolean createAccount(String username, String password) {
+        userService.saveUser(new User(username,password));
+        return true;
+    }
+
     @PostMapping(path = "/createAccount")
-    public User createAccount(@RequestBody User user){
+    public boolean createAccountDetached(@RequestBody User user){
+        log.info("createAccount with username");
         if (user != null){
-            log.info("Le user envoyer "+ user.getUsername() + " " + user.getPassword());
-           return userService.saveUser(user);
+            return createAccount(user.getUsername(), user.getPassword());
+        }else{
+            log.warn("user is null");
+            return false;
         }
-        return null;
     }
 
     @Override
-    @RequestMapping(path = "save/{username}/{password}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public boolean createAccount(@PathVariable("username") String username, @PathVariable("password") String password) {
-        log.info("createAcoount with username : "+username+" and password : "+password);
-
-        User userCreated = new User(username,password);
-        userCreated = userService.saveUser(userCreated);
-        return userCreated != null;
-    }
-
-    @Override
-    @RequestMapping(path = "newMdp/{username}/{password}")
     public boolean newPassword(@PathVariable("username") String username,@PathVariable("password") String password) {
-        log.info("newPassword with username : "+username+" and password : "+password);
-
         if(resetPassword(username)){
             return userService.changePassword(username, password);
         }
@@ -75,13 +59,17 @@ public class LoginController implements ILogin {
     @Override
     public boolean resetPassword(String username) {
         log.info("resetPassword with username : "+username);
-
         return userService.resetPassword(username);
     }
 
-    //front handling
-//    @Override
-//    public boolean logout(String user) {
-//        return true;
-//    }
+    @PostMapping(path = "/newPassword")
+    public boolean newPasswordDetached(@RequestBody User user){
+        log.info("newPassword for user "+user);
+        if(user!=null){
+            return newPassword(user.getUsername(), user.getPassword());
+        }else{
+            log.warn("user is null");
+            return false;
+        }
+    }
 }

@@ -67,17 +67,6 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
-    //Front handling
-//    @Override
-//    public boolean onlyOnePlayerIsPlaying() {
-//        return false;
-//    }
-//
-//    @Override
-//    public ArrayList<String> rollDiceAndGiveCaseToMove() {
-//        return null;
-//    }
-
     @Override
     @RequestMapping(path = "moveToCase/{user}/{newCase}")
     public boolean moveToCase(@PathVariable("user") String user, @PathVariable("newCase") String newCase) {
