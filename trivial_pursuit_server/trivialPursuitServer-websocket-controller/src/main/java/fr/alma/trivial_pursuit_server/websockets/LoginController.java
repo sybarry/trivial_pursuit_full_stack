@@ -20,15 +20,14 @@ public class LoginController implements ILogin {
     private UserService userService;
 
     @Override
-    public boolean login(@PathVariable("username") String username, @PathVariable("password") String password) {
-        log.info("login with username : "+username+" and password: "+password);
+    public boolean login(String username, String password) {
         return userService.isInRepository(new User(username,password));
     }
 
     @PostMapping(path = "/login")
-    public boolean login(@RequestBody User user) {
+    public boolean loginDetached(@RequestBody User user) {
         log.info("login with username : "+user);
-        return userService.isInRepository(user);
+        return login(user.getUsername(), user.getPassword());
     }
 
     @Override
@@ -49,7 +48,7 @@ public class LoginController implements ILogin {
     }
 
     @Override
-    public boolean newPassword(@PathVariable("username") String username,@PathVariable("password") String password) {
+    public boolean newPassword(String username, String password) {
         if(resetPassword(username)){
             return userService.changePassword(username, password);
         }

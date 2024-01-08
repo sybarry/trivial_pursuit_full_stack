@@ -2,7 +2,7 @@
 
 - [x] : Re-definition des interfaces si ce sont les controllers utilisé dans WebSocket-Controller pour exposer les endpoints utiles au front ?
 - [x] : Comment relier websocket au code des autres modules pour utiliser les types et les transférer via les controllers au front ?
-- [] : Front method handling in interface
+- [x] : Front method handling in interface
 
 == TODO BACK
 
