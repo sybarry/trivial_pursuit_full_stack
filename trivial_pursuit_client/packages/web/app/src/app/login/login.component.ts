@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
-import { Player } from '../../../player';
+// import { Player, User } from '../../../player';
+import { CoreFacade } from '@trivial-pursuit-client/core';
+import { Player, User } from '@trivial-pursuit-client/core/src/Player';
 
 
 @Component({
@@ -11,8 +13,11 @@ import { Player } from '../../../player';
   styleUrl: './login.component.css',
   standalone: true,
   imports: [
-    FormsModule
-  ]
+    FormsModule,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ], 
 })
 export class LoginComponent {
   
@@ -22,21 +27,59 @@ export class LoginComponent {
 
   submitted = false;
 
+  coref = new CoreFacade
+
+  user: User = new User();
+
+  msg = '';
+  
+  loginUserFromServe(){
+    this.authService.loginUserFromServe(this.user).subscribe(
+      data=>{
+        console.log("response received")
+        this.router.navigate(['/home'])
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+  }
+
+
   onSubmit() { 
     this.submitted = true;
     console.log("value are here"); 
+    this.authService.loginUserFromServe(this.user).subscribe(
+      data=>{
+        console.log("response received")
+        console.log(data)
+        this.router.navigate(['/home'])
+        this.authService.login();
+        this.user = new User();
+      },
+      error=>{
+        console.log(error)
+        this.msg = "Bad credential"
+      })
   }
+
   
   newPlayer(){
     this.player = new Player('','');
   }
 
-  connectPlayer(mail: string, password: string){
-    console.log(mail, ' ', password);
-    if(mail ==='mohamed@gmail.com' && password === 'test'){
+  connectPlayer(username: string, password: string){
+    console.log(username, ' ', password);
+    if(username ==='mohamed@gmail.com' && password === 'test'){
       sessionStorage.setItem('mail', 'mohamed@gmail.com');
       this.authService.login();
       this.router.navigate(['/home']);
     }
   }
+
+  
+redirectToCreate() {
+  this.router.navigate(['/create']);
+}
+
 }

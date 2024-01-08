@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,13 +17,14 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
+        userRepository.save(new User("test", "test"));
     }
 
 
     @Override
     public Boolean isInRepository(User user) {
         User userFind = findByUserName(user.getUsername());
-        return userFind != null;
+        return (userFind!=null && Objects.equals(user.getPassword(), userFind.getPassword()));
     }
 
     @Override

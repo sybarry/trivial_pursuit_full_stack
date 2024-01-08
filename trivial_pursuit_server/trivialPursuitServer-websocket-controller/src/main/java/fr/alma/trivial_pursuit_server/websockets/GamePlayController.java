@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/gameplay")
 @Slf4j
@@ -66,17 +67,6 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         }
         return false;
     }
-
-    //Front handling
-//    @Override
-//    public boolean onlyOnePlayerIsPlaying() {
-//        return false;
-//    }
-//
-//    @Override
-//    public ArrayList<String> rollDiceAndGiveCaseToMove() {
-//        return null;
-//    }
 
     @Override
     @RequestMapping(path = "moveToCase/{user}/{newCase}")

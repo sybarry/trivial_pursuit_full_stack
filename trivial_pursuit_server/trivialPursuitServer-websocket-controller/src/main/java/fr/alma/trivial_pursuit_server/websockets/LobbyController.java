@@ -17,11 +17,11 @@ import fr.alma.trivial_pursuit_server.util.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Slf4j
 @RequestMapping(path = "/lobby")
@@ -36,16 +36,8 @@ public class LobbyController implements ILobby {
     @Autowired
     private PartyService partyService;
 
-//    @Override
-//    public IBoard giveBoard() {
-//        return null;
-//    }
-
     @Override
-    @GetMapping(path = "history/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<IParty> partyHistory(@PathVariable("username") String username) {
-        log.info("game history for user : "+username);
-
+    public List<IParty> partyHistory(String username) {
         if(Boolean.TRUE.equals(userService.isInRepository(new User(username, null)))){
             User userFound = userService.findByUserName(username);
             List<Player> userPlayers = playerService.findAllPlayerByUser(userFound);
@@ -62,8 +54,19 @@ public class LobbyController implements ILobby {
         return Collections.emptyList();
     }
 
+    @PostMapping(path = "/history")
+    public List<IParty> partyHistoryDetached(@RequestBody User user){
+        log.info("game history for user : "+user);
+        if(user != null){
+            return partyHistory(user.getUsername());
+        }else{
+            log.warn("user is null");
+            return Collections.emptyList();
+        }
+    }
+
     @Override
-    @RequestMapping(path = "createGame/{gameName}/{nbPlayers}")
+    @RequestMapping(path = "/createGame/{gameName}/{nbPlayers}")
     @ResponseStatus(HttpStatus.CREATED)
     public IParty createGame(@PathVariable("gameName") String gameName, @PathVariable("nbPlayers") int nbPlayers) {
         log.info("createGame with gameName : "+gameName+" and nbPlayers : "+nbPlayers);
@@ -78,7 +81,7 @@ public class LobbyController implements ILobby {
     }
 
     @Override
-    @GetMapping(path = "playersReady/{partyId}")
+    @GetMapping(path = "/playersReady/{partyId}")
     public boolean checkPlayersReady(@PathVariable("partyId") String partyId) {
         log.info("checkPlayersReady for party : "+partyId);
         Party partyFound = partyService.findById(partyId);
@@ -91,10 +94,7 @@ public class LobbyController implements ILobby {
     }
 
     @Override
-    @RequestMapping(path = "joinGame/{username}/{partyId}")
-    public boolean joinGame(@PathVariable("username") String user, @PathVariable("partyId") String partyId) {
-        log.info("joinGame for party : "+partyId+" and user : "+user);
-
+    public boolean joinGame(String user, String partyId) {
         Party party = partyService.findById(partyId);
         User userFound = userService.findByUserName(user);
 
@@ -113,8 +113,19 @@ public class LobbyController implements ILobby {
         }
     }
 
+    @PostMapping(path = "/joinGame/{id}")
+    public boolean joinGameDetached(@RequestBody User user, @PathVariable("id") String partyId){
+        log.info("joinGame for party : "+partyId+" and user : "+user);
+        if(user != null && partyId != null){
+            return joinGame(user.getUsername(), partyId);
+        }else{
+            log.warn("user is null or id is null");
+            return false;
+        }
+    }
+
     @Override
-    @GetMapping(path = "startGame/{partyId}")
+    @GetMapping(path = "/startGame/{partyId}")
     public boolean startGame(@PathVariable("partyId") String partyId) {
         log.info("startGame for party : "+partyId);
 
@@ -132,39 +143,52 @@ public class LobbyController implements ILobby {
     }
 
     @Override
-    @GetMapping(path = "ready/{username}")
-    public void ready(@PathVariable("username") String user) {
-        log.info("ready for user : "+user);
-
+    public void ready(String user) {
         User userFound = userService.findByUserName(user);
         if(userFound.getUserPlayer() != null){
             userFound.getUserPlayer().setReady(!userFound.getUserPlayer().getReady());
             partyService.flush();
+        }else{
+            log.warn("user isn't in a party");
         }
     }
 
+    @PostMapping(path = "/ready")
+    public void readyDetached(@RequestBody User user){
+        log.info("ready for user : "+user);
+        if(user != null){
+            ready(user.getUsername());
+        }else{
+            log.warn("user is null");
+        }
+    }
+
+    @GetMapping(path = "/getParty/{partyId}")
+    public Party partyRefresh(@PathVariable("partyId") String id){
+        return partyService.findById(id);
+    }
 
 
 
     //Made for test in browser
-    @GetMapping(path = "findAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> findAllUser(){
-        return userService.findAll();
-    }
-
-    @GetMapping(path = "partyAll")
-    public List<Party> allParty() {
-        for(Party p : partyService.findAll()){
-            if(p.getBoard().getCards().isEmpty()){
-                p.setBoard(null);
-            }
-        }
-        return partyService.findAll();
-    }
-
-    @GetMapping(path = "findAllPl", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Player> findAllPlayer(){
-        return playerService.findAll();
-    }
+//    @GetMapping(path = "findAll", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<User> findAllUser(){
+//        return userService.findAll();
+//    }
+//
+//    @GetMapping(path = "partyAll")
+//    public List<Party> allParty() {
+//        for(Party p : partyService.findAll()){
+//            if(p.getBoard().getCards().isEmpty()){
+//                p.setBoard(null);
+//            }
+//        }
+//        return partyService.findAll();
+//    }
+//
+//    @GetMapping(path = "findAllPl", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<Player> findAllPlayer(){
+//        return playerService.findAll();
+//    }
 
 }
