@@ -2,11 +2,12 @@
     <h2>Connexion</h2>
     {{msg}}
     <form class="login-form" (ngSubmit)="onSubmit()" #playerForm="ngForm">
-      <input type="email" name="username" class="ng-untouched ng-pristine ng-valid" #mail="ngModel" placeholder="Your mail" [(ngModel)]="user.username" name="mail" required>
+      <input type="email" name="username" class="ng-untouched ng-pristine ng-valid" #mail="ngModel" placeholder="Pseudo" [(ngModel)]="user.username" name="mail" required>
       <div [hidden]="mail.valid || mail.pristine" class="alert alert-danger">Email required</div>
       <input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="user.password" required>
       <button>Se Connecter</button>
       <!-- <button type="submit" [disabled]="!playerForm.form.valid" (click)="connectPlayer(user.username, user.password)">Se Connecter</button> -->
     </form>
-    <p>Pas de compte ? Cliquez <a href="#"> ici </a>pour créer votre compte</p>
+    <p>Pas de compte ? <button class="button" (click)="redirectToCreate()">Cliquez ici </button>pour créer votre compte</p>
   </div>
+  <router-outlet></router-outlet>

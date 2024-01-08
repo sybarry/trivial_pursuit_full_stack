@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
@@ -13,8 +13,11 @@ import { Player, User } from '@trivial-pursuit-client/core/src/Player';
   styleUrl: './login.component.css',
   standalone: true,
   imports: [
-    FormsModule
-  ]
+    FormsModule,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ], 
 })
 export class LoginComponent {
   
@@ -73,4 +76,10 @@ export class LoginComponent {
       this.router.navigate(['/home']);
     }
   }
+
+  
+redirectToCreate() {
+  this.router.navigate(['/create']);
+}
+
 }
