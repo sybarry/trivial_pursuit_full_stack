@@ -41,6 +41,15 @@ public class LoginController implements ILogin {
         return userService.isInRepository(user);
     }
 
+    @PostMapping(path = "/createAccount")
+    public User createAccount(@RequestBody User user){
+        if (user != null){
+            log.info("Le user envoyer "+ user.getUsername() + " " + user.getPassword());
+           return userService.saveUser(user);
+        }
+        return null;
+    }
+
     @Override
     @RequestMapping(path = "save/{username}/{password}")
     @ResponseStatus(HttpStatus.CREATED)
