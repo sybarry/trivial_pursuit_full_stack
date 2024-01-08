@@ -1,5 +1,6 @@
 package fr.alma.trivial_pursuit_server.core.game;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import fr.alma.trivial_pursuit_server.kind.IChat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +19,7 @@ public class Chat implements IChat {
     @GeneratedValue
     private Long id;
     @OneToOne(mappedBy = "chat", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Party party;
     private List<String> messages = new ArrayList<>();
 

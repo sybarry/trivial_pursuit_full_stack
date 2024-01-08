@@ -1,5 +1,6 @@
 package fr.alma.trivial_pursuit_server.core.player;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,8 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    @OneToOne(mappedBy = "user")
-    @Transient
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Player userPlayer;
 
     public User(String username, String password){

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,18 +21,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isInRepository(User user) {
-        List<User> userList = userRepository.findAll();
-        for(User u : userList){
-            if(Objects.equals(u.getUsername(), user.getUsername())
-            && Objects.equals(u.getPassword(), user.getPassword())){
-                return true;
-            }
-        }
-        return false;
+        User userFind = findByUserName(user.getUsername());
+        return userFind != null;
     }
 
     @Override
     public User saveUser(User user) {
+        if(Boolean.TRUE.equals(isInRepository(user))){
+            return null;
+        }
         return userRepository.save(user);
     }
 
@@ -46,9 +42,8 @@ public class UserServiceImpl implements UserService {
     public Boolean resetPassword(String username) {
         User user = userRepository.findByUserName(username);
         if(user!=null){
-            userRepository.delete(user);
             user.setPassword(null);
-            userRepository.save(user);
+            flush();
             return true;
         }
         return false;
@@ -58,12 +53,20 @@ public class UserServiceImpl implements UserService {
     public Boolean changePassword(String username, String password) {
         User user = userRepository.findByUserName(username);
         if(user!=null){
-            userRepository.delete(user);
             user.setPassword(password);
-            userRepository.save(user);
+            flush();
             return true;
         }
         return false;
     }
 
+    @Override
+    public User findByUserName(String user) {
+        return userRepository.findByUserName(user);
+    }
+
+    @Override
+    public void flush(){
+        userRepository.flush();
+    }
 }

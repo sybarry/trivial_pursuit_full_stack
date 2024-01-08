@@ -64,13 +64,13 @@ class CardServiceImplTest {
         card2.setId(2L);
 
         when(cardRepository.save(card)).thenReturn(card);
-        when(cardRepository.existsById(card.getId())).thenReturn(true);
-        when(cardRepository.existsById(card2.getId())).thenReturn(false);
+        when(cardRepository.existsById(card.getId())).thenReturn(false);
+        when(cardRepository.existsById(card2.getId())).thenReturn(true);
 
         //ACTION
+        Boolean resultNotExist = cardService.isInRepository(card);
         Card resultSave = cardService.saveCard(card);
-        Boolean resultExist = cardService.isInRepository(card);
-        Boolean resultNotExist = cardService.isInRepository(card2);
+        Boolean resultExist = cardService.isInRepository(card2);
 
         //VERIFY
         verify(cardRepository, atLeastOnce()).save(card);
@@ -80,16 +80,46 @@ class CardServiceImplTest {
     }
 
     @Test
-    @DisplayName("test find all")
+    @DisplayName("test add but already added and check")
+    void testAddAlreadyAddedAndCheck() {
+        //CONFIG
+        Card card2 = new Card();
+        card2.setId(2L);
+
+        when(cardRepository.save(card)).thenReturn(null);
+        when(cardRepository.existsById(card.getId())).thenReturn(true);
+        when(cardRepository.existsById(card2.getId())).thenReturn(false);
+
+        //ACTION
+        Boolean resultExistAlready = cardService.isInRepository(card);
+        Card resultSave = cardService.saveCard(card);
+        Boolean resultNotExist = cardService.isInRepository(card2);
+        cardService.flush();
+
+        //VERIFY
+        verify(cardRepository, never()).save(card);
+        Assertions.assertNull(resultSave);
+        Assertions.assertTrue(resultExistAlready);
+        Assertions.assertFalse(resultNotExist);
+    }
+
+    @Test
+    @DisplayName("test find all and find by id")
     void testFindAll(){
         //CONFIG
+        card.setId(1L);
         when(cardRepository.findAll()).thenReturn(Collections.singletonList(card));
+        when(cardRepository.findByIdNotOptional(card.getId())).thenReturn(card);
 
         //ACTION
         List<Card> result = cardService.findAll();
+        Card cardFound = cardService.findById(card.getId()+"");
 
         //VERIFY
         verify(cardRepository, atLeastOnce()).findAll();
+        verify(cardRepository, atLeastOnce()).findByIdNotOptional(card.getId());
         Assertions.assertEquals(Collections.singletonList(card), result);
+        Assertions.assertEquals(card, cardFound);
+
     }
 }

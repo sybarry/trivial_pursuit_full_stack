@@ -50,4 +50,19 @@ class QuestionTest {
         Assertions.assertEquals("this is the response", question.getAnswer().getAnswerText());
         Assertions.assertEquals(Theme.GEOGRAPHY, question.getAnswer().getTheme());
     }
+
+    @Test
+    @DisplayName("analyse answer")
+    void testAnalyseAnswer(){
+        //CONFIG
+        question.setAnswer(answer);
+
+        //ACTION
+        boolean resultTrue = question.analyseAnswer("this is the response");
+        boolean resultFalse = question.analyseAnswer("false response");
+
+        //VERIFY
+        Assertions.assertTrue(resultTrue);
+        Assertions.assertFalse(resultFalse);
+    }
 }

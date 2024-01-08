@@ -72,11 +72,11 @@ class CardRepositoryTest {
         Assertions.assertTrue(cardRepository.existsById(card.getId()));
         Assertions.assertEquals(q, cardRepository.find(card).getQuestions().get(0));
         Assertions.assertEquals(a, cardRepository.find(card).getAnswers().get(0));
-        Assertions.assertEquals(1, cardRepository.findAllCard().size());
+        Assertions.assertEquals(1, cardRepository.findAll().size());
         Assertions.assertEquals(1,cardRepository.count());
 
 
-        Optional<Card> cardd = cardRepository.findAllCard()
+        Optional<Card> cardd = cardRepository.findAll()
                 .stream()
                 .filter(cd-> cd.getQuestions().get(0).equals(q) && cd.getAnswers().get(0).equals(a))
                 .findFirst();
