@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Player, User } from '../../../player';
+import { User } from '@trivial-pursuit-client/core/src/Player';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AuthentificationService {
     return this.isAuth;
   }
 
-  loginFromServer(player: Player): Observable<any>{
+  loginFromServer(player: User): Observable<any>{
     return this._http.post<any>(this.baseUrl, player);
   }
 
@@ -34,8 +34,12 @@ export class AuthentificationService {
     return this._http.post<any>(this.baseUrl+'/api/login', user);
   }
 
-  registrationAccount(player: Player): Observable<any>{
+  registrationAccount(player: User): Observable<any>{
     return this._http.post<any>(this.baseUrl, player);
+  }
+
+  registrationAccountUser(user: User): Observable<any>{
+    return this._http.post<any>(this.baseUrl+'/api/createAccount', user);
   }
 
 }

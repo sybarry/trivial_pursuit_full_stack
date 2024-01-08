@@ -1,5 +1,6 @@
 <div class="login-container">
     <h2>Connexion</h2>
+    {{ msg }}
     <form class="login-form" (ngSubmit)="onSubmit()" #playerForm="ngForm">
       <input type="email" name="username" class="ng-untouched ng-pristine ng-valid" #username="ngModel" placeholder="Pseudo" [(ngModel)]="user.username" name="mail" required>
       <div [hidden]="username.valid || username.pristine" class="alert alert-danger">Email required</div>
