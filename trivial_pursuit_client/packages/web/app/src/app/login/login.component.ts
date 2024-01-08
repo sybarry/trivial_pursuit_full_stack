@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
-import { Player, User } from '../../../player';
+// import { Player, User } from '../../../player';
+import { CoreFacade } from '@trivial-pursuit-client/core';
+import { Player, User } from '@trivial-pursuit-client/core/src/Player';
 
 
 @Component({
@@ -21,6 +23,8 @@ export class LoginComponent {
   player = new Player("mohamed@gmail.com", "test");
 
   submitted = false;
+
+  coref = new CoreFacade
 
   user: User = new User();
 
