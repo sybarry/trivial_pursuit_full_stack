@@ -31,7 +31,9 @@ class UserServiceImplTest {
     void testAddAndCheck() {
         //CONFIG
         User user2 = new User("username2", "password2");
+        User userSameUsernameNotPassword = new User("username2", "password5");
         user2.setId(888L);
+        userSameUsernameNotPassword.setId(775L);
 
         when(userRepository.save(user)).thenReturn(user);
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
@@ -42,12 +44,14 @@ class UserServiceImplTest {
         Boolean resultNotExist = userService.isInRepository(user);
         User resultSave = userService.saveUser(user);
         Boolean resultExist = userService.isInRepository(user2);
+        Boolean notSamePasswordSoFalse = userService.isInRepository(userSameUsernameNotPassword);
 
         //VERIFY
         verify(userRepository, atLeastOnce()).save(user);
         Assertions.assertEquals(user, resultSave);
         Assertions.assertTrue(resultExist);
         Assertions.assertFalse(resultNotExist);
+        Assertions.assertFalse(notSamePasswordSoFalse);
     }
 
     @Test

@@ -47,9 +47,4 @@ public class Question {
         //TODO upgrade the way to validate an answer
         return Objects.equals(this.answer.getAnswerText(), answer);
     }
-
-    public boolean analyseAnswer(String answer) {
-        //TODO upgrade the way to validate an answer
-        return Objects.equals(this.answer.getAnswerText(), answer);
-    }
 }

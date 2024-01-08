@@ -1,15 +1,14 @@
 package fr.alma.trivial_pursuit_server.websockets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.card.Answer;
 import fr.alma.trivial_pursuit_server.core.card.Card;
 import fr.alma.trivial_pursuit_server.core.card.Question;
-import fr.alma.trivial_pursuit_server.core.game.Chat;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.data.service.CardService;
 import fr.alma.trivial_pursuit_server.data.service.PartyService;
 import fr.alma.trivial_pursuit_server.data.service.PlayerService;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
-import fr.alma.trivial_pursuit_server.exception.CardException;
 import fr.alma.trivial_pursuit_server.util.Theme;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -152,5 +150,13 @@ class GamePlayControllerTest {
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
         Assertions.assertEquals("false", resultFalseNull.getResponse().getContentAsString());
 
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

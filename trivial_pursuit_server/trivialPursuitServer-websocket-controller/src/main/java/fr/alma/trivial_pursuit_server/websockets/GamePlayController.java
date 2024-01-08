@@ -44,10 +44,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     private PartyService partyService;
 
     @Override
-    @GetMapping(path = "leaveGame/{username}")
-    public boolean leaveGame(@PathVariable("username") String user) {
-        log.info("leaveGame for "+user);
-
+    public boolean leaveGame(String user) {
         User userFound = userService.findByUserName(user);
         if(userFound.getUserPlayer()!=null && userFound.getUserPlayer().getParty() != null){
             Player playerOfUser = userFound.getUserPlayer();
@@ -68,6 +65,12 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
+    @PostMapping(path = "/leaveGame")
+    public boolean leaveGameDetached(@RequestBody User user){
+        log.info("leaveGame for "+user);
+        return leaveGame(user.getUsername());
+    }
+
     @Override
     @RequestMapping(path = "moveToCase/{user}/{newCase}")
     public boolean moveToCase(@PathVariable("user") String user, @PathVariable("newCase") String newCase) {
@@ -84,11 +87,14 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
-    @Override
-    @RequestMapping(path = "pickCard/{partyId}/{questionTheme}")
-    public String pickCard(@PathVariable("partyId") String partyId,@PathVariable("questionTheme") String questionTheme) {
-        log.info("pickCard for party : "+partyId+" and theme : "+questionTheme);
+    @PostMapping(path = "/moveToCase")
+    public boolean moveToCaseDetached(@RequestBody User user /*+Case*/){
+        log.info("moveToCase for "+user+" with a new case : "/*+newCase*/);
+        return moveToCase(user.getUsername(),"newCase");
+    }
 
+    @Override
+    public String pickCard(String partyId, String questionTheme) {
         Party partyFound = partyService.findById(partyId);
         if(partyFound != null && !partyFound.getBoard().getCards().isEmpty()){
             Card card = partyFound.getBoard().getACard();
@@ -103,6 +109,12 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
             log.warn("party is null or not started");
         }
         return null;
+    }
+
+    @PostMapping(path = "/pickCard/{partyId}")
+    public String pickCardDetached(@RequestBody Theme questionTheme, @PathVariable("partyId") String partyId){
+        log.info("pickCard for party : "+partyId+" and theme : "+questionTheme);
+        return pickCard(partyId, questionTheme.toString());
     }
 
     @Override
@@ -170,9 +182,9 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
 
 
     //Made for test in browser
-    @GetMapping(path = "findAllCard", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Card> findAllCard(){
-        log.info(cardService.findAll().size()+" taille");
-        return cardService.findAll();
-    }
+//    @GetMapping(path = "findAllCard", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<Card> findAllCard(){
+//        log.info(cardService.findAll().size()+" taille");
+//        return cardService.findAll();
+//    }
 }

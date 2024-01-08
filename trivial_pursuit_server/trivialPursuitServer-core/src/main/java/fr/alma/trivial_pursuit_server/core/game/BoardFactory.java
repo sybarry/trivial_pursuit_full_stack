@@ -2,7 +2,6 @@ package fr.alma.trivial_pursuit_server.core.game;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.alma.trivial_pursuit_server.core.card.Card;
 import fr.alma.trivial_pursuit_server.core.cases.Case;
 import fr.alma.trivial_pursuit_server.core.cases.HeadQuarter;
@@ -16,8 +15,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,35 +46,35 @@ public class BoardFactory {
      * @param card card to be stocked
      * @throws BoardException if a problem occur during stocking
      */
-    public static void addCardToJsonFile(Card card) throws BoardException {
-        Path path = Paths.get("C:\\Users\\Lola\\Documents\\hugo-projet\\trivial_pursuit_full_stack\\trivial_pursuit_server\\trivialPursuitServer-core\\src\\main\\java\\fr\\alma\\trivial_pursuit_server\\util\\cards.json");
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
-        try(FileReader ff = new FileReader(path.toString())){
-            BufferedReader bufferedReader = new BufferedReader(ff);
-            StringBuilder bbb = new StringBuilder();
-            if (ff.read() == -1) {
-                bbb.append("[");
-            } else {
-                bbb.append("[");
-                String line;
-                String temp;
-                while ((line = bufferedReader.readLine()) != null) {
-                    temp = line;
-                    temp = temp.replace("}]", "},");
-                    bbb.append(temp).append("\n");
-                }
-            }
-            try (FileWriter fff = new FileWriter(path.toString(), false)) {
-                BufferedWriter bufferedWriter = new BufferedWriter(fff);
-                bbb.append(ow.writeValueAsString(card)).append("]");
-                bufferedWriter.write(bbb.toString());
-                bufferedWriter.close();
-            }
-        }catch (Exception e){
-            throw new BoardException("add to the json doesn't work : \n"+e.getMessage());
-        }
-    }
+//    public static void addCardToJsonFile(Card card) throws BoardException {
+//        Path path = Paths.get("C:\\Users\\Lola\\Documents\\hugo-projet\\trivial_pursuit_full_stack\\trivial_pursuit_server\\trivialPursuitServer-core\\src\\main\\java\\fr\\alma\\trivial_pursuit_server\\util\\cards.json");
+//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//
+//        try(FileReader ff = new FileReader(path.toString())){
+//            BufferedReader bufferedReader = new BufferedReader(ff);
+//            StringBuilder bbb = new StringBuilder();
+//            if (ff.read() == -1) {
+//                bbb.append("[");
+//            } else {
+//                bbb.append("[");
+//                String line;
+//                String temp;
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    temp = line;
+//                    temp = temp.replace("}]", "},");
+//                    bbb.append(temp).append("\n");
+//                }
+//            }
+//            try (FileWriter fff = new FileWriter(path.toString(), false)) {
+//                BufferedWriter bufferedWriter = new BufferedWriter(fff);
+//                bbb.append(ow.writeValueAsString(card)).append("]");
+//                bufferedWriter.write(bbb.toString());
+//                bufferedWriter.close();
+//            }
+//        }catch (Exception e){
+//            throw new BoardException("add to the json doesn't work : \n"+e.getMessage());
+//        }
+//    }
 
     /**
      * Retrieves a list of 400 Cards randomly from json file who store cards.

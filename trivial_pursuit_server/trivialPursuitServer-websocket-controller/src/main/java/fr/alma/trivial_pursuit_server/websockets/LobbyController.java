@@ -57,12 +57,7 @@ public class LobbyController implements ILobby {
     @PostMapping(path = "/history")
     public List<IParty> partyHistoryDetached(@RequestBody User user){
         log.info("game history for user : "+user);
-        if(user != null){
-            return partyHistory(user.getUsername());
-        }else{
-            log.warn("user is null");
-            return Collections.emptyList();
-        }
+        return partyHistory(user.getUsername());
     }
 
     @Override
@@ -116,7 +111,7 @@ public class LobbyController implements ILobby {
     @PostMapping(path = "/joinGame/{id}")
     public boolean joinGameDetached(@RequestBody User user, @PathVariable("id") String partyId){
         log.info("joinGame for party : "+partyId+" and user : "+user);
-        if(user != null && partyId != null){
+        if(partyId != null){
             return joinGame(user.getUsername(), partyId);
         }else{
             log.warn("user is null or id is null");
@@ -156,11 +151,7 @@ public class LobbyController implements ILobby {
     @PostMapping(path = "/ready")
     public void readyDetached(@RequestBody User user){
         log.info("ready for user : "+user);
-        if(user != null){
-            ready(user.getUsername());
-        }else{
-            log.warn("user is null");
-        }
+        ready(user.getUsername());
     }
 
     @GetMapping(path = "/getParty/{partyId}")

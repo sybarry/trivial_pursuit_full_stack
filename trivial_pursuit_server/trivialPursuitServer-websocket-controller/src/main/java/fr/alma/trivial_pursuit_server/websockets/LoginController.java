@@ -6,6 +6,7 @@ import fr.alma.trivial_pursuit_server.lobby.ILogin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,12 +40,7 @@ public class LoginController implements ILogin {
     @PostMapping(path = "/createAccount")
     public boolean createAccountDetached(@RequestBody User user){
         log.info("createAccount with username");
-        if (user != null){
-            return createAccount(user.getUsername(), user.getPassword());
-        }else{
-            log.warn("user is null");
-            return false;
-        }
+        return createAccount(user.getUsername(), user.getPassword());
     }
 
     @Override
@@ -64,11 +60,6 @@ public class LoginController implements ILogin {
     @PostMapping(path = "/newPassword")
     public boolean newPasswordDetached(@RequestBody User user){
         log.info("newPassword for user "+user);
-        if(user!=null){
-            return newPassword(user.getUsername(), user.getPassword());
-        }else{
-            log.warn("user is null");
-            return false;
-        }
+        return newPassword(user.getUsername(), user.getPassword());
     }
 }
