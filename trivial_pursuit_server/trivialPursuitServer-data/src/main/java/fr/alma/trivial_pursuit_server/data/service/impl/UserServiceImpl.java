@@ -24,10 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean isInRepository(User user) {
         User userFind = findByUserName(user.getUsername());
-        if(userFind!=null){
-            return !Objects.equals(user.getPassword(), userFind.getPassword());
-        }
-        return false;
+        return (userFind!=null && Objects.equals(user.getPassword(), userFind.getPassword()));
     }
 
     @Override
