@@ -38,8 +38,8 @@ public class LobbyController implements ILobby {
 
     @Override
     public List<IParty> partyHistory(String username) {
-        if(Boolean.TRUE.equals(userService.isInRepository(new User(username, null)))){
-            User userFound = userService.findByUserName(username);
+        User userFound = userService.findByUserName(username);
+        if(userFound != null){
             List<Player> userPlayers = playerService.findAllPlayerByUser(userFound);
             List<IParty> result = new ArrayList<>();
 

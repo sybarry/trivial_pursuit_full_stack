@@ -176,7 +176,8 @@ class LobbyControllerTest {
     @DisplayName("test startGame")
     void testStartGame() throws Exception {
         //CONFIG
-        given(partyService.findById(Mockito.any())).willReturn(new Party("party", 4));
+        Party party = new Party("party", 4);
+        given(partyService.findById(Mockito.any())).willReturn(party);
 
         //ACTION
         MvcResult resultFalse = mvc.perform(get("/lobby/startGame/1")
@@ -215,6 +216,7 @@ class LobbyControllerTest {
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
         Assertions.assertNotNull(user.getUserPlayer());
+        Assertions.assertNotNull(user.getUserPlayer().getUser());
 
         //ACTION
         resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
@@ -262,8 +264,8 @@ class LobbyControllerTest {
         //CONFIG
         User user = new User("user", "pass");
         User user2 = new User("user2", "pass2");
-        given(userService.isInRepository(user)).willReturn(true);
-        given(userService.isInRepository(user2)).willReturn(false);
+        given(userService.findByUserName(user.getUsername())).willReturn(user);
+        given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
         //ACTION
         MvcResult resultEmptyListTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/history")

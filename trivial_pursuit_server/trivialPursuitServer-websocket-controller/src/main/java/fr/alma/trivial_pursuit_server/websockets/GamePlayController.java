@@ -20,10 +20,7 @@ import fr.alma.trivial_pursuit_server.util.Theme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -46,7 +43,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     @Override
     public boolean leaveGame(String user) {
         User userFound = userService.findByUserName(user);
-        if(userFound.getUserPlayer()!=null && userFound.getUserPlayer().getParty() != null){
+        if(userFound != null && userFound.getUserPlayer()!=null && userFound.getUserPlayer().getParty() != null){
             Player playerOfUser = userFound.getUserPlayer();
             Party partyFound = partyService.findById(String.valueOf(playerOfUser.getParty().getId()));
             try{
