@@ -99,6 +99,7 @@ public class LoginControllerTest {
         User user2 = new User("user2", "pass2");
         given(userService.changePassword(user.getUsername(), user.getPassword())).willReturn(true);
         given(userService.resetPassword(user.getUsername())).willReturn(true);
+        given(userService.resetPassword(user2.getUsername())).willReturn(true);
         given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(false);
 
         //ACTION
