@@ -76,6 +76,19 @@ public class LoginControllerTest {
                 .andReturn();
 
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
+
+        //CONFIG
+        given(userService.saveUser(Mockito.any())).willReturn(null);
+
+        //ACTION
+        //VERIFY
+        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
     @Test
@@ -83,8 +96,10 @@ public class LoginControllerTest {
     void testNewPassword() throws Exception {
         //CONFIG
         User user = new User("user", "pass");
+        User user2 = new User("user2", "pass2");
         given(userService.changePassword(user.getUsername(), user.getPassword())).willReturn(true);
         given(userService.resetPassword(user.getUsername())).willReturn(true);
+        given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(false);
 
         //ACTION
         //VERIFY
@@ -94,15 +109,22 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
+                        .content(asJsonString(user2))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
 
         //CONFIG
-        given(userService.resetPassword(user.getUsername())).willReturn(false);
+        given(userService.resetPassword(user2.getUsername())).willReturn(false);
 
         //ACTION
         //VERIFY
-        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
-                        .content(asJsonString(user))
+        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
+                        .content(asJsonString(user2))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();

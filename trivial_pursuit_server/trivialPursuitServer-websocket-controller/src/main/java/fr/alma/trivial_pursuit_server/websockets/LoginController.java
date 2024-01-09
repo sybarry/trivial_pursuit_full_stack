@@ -33,8 +33,8 @@ public class LoginController implements ILogin {
 
     @Override
     public boolean createAccount(String username, String password) {
-        userService.saveUser(new User(username,password));
-        return true;
+        User userSaved = userService.saveUser(new User(username,password));
+        return userSaved!=null;
     }
 
     @PostMapping(path = "/createAccount")
