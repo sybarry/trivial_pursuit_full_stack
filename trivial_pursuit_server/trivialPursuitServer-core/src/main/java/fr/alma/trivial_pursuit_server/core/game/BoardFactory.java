@@ -40,14 +40,14 @@ public class BoardFactory {
         return new Board(cardsList, casesList, initialCase, playerList);
     }
 
-    /**
-     * Static method for add a card object to json file stocking them.
-     * For future retrieve in a card repository and for auto creating of board.
-     * @param card card to be stocked
-     * @throws BoardException if a problem occur during stocking
-     */
+//    /**
+//     * Static method for add a card object to json file stocking them.
+//     * For future retrieve in a card repository and for auto creating of board.
+//     * @param card card to be stocked
+//     * @throws BoardException if a problem occur during stocking
+//     */
 //    public static void addCardToJsonFile(Card card) throws BoardException {
-//        Path path = Paths.get("C:\\Users\\Lola\\Documents\\hugo-projet\\trivial_pursuit_full_stack\\trivial_pursuit_server\\trivialPursuitServer-core\\src\\main\\java\\fr\\alma\\trivial_pursuit_server\\util\\cards.json");
+//        Path path = Paths.get("trivialPursuitServer-core/src/main/java/fr/alma/trivial_pursuit_server/util/cards.json");
 //        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 //
 //        try(FileReader ff = new FileReader(path.toString())){

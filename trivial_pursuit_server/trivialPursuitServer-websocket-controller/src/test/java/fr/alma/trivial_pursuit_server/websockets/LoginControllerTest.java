@@ -2,11 +2,9 @@ package fr.alma.trivial_pursuit_server.websockets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.player.User;
-import fr.alma.trivial_pursuit_server.data.service.CardService;
-import fr.alma.trivial_pursuit_server.data.service.PartyService;
-import fr.alma.trivial_pursuit_server.data.service.PlayerService;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoginController.class)
@@ -29,34 +30,42 @@ public class LoginControllerTest {
     @MockBean
     private UserService userService;
 
+    private User user;
+    private User user2;
+
+    @BeforeEach
+    void setUp(){
+        user = new User("user", "pass");
+        user2 = new User("user2", "pass2");
+    }
+
     @Test
     @DisplayName("test login")
     void testLogin() throws Exception {
         //CONFIG
-        User user = new User("user", "pass");
         given(userService.isInRepository(Mockito.any())).willReturn(true);
 
         //ACTION
-        //VERIFY
         MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/api/login")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
 
         //CONFIG
         given(userService.isInRepository(Mockito.any())).willReturn(false);
 
         //ACTION
-        //VERIFY
         MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/login")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
@@ -64,30 +73,29 @@ public class LoginControllerTest {
     @DisplayName("test create account")
     void testCreateAccount() throws Exception {
         //CONFIG
-        User user = new User("user", "pass");
         given(userService.saveUser(Mockito.any())).willReturn(user);
 
         //ACTION
-        //VERIFY
         MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
 
         //CONFIG
         given(userService.saveUser(Mockito.any())).willReturn(null);
 
         //ACTION
-        //VERIFY
         MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
@@ -95,15 +103,12 @@ public class LoginControllerTest {
     @DisplayName("test newPassword")
     void testNewPassword() throws Exception {
         //CONFIG
-        User user = new User("user", "pass");
-        User user2 = new User("user2", "pass2");
         given(userService.changePassword(user.getUsername(), user.getPassword())).willReturn(true);
         given(userService.resetPassword(user.getUsername())).willReturn(true);
         given(userService.resetPassword(user2.getUsername())).willReturn(true);
         given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(false);
 
         //ACTION
-        //VERIFY
         MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -116,21 +121,48 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
 
         //CONFIG
         given(userService.resetPassword(user2.getUsername())).willReturn(false);
+        given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(true);
 
         //ACTION
-        //VERIFY
         resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
                         .content(asJsonString(user2))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
+        //VERIFY
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
+    }
+
+    @Test
+    @DisplayName("test getUser")
+    void testGetUser() throws Exception {
+        //CONFIG
+        given(userService.findByUserName(user.getUsername())).willReturn(user);
+        given(userService.findByUserName(user2.getUsername())).willReturn(null);
+
+        //ACTION
+        mvc.perform(get("/api/user/"+user.getUsername())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(nullValue()))
+                .andExpect(jsonPath("$.username").value("user"))
+                .andExpect(jsonPath("$.password").value("pass"))
+                .andReturn();
+
+        MvcResult resultNull = mvc.perform(get("/api/user/"+user2.getUsername())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertEquals("", resultNull.getResponse().getContentAsString());
     }
 
     public static String asJsonString(final Object obj) {

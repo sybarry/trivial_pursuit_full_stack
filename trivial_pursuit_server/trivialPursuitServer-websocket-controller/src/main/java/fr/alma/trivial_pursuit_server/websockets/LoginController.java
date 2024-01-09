@@ -6,11 +6,7 @@ import fr.alma.trivial_pursuit_server.lobby.ILogin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/api")
@@ -38,6 +34,7 @@ public class LoginController implements ILogin {
     }
 
     @PostMapping(path = "/createAccount")
+    @ResponseStatus(HttpStatus.CREATED)
     public boolean createAccountDetached(@RequestBody User user){
         log.info("createAccount with username");
         return createAccount(user.getUsername(), user.getPassword());
@@ -61,5 +58,10 @@ public class LoginController implements ILogin {
     public boolean newPasswordDetached(@RequestBody User user){
         log.info("newPassword for user "+user);
         return newPassword(user.getUsername(), user.getPassword());
+    }
+
+    @GetMapping(path = "/user/{username}")
+    public User getUser(@PathVariable("username") String username){
+        return userService.findByUserName(username);
     }
 }

@@ -111,22 +111,17 @@ public class LobbyController implements ILobby {
     @PostMapping(path = "/joinGame/{id}")
     public boolean joinGameDetached(@RequestBody User user, @PathVariable("id") String partyId){
         log.info("joinGame for party : "+partyId+" and user : "+user);
-        if(partyId != null){
-            return joinGame(user.getUsername(), partyId);
-        }else{
-            log.warn("user is null or id is null");
-            return false;
-        }
+        return joinGame(user.getUsername(), partyId);
     }
 
     @Override
     @GetMapping(path = "/startGame/{partyId}")
     public boolean startGame(@PathVariable("partyId") String partyId) {
         log.info("startGame for party : "+partyId);
-
         try {
-            //TODO dont work cause of foreign key no parent
+            //TODO
             //party and card are link via board who is embeddable so it doesn't work
+            //must be a table where party_id and card_id are linked.
             Party party = partyService.findById(partyId);
             party.setBoard(BoardFactory.createBoard(party.getPlayerList()));
             partyService.flush();
@@ -140,7 +135,7 @@ public class LobbyController implements ILobby {
     @Override
     public void ready(String user) {
         User userFound = userService.findByUserName(user);
-        if(userFound.getUserPlayer() != null){
+        if(userFound != null && userFound.getUserPlayer() != null){
             userFound.getUserPlayer().setReady(!userFound.getUserPlayer().getReady());
             partyService.flush();
         }else{
