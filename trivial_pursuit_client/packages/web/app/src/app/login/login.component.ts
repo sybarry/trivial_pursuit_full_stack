@@ -53,9 +53,11 @@ export class LoginComponent {
       data=>{
         console.log("response received")
         console.log(data)
-        this.router.navigate(['/home'])
         this.authService.login();
-        this.user = new User();
+        console.log(this.user);
+        let name = ''+this.user.username;
+        sessionStorage.setItem('user', name);
+        this.router.navigate(['/home'])
       },
       error=>{
         console.log(error)
@@ -63,10 +65,6 @@ export class LoginComponent {
       })
   }
 
-  
-  newPlayer(){
-    this.player = new Player('','');
-  }
 
   connectPlayer(username: string, password: string){
     console.log(username, ' ', password);

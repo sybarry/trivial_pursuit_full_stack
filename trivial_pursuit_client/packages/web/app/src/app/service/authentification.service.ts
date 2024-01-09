@@ -42,4 +42,8 @@ export class AuthentificationService {
     return this._http.post<any>(this.baseUrl+'/api/createAccount', user);
   }
 
+  getUser(username: string): Observable<any>{
+    return this._http.post<any>(this.baseUrl+'/api/user', username);
+  }
+
 }
