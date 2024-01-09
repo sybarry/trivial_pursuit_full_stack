@@ -37,6 +37,7 @@ coverage-jacoco:
   artifacts:
     when: always
     paths:
+      - trivial_pursuit_server/trivialPursuitServer-api/target/site
       - trivial_pursuit_server/trivialPursuitServer-core/target/site
       - trivial_pursuit_server/trivialPursuitServer-data/target/site
       - trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/site
@@ -53,6 +54,7 @@ mutation-pit:
   artifacts:
     when: always
     paths:
+      - trivial_pursuit_server/trivialPursuitServer-api/target/pit-reports
       - trivial_pursuit_server/trivialPursuitServer-core/target/pit-reports
       - trivial_pursuit_server/trivialPursuitServer-data/target/pit-reports
       - trivial_pursuit_server/trivialPursuitServer-websocket-controller/target/pit-reports
@@ -71,6 +73,8 @@ pages:
     - mkdir public
     - cd public
   
+    - mkdir -p api/{jacoco,pit}
+    
     - mkdir -p core/{jacoco,pit}
 
     - mkdir -p data/{jacoco,pit}
@@ -79,6 +83,9 @@ pages:
 
     - cd ..
     - mv trivial_pursuit_server/index.html public
+
+    - mv trivial_pursuit_server/trivialPursuitServer-api/target/site/jacoco/* public/api/jacoco
+    - mv trivial_pursuit_server/trivialPursuitServer-api/target/pit-reports/* public/api/pit
 
     - mv trivial_pursuit_server/trivialPursuitServer-core/target/site/jacoco/* public/core/jacoco
     - mv trivial_pursuit_server/trivialPursuitServer-core/target/pit-reports/* public/core/pit
