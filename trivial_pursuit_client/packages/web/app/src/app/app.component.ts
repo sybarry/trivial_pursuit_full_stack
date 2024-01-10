@@ -8,6 +8,7 @@ import { AuthentificationService } from './service/authentification.service';
 })
 export class AppComponent {
   title = 'Bienvenu au jeu en ligne Trivial Pursuit';
+  name = sessionStorage.getItem('user');
 
   constructor(private authService: AuthentificationService){}
 

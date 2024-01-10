@@ -72,8 +72,9 @@ pages:
     - rm -rf public
     - mkdir public
     - cd public
+  
     - mkdir -p api/{jacoco,pit}
-
+    
     - mkdir -p core/{jacoco,pit}
 
     - mkdir -p data/{jacoco,pit}

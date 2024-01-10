@@ -2,7 +2,7 @@
 
 - [x] : Re-definition des interfaces si ce sont les controllers utilisé dans WebSocket-Controller pour exposer les endpoints utiles au front ?
 - [x] : Comment relier websocket au code des autres modules pour utiliser les types et les transférer via les controllers au front ?
-- [] : Front method handling in interface
+- [x] : Front method handling in interface
 
 == TODO BACK
 
@@ -14,4 +14,4 @@
 - [x] : Création des classes controller dans websocket en accord avec les interfaces de la conception
 - [] : Test de ces controller comme la classe GamePlayControllerTest
 - [] : Check Javadoc
-- [] : add json to websocket pour éviter le chemin absolue
+- [x] : add json to websocket pour éviter le chemin absolue

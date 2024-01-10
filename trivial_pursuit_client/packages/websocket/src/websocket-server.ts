@@ -1,6 +1,6 @@
-import { TemplateServer } from "@trivial-pursuit-client/api";
+import { TrivialPursuitServer } from "@trivial-pursuit-client/api";
 
-export class WebsocketServer implements TemplateServer {
+export class WebsocketServer implements TrivialPursuitServer {
     connect(user: String, password: String): boolean {
         console.log("Appel de WebsocketServer::connect(" + user + ", " + password + ")");
         return true;
