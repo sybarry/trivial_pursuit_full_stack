@@ -165,7 +165,7 @@ public class LobbyController implements ILobby {
     @GetMapping(path = "/partyAll")
     public List<Party> allParty() {
         for(Party p : partyService.findAll()){
-            if(p.getBoard().getCards().isEmpty()){
+            if(p.getBoard() != null){
                 p.setBoard(null);
             }
         }

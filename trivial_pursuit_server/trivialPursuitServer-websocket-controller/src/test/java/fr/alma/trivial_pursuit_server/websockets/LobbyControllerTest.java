@@ -310,6 +310,27 @@ class LobbyControllerTest {
         Assertions.assertEquals("[]", resultEmptyListFalse.getResponse().getContentAsString());
     }
 
+    @Test
+    @DisplayName("test partyAll")
+    void testPartyAll() throws Exception {
+        Party party = new Party();
+        given(partyService.findAll()).willReturn(Collections.singletonList(party));
+
+        //ACTION
+        MvcResult result = mvc.perform(get("/lobby/partyAll")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(nullValue()))
+                .andExpect(jsonPath("$[0].playerList").isEmpty())
+                .andExpect(jsonPath("$[0].chat").value(nullValue()))
+                .andExpect(jsonPath("$[0].board").value(nullValue()))
+                .andExpect(jsonPath("$[0].maxCapacityPlayer").value(6))
+                .andExpect(jsonPath("$[0].name").value(nullValue()))
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertFalse(result.getResponse().getContentAsString().isEmpty());
+    }
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

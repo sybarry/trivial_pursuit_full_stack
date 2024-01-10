@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -91,6 +92,19 @@ public class LoginControllerTest {
 
         //ACTION
         MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
+
+        //CONFIG
+        given(userService.saveUser(Mockito.any())).willThrow(ConstraintViolationException.class);
+
+        //ACTION
+        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
