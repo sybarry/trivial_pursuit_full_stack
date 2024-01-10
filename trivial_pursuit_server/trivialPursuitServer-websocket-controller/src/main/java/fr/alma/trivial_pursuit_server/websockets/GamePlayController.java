@@ -72,22 +72,28 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     @RequestMapping(path = "moveToCase/{user}/{newCase}")
     public boolean moveToCase(@PathVariable("user") String user, @PathVariable("newCase") String newCase) {
         log.info("moveToCase for "+user+" with a new case : "+newCase);
-        ObjectMapper objectMapper = new ObjectMapper();
         try{
-            Case newCaseDeserialize = objectMapper.readValue(newCase, new TypeReference<>(){});
             Player playerFound = userService.findByUserName(user).getUserPlayer();
-            playerFound.setActualCase(newCaseDeserialize);
-            playerService.flush();
+            Case newCaseFound = null;
+            for(Case c : playerFound.getParty().getBoard().getCases()){
+                if(c.getName().equals(newCase))
+                    newCaseFound = c;
+            }
+            if(newCaseFound != null) {
+                playerFound.setActualCase(newCaseFound);
+                playerService.flush();
+                return true;
+            }
         }catch (Exception e){
             log.warn(e.getMessage());
         }
         return false;
     }
 
-    @PostMapping(path = "/moveToCase")
-    public boolean moveToCaseDetached(@RequestBody User user /*+Case*/){
-        log.info("moveToCase for "+user+" with a new case : "/*+newCase*/);
-        return moveToCase(user.getUsername(),"newCase");
+    @PostMapping(path = "/moveToCase/{caseName}")
+    public boolean moveToCaseDetached(@RequestBody User user, @PathVariable("caseName") String caseName){
+        log.info("moveToCase for "+user+" with a new case : "+caseName);
+        return moveToCase(user.getUsername(),caseName);
     }
 
     @Override
@@ -105,7 +111,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         }else{
             log.warn("party is null or not started");
         }
-        return null;
+        return "";
     }
 
     @PostMapping(path = "/pickCard/{partyId}")

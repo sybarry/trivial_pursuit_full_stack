@@ -29,8 +29,13 @@ public class LoginController implements ILogin {
 
     @Override
     public boolean createAccount(String username, String password) {
-        User userSaved = userService.saveUser(new User(username,password));
-        return userSaved!=null;
+        try{
+            User userSaved = userService.saveUser(new User(username,password));
+            return userSaved!=null;
+        }catch(Exception e){
+            log.warn(e.getMessage());
+            return false;
+        }
     }
 
     @PostMapping(path = "/createAccount")
@@ -54,7 +59,7 @@ public class LoginController implements ILogin {
         return userService.resetPassword(username);
     }
 
-    @PostMapping(path = "/newPassword")
+    @PutMapping(path = "/newPassword")
     public boolean newPasswordDetached(@RequestBody User user){
         log.info("newPassword for user "+user);
         return newPassword(user.getUsername(), user.getPassword());

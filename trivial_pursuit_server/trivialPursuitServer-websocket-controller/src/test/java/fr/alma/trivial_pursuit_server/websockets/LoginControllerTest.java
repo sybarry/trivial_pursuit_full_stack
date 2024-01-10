@@ -109,13 +109,13 @@ public class LoginControllerTest {
         given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(false);
 
         //ACTION
-        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
+        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.put("/api/newPassword")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
+        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.put("/api/newPassword")
                         .content(asJsonString(user2))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -130,7 +130,7 @@ public class LoginControllerTest {
         given(userService.changePassword(user2.getUsername(), user2.getPassword())).willReturn(true);
 
         //ACTION
-        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/newPassword")
+        resultFalse = mvc.perform(MockMvcRequestBuilders.put("/api/newPassword")
                         .content(asJsonString(user2))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
