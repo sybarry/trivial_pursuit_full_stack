@@ -1,6 +1,8 @@
 package fr.alma.trivial_pursuit_server.websockets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.alma.trivial_pursuit_server.core.game.Board;
+import fr.alma.trivial_pursuit_server.core.game.BoardFactory;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.core.player.User;
@@ -19,6 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Collections;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -267,6 +271,9 @@ class LobbyControllerTest {
         given(userService.findByUserName(user.getUsername())).willReturn(user);
         given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
+        Party party = new Party();
+        given(partyService.findAllByPlayer(Mockito.any())).willReturn(Collections.singletonList(party));
+
         //ACTION
         MvcResult resultEmptyListTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/history")
                         .content(asJsonString(user))
@@ -281,7 +288,7 @@ class LobbyControllerTest {
                 .andReturn();
 
         //VERIFY
-        Assertions.assertEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
+        Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
         Assertions.assertEquals("[]", resultEmptyListFalse.getResponse().getContentAsString());
     }
 

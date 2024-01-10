@@ -44,7 +44,7 @@ public class LobbyController implements ILobby {
             List<IParty> result = new ArrayList<>();
 
             for(Party p : partyService.findAllByPlayer(userPlayers)){
-                if(p.getBoard().getCards().isEmpty()){
+                if(p.getBoard() != null){
                     p.setBoard(null);
                 }
                 result.add(p);
