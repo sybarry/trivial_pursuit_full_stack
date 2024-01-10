@@ -3,6 +3,8 @@ package fr.alma.trivial_pursuit_server.data.service.impl;
 import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.data.repository.UserRepository;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
+import fr.alma.trivial_pursuit_server.util.Constant;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -17,14 +20,14 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
-        userRepository.save(new User("test", "test"));
+        userRepository.save(new User("test", Constant.get_SHA_512_SecurePassword("test")));
     }
 
 
     @Override
     public Boolean isInRepository(User user) {
         User userFind = findByUserName(user.getUsername());
-        return (userFind!=null && Objects.equals(user.getPassword(), userFind.getPassword()));
+        return (userFind!=null && Objects.equals(Constant.get_SHA_512_SecurePassword(user.getPassword()), userFind.getPassword()));
     }
 
     @Override
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
         if(Boolean.TRUE.equals(isInRepository(user))){
             return null;
         }
+        user.setPassword(Constant.get_SHA_512_SecurePassword(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public Boolean changePassword(String username, String password) {
         User user = userRepository.findByUserName(username);
         if(user!=null){
-            user.setPassword(password);
+            user.setPassword(Constant.get_SHA_512_SecurePassword(password));
             flush();
             return true;
         }
