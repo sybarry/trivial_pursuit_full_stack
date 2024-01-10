@@ -308,6 +308,22 @@ class LobbyControllerTest {
         Assertions.assertNull(party.getBoard());
         Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
         Assertions.assertEquals("[]", resultEmptyListFalse.getResponse().getContentAsString());
+
+        //CONFIG
+        party = new Party();
+
+        //ACTION
+        resultEmptyListTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/history")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertNull(party.getBoard());
+        Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
+
+
     }
 
     @Test
