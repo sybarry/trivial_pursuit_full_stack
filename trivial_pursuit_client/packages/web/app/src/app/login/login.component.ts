@@ -31,18 +31,6 @@ export class LoginComponent {
 
   msg = '';
 
-  loginUserFromServe(){
-    this.authService.loginUserFromServe(this.user).subscribe(
-      data=>{
-        console.log("response received")
-        this.router.navigate(['/home'])
-      },
-      error=>{
-        console.log(error)
-      }
-    )
-  }
-
 
   onSubmit() {
     this.submitted = true;
@@ -51,7 +39,9 @@ export class LoginComponent {
         if(data){
           console.log("response received")
           this.authService.login();
-          sessionStorage.setItem('user', ''+this.user.username);
+          let username = this.user.username;
+          console.log(username);
+          sessionStorage.setItem('user', ''+username);
           this.router.navigate(['/home'])
         }else{
           this.msg = "Bad credential"

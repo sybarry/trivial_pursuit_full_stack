@@ -6,3 +6,15 @@ export interface TrivialPursuitServer {
 export interface IUser {
 
 }
+
+export interface IParty {
+
+}
+
+export interface IPlayer {
+
+}
+
+export interface Ichat {
+    
+}

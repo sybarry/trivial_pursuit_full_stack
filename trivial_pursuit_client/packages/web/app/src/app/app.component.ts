@@ -13,6 +13,7 @@ export class AppComponent {
   constructor(private authService: AuthentificationService){}
 
   isAuthenticated(): boolean {
+    this.name = ''+sessionStorage.getItem('user');
     return this.authService.isAuthenticatedUser();
   }
 
