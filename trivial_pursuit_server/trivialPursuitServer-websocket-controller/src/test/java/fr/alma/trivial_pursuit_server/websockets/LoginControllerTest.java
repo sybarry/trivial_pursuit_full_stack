@@ -2,6 +2,7 @@ package fr.alma.trivial_pursuit_server.websockets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.player.User;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -144,7 +145,8 @@ public class LoginControllerTest {
     @DisplayName("test getUser")
     void testGetUser() throws Exception {
         //CONFIG
-        given(userService.findByUserName(user.getUsername())).willReturn(user);
+        User userHash = new User("user", Constant.get_SHA_512_SecurePassword("pass"));
+        given(userService.findByUserName(user.getUsername())).willReturn(userHash);
         given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
         //ACTION
@@ -153,7 +155,7 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(nullValue()))
                 .andExpect(jsonPath("$.username").value("user"))
-                .andExpect(jsonPath("$.password").value("pass"))
+                .andExpect(jsonPath("$.password").value(Constant.get_SHA_512_SecurePassword("pass")))
                 .andReturn();
 
         MvcResult resultNull = mvc.perform(get("/api/user/"+user2.getUsername())

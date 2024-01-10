@@ -162,15 +162,15 @@ public class LobbyController implements ILobby {
 //        return userService.findAll();
 //    }
 //
-//    @GetMapping(path = "partyAll")
-//    public List<Party> allParty() {
-//        for(Party p : partyService.findAll()){
-//            if(p.getBoard().getCards().isEmpty()){
-//                p.setBoard(null);
-//            }
-//        }
-//        return partyService.findAll();
-//    }
+    @GetMapping(path = "/partyAll")
+    public List<Party> allParty() {
+        for(Party p : partyService.findAll()){
+            if(p.getBoard().getCards().isEmpty()){
+                p.setBoard(null);
+            }
+        }
+        return partyService.findAll();
+    }
 //
 //    @GetMapping(path = "findAllPl", produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<Player> findAllPlayer(){

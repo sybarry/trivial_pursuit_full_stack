@@ -23,7 +23,7 @@ public class LoginController implements ILogin {
 
     @PostMapping(path = "/login")
     public boolean loginDetached(@RequestBody User user) {
-        log.info("login with username : "+user);
+        log.info("login with username : "+user.getUsername());
         return login(user.getUsername(), user.getPassword());
     }
 
@@ -41,7 +41,7 @@ public class LoginController implements ILogin {
     @PostMapping(path = "/createAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public boolean createAccountDetached(@RequestBody User user){
-        log.info("createAccount with username");
+        log.info("createAccount with username "+user.getUsername());
         return createAccount(user.getUsername(), user.getPassword());
     }
 
@@ -61,7 +61,7 @@ public class LoginController implements ILogin {
 
     @PutMapping(path = "/newPassword")
     public boolean newPasswordDetached(@RequestBody User user){
-        log.info("newPassword for user "+user);
+        log.info("newPassword for user "+user.getUsername());
         return newPassword(user.getUsername(), user.getPassword());
     }
 

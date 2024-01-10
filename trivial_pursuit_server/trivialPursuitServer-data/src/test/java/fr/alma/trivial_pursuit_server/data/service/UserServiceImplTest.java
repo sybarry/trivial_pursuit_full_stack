@@ -3,6 +3,7 @@ package fr.alma.trivial_pursuit_server.data.service;
 import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.data.repository.UserRepository;
 import fr.alma.trivial_pursuit_server.data.service.impl.UserServiceImpl;
+import fr.alma.trivial_pursuit_server.util.Constant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,27 +19,30 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     private User user;
+    private User userHash;
 
     @BeforeEach
     void setUp() {
         this.userRepository = mock(UserRepository.class);
         this.userService = new UserServiceImpl(userRepository);
 
-        user = new User("username", "password");
+        user = new User("username",  "password");
+        userHash = new User("username",  Constant.get_SHA_512_SecurePassword("password"));
     }
     @Test
     @DisplayName("test add and check")
     void testAddAndCheck() {
         //CONFIG
         User user2 = new User("username2", "password2");
-        User userSameUsernameNotPassword = new User("username2", "password5");
+        User user2Hash = new User("username2", Constant.get_SHA_512_SecurePassword("password2"));
+        User userSameUsernameNotPassword = new User("username2", Constant.get_SHA_512_SecurePassword("password5"));
         user2.setId(888L);
         userSameUsernameNotPassword.setId(775L);
 
         when(userRepository.save(user)).thenReturn(user);
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
         when(userRepository.findByUserName(user.getUsername())).thenReturn(null);
-        when(userRepository.findByUserName(user2.getUsername())).thenReturn(user2);
+        when(userRepository.findByUserName(user2.getUsername())).thenReturn(user2Hash);
 
         //ACTION
         Boolean resultNotExist = userService.isInRepository(user);
@@ -62,7 +66,7 @@ class UserServiceImplTest {
         user2.setId(888L);
 
         when(userRepository.save(user)).thenReturn(null);
-        when(userRepository.findByUserName(user.getUsername())).thenReturn(user);
+        when(userRepository.findByUserName(user.getUsername())).thenReturn(userHash);
         when(userRepository.findByUserName(user2.getUsername())).thenReturn(null);
 
         //ACTION
@@ -95,7 +99,7 @@ class UserServiceImplTest {
     @DisplayName("test reset and change password")
     void testResetAndChangePassword(){
         //CONFIG
-        when(userRepository.findByUserName(user.getUsername())).thenReturn(user);
+        when(userRepository.findByUserName(user.getUsername())).thenReturn(userHash);
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
 
         //ACTION
@@ -106,20 +110,21 @@ class UserServiceImplTest {
         verify(userRepository, atLeastOnce()).findByUserName(user.getUsername());
         Assertions.assertTrue(result);
         Assertions.assertFalse(resultFalse);
-        Assertions.assertNull(user.getPassword());
+        Assertions.assertNull(userHash.getPassword());
         Assertions.assertNull(userRepository.findByUserName(user.getUsername()).getPassword());
 
         //ACTION
         resultFalse = userService.changePassword(user.getUsername(), "newPassword");
         result = userService.changePassword("userNotInBase", "password");
+        user.setPassword("newPassword");
 
         //VERIFY
         Assertions.assertTrue(resultFalse);
         Assertions.assertFalse(result);
-        Assertions.assertEquals("newPassword", user.getPassword());
+        Assertions.assertEquals(Constant.get_SHA_512_SecurePassword("newPassword"), userHash.getPassword());
         Assertions.assertTrue(userService.isInRepository(user));
         Assertions.assertFalse(userService.isInRepository(new User("user","password")));
-        Assertions.assertEquals("newPassword", userRepository.findByUserName(user.getUsername()).getPassword());
+        Assertions.assertEquals(Constant.get_SHA_512_SecurePassword("newPassword"), userRepository.findByUserName(user.getUsername()).getPassword());
 
     }
 }

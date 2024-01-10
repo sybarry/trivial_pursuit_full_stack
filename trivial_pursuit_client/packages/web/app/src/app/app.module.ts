@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     HttpClientModule,
     LoginComponent,
     CreateAccountComponent,
+    ResetPasswordComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

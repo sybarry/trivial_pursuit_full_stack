@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '@trivial-pursuit-client/core/src/Player';
 import { AuthentificationService } from '../service/authentification.service';
 
@@ -10,7 +10,8 @@ import { AuthentificationService } from '../service/authentification.service';
   styleUrl: './create-account.component.css',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule, 
+    RouterLink
   ]
 })
 export class CreateAccountComponent {
@@ -19,22 +20,29 @@ export class CreateAccountComponent {
 
   user: User = new User();
   msg: string = '';
-
+  
+  mdpConfirmation: string = '';
   submitted = false;
 
   public onSubmit(){
-    this.submitted = true;
-    console.log(this.user);
-    this.authService.registrationAccountUser(this.user).subscribe(
-      data=>{
-        console.log(data)
-        if(data){
-          this.route.navigate(['/login'])
-          this.user = new User()
-        }else{
-          this.msg="Cet utilisateur existe dejà"
-        }
-      })
+    if(this.user.password==this.mdpConfirmation){
+      this.mdpConfirmation = '';
+      this.submitted = true;
+      console.log(this.user);
+      this.authService.registrationAccountUser(this.user).subscribe(
+        data=>{
+          console.log(data)
+          if(data){
+            this.route.navigate(['/login'])
+            this.user = new User()
+          }else{
+            this.msg="Cet utilisateur existe dejà"
+          }
+        })
+    }else{
+      this.msg="Veuillez rentrer le même mot de passe 2 fois"
+    }
+    
   }
 
 
