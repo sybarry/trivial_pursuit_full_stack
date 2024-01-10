@@ -12,6 +12,7 @@
 - [x] : Test dans CORE module où il y a des *//TODO*
 - [x] : Test dans DATA module pour améliorer les tests d'utilisations des repository
 - [x] : Création des classes controller dans websocket en accord avec les interfaces de la conception
-- [] : Test de ces controller comme la classe GamePlayControllerTest
+- [x] : Test de ces controller comme la classe GamePlayControllerTest
 - [] : Check Javadoc
+- [] : hash password
 - [x] : add json to websocket pour éviter le chemin absolue
