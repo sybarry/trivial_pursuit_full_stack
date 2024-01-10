@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/api")
@@ -32,19 +29,15 @@ public class LoginController implements ILogin {
 
     @Override
     public boolean createAccount(String username, String password) {
-        userService.saveUser(new User(username,password));
-        return true;
+        User userSaved = userService.saveUser(new User(username,password));
+        return userSaved!=null;
     }
 
     @PostMapping(path = "/createAccount")
+    @ResponseStatus(HttpStatus.CREATED)
     public boolean createAccountDetached(@RequestBody User user){
         log.info("createAccount with username");
-        if (user != null){
-            return createAccount(user.getUsername(), user.getPassword());
-        }else{
-            log.warn("user is null");
-            return false;
-        }
+        return createAccount(user.getUsername(), user.getPassword());
     }
 
     @Override
@@ -64,11 +57,11 @@ public class LoginController implements ILogin {
     @PostMapping(path = "/newPassword")
     public boolean newPasswordDetached(@RequestBody User user){
         log.info("newPassword for user "+user);
-        if(user!=null){
-            return newPassword(user.getUsername(), user.getPassword());
-        }else{
-            log.warn("user is null");
-            return false;
-        }
+        return newPassword(user.getUsername(), user.getPassword());
+    }
+
+    @GetMapping(path = "/user/{username}")
+    public User getUser(@PathVariable("username") String username){
+        return userService.findByUserName(username);
     }
 }
