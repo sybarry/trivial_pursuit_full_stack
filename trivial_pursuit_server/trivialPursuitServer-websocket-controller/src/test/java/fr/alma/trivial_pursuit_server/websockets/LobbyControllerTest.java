@@ -21,12 +21,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.Assert;
 
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -145,6 +148,19 @@ class LobbyControllerTest {
 
         //VERIFY
         Assertions.assertTrue(user.getUserPlayer().getReady());
+        verify(partyService, atLeastOnce()).flush();
+
+        //ACTION
+        user.setUserPlayer(new Player(Color.GREEN, new Party()));
+        user.getUserPlayer().setReady(true);
+        mvc.perform(MockMvcRequestBuilders.post("/lobby/ready")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertFalse(user.getUserPlayer().getReady());
     }
 
     @Test
@@ -221,6 +237,7 @@ class LobbyControllerTest {
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
         Assertions.assertNotNull(user.getUserPlayer());
         Assertions.assertNotNull(user.getUserPlayer().getUser());
+        verify(partyService, atLeastOnce()).flush();
 
         //ACTION
         resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
@@ -271,7 +288,7 @@ class LobbyControllerTest {
         given(userService.findByUserName(user.getUsername())).willReturn(user);
         given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
-        Party party = new Party();
+        Party party = new Party("party",Collections.emptyList(),null, new Board());
         given(partyService.findAllByPlayer(Mockito.any())).willReturn(Collections.singletonList(party));
 
         //ACTION
@@ -288,6 +305,7 @@ class LobbyControllerTest {
                 .andReturn();
 
         //VERIFY
+        Assertions.assertNull(party.getBoard());
         Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
         Assertions.assertEquals("[]", resultEmptyListFalse.getResponse().getContentAsString());
     }

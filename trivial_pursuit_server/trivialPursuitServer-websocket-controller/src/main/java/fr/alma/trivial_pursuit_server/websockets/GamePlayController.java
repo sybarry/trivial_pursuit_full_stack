@@ -93,7 +93,7 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     @Override
     public String pickCard(String partyId, String questionTheme) {
         Party partyFound = partyService.findById(partyId);
-        if(partyFound != null && !partyFound.getBoard().getCards().isEmpty()){
+        if(partyFound != null && partyFound.getBoard() != null && !partyFound.getBoard().getCards().isEmpty()){
             Card card = partyFound.getBoard().getACard();
             partyService.flush();
             cardService.flush();

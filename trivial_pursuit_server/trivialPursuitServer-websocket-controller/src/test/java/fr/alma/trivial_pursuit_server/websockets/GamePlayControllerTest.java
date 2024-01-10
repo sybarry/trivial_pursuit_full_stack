@@ -74,6 +74,7 @@ class GamePlayControllerTest {
 
         Assertions.assertNotNull(party.getChat());
         Assertions.assertEquals("", resultNull.getResponse().getContentAsString());
+        verify(partyService, atLeastOnce()).flush();
     }
 
     @Test
@@ -185,13 +186,46 @@ class GamePlayControllerTest {
 
     @Test
     @DisplayName("test pick card")
-    void testPickCard(){
+    void testPickCard() throws Exception {
+        //CONFIG
+        Party party = new Party();
+        party.setId(1L);
+        given(partyService.findById(String.valueOf(party.getId()))).willReturn(party);
+        given(partyService.findById("100")).willReturn(null);
 
+        //ACTION
+        MvcResult resultNull = mvc.perform(MockMvcRequestBuilders.post("/gameplay/pickCard/1")
+                        .content(asJsonString(Theme.GEOGRAPHY))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult resultNull2 = mvc.perform(MockMvcRequestBuilders.post("/gameplay/pickCard/100")
+                        .content(asJsonString(Theme.GEOGRAPHY))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertEquals("", resultNull.getResponse().getContentAsString());
+        Assertions.assertEquals("", resultNull2.getResponse().getContentAsString());
     }
 
     @Test
     @DisplayName("test move to case")
-    void testMoveToCase(){}
+    void testMoveToCase() throws Exception {
+        //TODO
+        //CONFIG
+        User user = new User("user", "pass");
+
+        //ACTION
+        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/gameplay/moveToCase")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        //VERIFY
+    }
 
     @Test
     @DisplayName("test leave game")
@@ -231,6 +265,8 @@ class GamePlayControllerTest {
         Assertions.assertNull(user.getUserPlayer());
         Assertions.assertNull(player.getUser());
         Assertions.assertTrue(party.getPlayerList().isEmpty());
+        verify(playerService, atLeastOnce()).delete(Mockito.any());
+        verify(playerService, atLeastOnce()).flush();
 
         //ACTION
         resultFalse = mvc.perform(MockMvcRequestBuilders.post("/gameplay/leaveGame")
@@ -254,6 +290,19 @@ class GamePlayControllerTest {
         //VERIFY
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
 
+        //ACTION
+        player = new Player(Color.GREEN, party);
+        user.setUserPlayer(player);
+        Assertions.assertTrue(party.getPlayerList().isEmpty());
+
+        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/gameplay/leaveGame")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
     public static String asJsonString(final Object obj) {
