@@ -23,11 +23,8 @@ export class LoginComponent {
   
   constructor(private router: Router, private authService: AuthentificationService){}
 
-  player = new Player("mohamed@gmail.com", "test");
 
   submitted = false;
-
-  coref = new CoreFacade
 
   user: User = new User();
 
@@ -51,33 +48,30 @@ export class LoginComponent {
     console.log("value are here"); 
     this.authService.loginUserFromServe(this.user).subscribe(
       data=>{
-        console.log("response received")
         console.log(data)
-        this.authService.login();
-        console.log(this.user);
-        let name = ''+this.user.username;
-        sessionStorage.setItem('user', name);
-        this.router.navigate(['/home'])
-      },
-      error=>{
-        console.log(error)
-        this.msg = "Bad credential"
+        if(data){
+          console.log("response received")
+          console.log(data)
+          this.authService.login();
+          console.log(this.user);
+          let name = ''+this.user.username;
+          sessionStorage.clear();
+          sessionStorage.setItem('user', name);
+          console.log(sessionStorage.getItem('user'));
+          this.router.navigate(['/home'])
+        }else{
+          this.msg = "Bad credential"
+        }
+        
       })
   }
 
-
-  connectPlayer(username: string, password: string){
-    console.log(username, ' ', password);
-    if(username ==='mohamed@gmail.com' && password === 'test'){
-      sessionStorage.setItem('mail', 'mohamed@gmail.com');
-      this.authService.login();
-      this.router.navigate(['/home']);
-    }
+  redirectToCreate() {
+    this.router.navigate(['/create']);
   }
 
-  
-redirectToCreate() {
-  this.router.navigate(['/create']);
-}
+  redirectToResetPass() {
+    this.router.navigate(['/resetPassword']);
+  }
 
 }

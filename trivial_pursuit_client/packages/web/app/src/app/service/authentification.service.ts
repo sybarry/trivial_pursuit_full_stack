@@ -43,7 +43,11 @@ export class AuthentificationService {
   }
 
   getUser(username: string): Observable<any>{
-    return this._http.post<any>(this.baseUrl+'/api/user', username);
+    return this._http.get<any>(this.baseUrl+'/api/user/'+username );
+  }
+
+  resetUserPassword(user: User): Observable<any>{
+    return this._http.put<any>(this.baseUrl+"/api/newPassword", user);
   }
 
 }
