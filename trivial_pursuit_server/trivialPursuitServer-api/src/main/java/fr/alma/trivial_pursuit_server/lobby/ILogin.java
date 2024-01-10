@@ -5,6 +5,4 @@ public interface ILogin extends Lobby{
     boolean login(String user, String password);
     boolean createAccount(String user, String password);
     boolean resetPassword(String user);
-    //front handling
-//    boolean logout(String user);
 }

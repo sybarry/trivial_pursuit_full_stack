@@ -20,7 +20,7 @@ public class CardServiceImpl implements CardService {
     public CardServiceImpl(CardRepository cardRepository){
         this.cardRepository = cardRepository;
         try{
-            for(Card c : BoardFactory.getCardsFromJson("src/main/java/fr/alma/trivial_pursuit_server/data/util/cards.json")){
+            for(Card c : BoardFactory.getCardsFromJson("trivialPursuitServer-core/src/main/java/fr/alma/trivial_pursuit_server/util/cards.json")){
                 cardRepository.save(c);
             }
         }catch (Exception e){

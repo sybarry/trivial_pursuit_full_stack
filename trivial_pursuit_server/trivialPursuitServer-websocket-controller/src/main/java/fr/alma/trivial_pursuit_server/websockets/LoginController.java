@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/api")
 @Slf4j
@@ -17,28 +17,31 @@ public class LoginController implements ILogin {
     private UserService userService;
 
     @Override
-    @RequestMapping(path = "login/{username}/{password}")
-    public boolean login(@PathVariable("username") String username, @PathVariable("password") String password) {
-        log.info("login with username : "+username+" and password: "+password);
-
+    public boolean login(String username, String password) {
         return userService.isInRepository(new User(username,password));
     }
-    @Override
-    @RequestMapping(path = "save/{username}/{password}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public boolean createAccount(@PathVariable("username") String username, @PathVariable("password") String password) {
-        log.info("createAcoount with username : "+username+" and password : "+password);
 
-        User userCreated = new User(username,password);
-        userCreated = userService.saveUser(userCreated);
-        return userCreated != null;
+    @PostMapping(path = "/login")
+    public boolean loginDetached(@RequestBody User user) {
+        log.info("login with username : "+user);
+        return login(user.getUsername(), user.getPassword());
     }
 
     @Override
-    @RequestMapping(path = "newMdp/{username}/{password}")
-    public boolean newPassword(@PathVariable("username") String username,@PathVariable("password") String password) {
-        log.info("newPassword with username : "+username+" and password : "+password);
+    public boolean createAccount(String username, String password) {
+        User userSaved = userService.saveUser(new User(username,password));
+        return userSaved!=null;
+    }
 
+    @PostMapping(path = "/createAccount")
+    @ResponseStatus(HttpStatus.CREATED)
+    public boolean createAccountDetached(@RequestBody User user){
+        log.info("createAccount with username");
+        return createAccount(user.getUsername(), user.getPassword());
+    }
+
+    @Override
+    public boolean newPassword(String username, String password) {
         if(resetPassword(username)){
             return userService.changePassword(username, password);
         }
@@ -48,13 +51,17 @@ public class LoginController implements ILogin {
     @Override
     public boolean resetPassword(String username) {
         log.info("resetPassword with username : "+username);
-
         return userService.resetPassword(username);
     }
 
-    //front handling
-//    @Override
-//    public boolean logout(String user) {
-//        return true;
-//    }
+    @PostMapping(path = "/newPassword")
+    public boolean newPasswordDetached(@RequestBody User user){
+        log.info("newPassword for user "+user);
+        return newPassword(user.getUsername(), user.getPassword());
+    }
+
+    @GetMapping(path = "/user/{username}")
+    public User getUser(@PathVariable("username") String username){
+        return userService.findByUserName(username);
+    }
 }

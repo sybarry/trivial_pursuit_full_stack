@@ -37,8 +37,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<Player> findAllPlayerByUser(User userfind) {
-        return playerRepository.findAllPlayerByUser(userfind);
+    public List<Player> findAllPlayerByUser(User user) {
+        return playerRepository.findAllPlayerByUser(user);
     }
 
     @Override
