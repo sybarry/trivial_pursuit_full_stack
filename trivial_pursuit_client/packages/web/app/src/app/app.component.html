@@ -9,14 +9,32 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/home">Home</a></li>
+            <li *ngIf="isAuthenticated()" class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/party" >Lobby</a></li>
             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" >Language</a></li>
             <div *ngIf="!isAuthenticated()">
-              <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/login">
+              <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/login">
                 <span class=" fas fa-user"></span> Login</a>
+              </li> -->
+              <li class="nav-item dropdown no-arrow" style="margin-top: 8px;">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> login
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown">
+                    <a class="dropdown-item" routerLink="/login">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Sign In
+                    </a>
+                    <a class="dropdown-item" routerLink="/create">
+                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Registration
+                    </a>
+                </div>
               </li>
             </div>
               <div *ngIf="isAuthenticated()">
-                <li class="nav-item dropdown no-arrow">
+                <li class="nav-item dropdown no-arrow" style="margin-top: 5px;">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ name | uppercase}} </span>
@@ -39,7 +57,7 @@
                           Activity Log
                       </a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" (click)="logout()" data-toggle="modal" data-target="#logoutModal">
+                      <a class="dropdown-item" (click)="logout()" data-toggle="modal" data-target="#logoutModal" routerLink="/login">
                           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                           Logout
                       </a>
@@ -53,7 +71,7 @@
 <section class="page-section portfolio" id="portfolio">
   <div class="container">
 
-      <h1 class="mt-5 ">{{title }} </h1>
+      <h1 class="mt-5" style="text-align:center">{{title}} </h1>
       <router-outlet></router-outlet>
   </div>
 </section>

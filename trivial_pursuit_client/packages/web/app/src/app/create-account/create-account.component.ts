@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '@trivial-pursuit-client/core/src/Player';
 import { AuthentificationService } from '../service/authentification.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create-account',
@@ -10,7 +11,10 @@ import { AuthentificationService } from '../service/authentification.service';
   styleUrl: './create-account.component.css',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule, 
+    RouterLink,
+    NgIf,
+    ReactiveFormsModule
   ]
 })
 export class CreateAccountComponent {
@@ -19,26 +23,27 @@ export class CreateAccountComponent {
 
   user: User = new User();
   msg: string = '';
-
+  
+  mdpConfirmation: string = '';
   submitted = false;
 
   public onSubmit(){
-    this.submitted = true;
-    console.log(this.user);
-    this.authService.registrationAccountUser(this.user).subscribe(
-      data=>{
-        console.log(data)
-        if(data){
-          this.route.navigate(['/login'])
-          this.user = new User()
-        }else{
-          this.msg="Cet utilisateur existe dejà"
-        }
-      })
-  }
-
-  redirectToConnect() {
-    this.route.navigate(['/login']);
+    console.log(this.profileForm.value.confirmPassword)
+      this.submitted = true;
+      this.user.password = ''+this.profileForm.value.password;
+      this.user.username = ''+this.profileForm.value.username;
+      console.log(this.user);
+      this.authService.registrationAccountUser(this.user).subscribe(
+        data=>{
+          console.log(data)
+          if(data){
+            this.route.navigate(['/login'])
+            this.user = new User()
+          }else{
+            this.msg="Cet utilisateur existe dejà"
+          }
+        })
+    
   }
 
 
@@ -57,6 +62,7 @@ export class CreateAccountComponent {
     {
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required])
     },
     [CreateAccountComponent.MatchValidator('password', 'confirmPassword')]
   );

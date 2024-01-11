@@ -3,6 +3,9 @@ package fr.alma.trivial_pursuit_server.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constant {
     public static final int BOARD_CARD_LIST_SIZE_IN_JSON = 100;
@@ -15,4 +18,26 @@ public final class Constant {
     public static final int CASE_MIN_NEIGHBORS = 2;
     public static final int CASE_MAX_NEIGHBORS = 6;
     public static final int SIZE_JSON_CARD = 72;
+
+    /**
+     * Generate a string hash with SHA-512 algorithm for a string given
+     * @param passwordToHash string to be hash
+     * @return the string hashed
+     */
+    public static String getSHA512SecurePassword(String passwordToHash) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16)
+                        .substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
 }

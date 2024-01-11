@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
+
+    /**
+     * Find a chat similar to the one passed
+     * @param chat chat to be find in repository
+     * @return the chat find, null if none
+     */
     @Query("SELECT c FROM Chat c WHERE c=?1")
     Chat find(Chat chat);
 }

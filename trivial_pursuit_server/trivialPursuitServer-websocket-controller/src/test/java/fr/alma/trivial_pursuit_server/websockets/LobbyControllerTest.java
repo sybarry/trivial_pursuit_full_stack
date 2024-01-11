@@ -2,7 +2,6 @@ package fr.alma.trivial_pursuit_server.websockets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.game.Board;
-import fr.alma.trivial_pursuit_server.core.game.BoardFactory;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.core.player.User;
@@ -21,11 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.Assert;
-
+import java.util.Arrays;
 import java.util.Collections;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.atLeastOnce;
@@ -164,32 +161,58 @@ class LobbyControllerTest {
     }
 
     @Test
-    @DisplayName("test create game")
-    void testCreateGame() throws Exception {
+    @DisplayName("test create party")
+    void testCreateParty() throws Exception {
         //CONFIG
-        Party party = new Party("party",6);
-        party.setId(1L);
-        given(partyService.saveParty(Mockito.any())).willReturn(party);
+        Player player = new Player();
+
+        Party partyMaxTrue = new Party("party",6);
+        Party partyMinTrue = new Party("party",2);
+        Party partyMinFalse = new Party("partyy",2);
+        Party partyMaxFalse = new Party("partyyy",7);
+
+        partyMaxTrue.setId(1L);
+        partyMinTrue.setId(1L);
+
+        partyMaxTrue.setPlayerList(Arrays.asList(player, player));
+        partyMinTrue.setPlayerList(Arrays.asList(player, player));
+
+        partyMinFalse.setPlayerList(Arrays.asList(player, player));
+        partyMinFalse.setMaxCapacityPlayer(1);
+        partyMaxFalse.setPlayerList(Arrays.asList(player, player));
+
+        given(partyService.saveParty(Mockito.any())).willReturn(partyMaxTrue);
 
         //ACTION
-        mvc.perform(get("/lobby/createGame/party/6")
+        MvcResult resultTrueMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMaxTrue))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(notNullValue()))
-                .andExpect(jsonPath("$.playerList").isEmpty())
-                .andExpect(jsonPath("$.name").value("party"))
-                .andExpect(jsonPath("$.chat").value(nullValue()))
-                .andExpect(jsonPath("$.board").value(nullValue()))
-                .andExpect(jsonPath("$.maxCapacityPlayer").value(6))
                 .andReturn();
 
-        MvcResult resultNull = mvc.perform(get("/lobby/createGame"+"/partyyyy"+"/7")
+        given(partyService.saveParty(Mockito.any())).willReturn(partyMinTrue);
+        MvcResult resultTrueMin = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMinTrue))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        MvcResult resultFalseMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMaxFalse))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+        MvcResult resultFalseMin = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMinFalse))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
         //VERIFY
-        Assertions.assertEquals("", resultNull.getResponse().getContentAsString());
+        Assertions.assertEquals("true", resultTrueMax.getResponse().getContentAsString());
+        Assertions.assertEquals("true", resultTrueMin.getResponse().getContentAsString());
+        Assertions.assertEquals("false", resultFalseMax.getResponse().getContentAsString());
+        Assertions.assertEquals("false", resultFalseMin.getResponse().getContentAsString());
     }
 
     @Test
@@ -308,8 +331,64 @@ class LobbyControllerTest {
         Assertions.assertNull(party.getBoard());
         Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
         Assertions.assertEquals("[]", resultEmptyListFalse.getResponse().getContentAsString());
+
+        //CONFIG
+        party = new Party();
+
+        //ACTION
+        resultEmptyListTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/history")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertNull(party.getBoard());
+        Assertions.assertNotEquals("[]", resultEmptyListTrue.getResponse().getContentAsString());
+
+
     }
 
+    @Test
+    @DisplayName("test partyAll")
+    void testPartyAll() throws Exception {
+        Party party = new Party();
+        given(partyService.findAll()).willReturn(Collections.singletonList(party));
+
+        //ACTION
+        MvcResult result = mvc.perform(get("/lobby/partyAll")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(nullValue()))
+                .andExpect(jsonPath("$[0].playerList").isEmpty())
+                .andExpect(jsonPath("$[0].chat").value(nullValue()))
+                .andExpect(jsonPath("$[0].board").value(nullValue()))
+                .andExpect(jsonPath("$[0].maxCapacityPlayer").value(6))
+                .andExpect(jsonPath("$[0].name").value(nullValue()))
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertFalse(result.getResponse().getContentAsString().isEmpty());
+
+        //CONFIG
+        party.setBoard(new Board());
+
+        //ACTION
+        result = mvc.perform(get("/lobby/partyAll")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(nullValue()))
+                .andExpect(jsonPath("$[0].playerList").isEmpty())
+                .andExpect(jsonPath("$[0].chat").value(nullValue()))
+                .andExpect(jsonPath("$[0].board").value(nullValue()))
+                .andExpect(jsonPath("$[0].maxCapacityPlayer").value(6))
+                .andExpect(jsonPath("$[0].name").value(nullValue()))
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertFalse(result.getResponse().getContentAsString().isEmpty());
+
+    }
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
