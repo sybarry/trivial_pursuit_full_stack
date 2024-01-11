@@ -1,0 +1,36 @@
+<div class="container-party">
+    <div class="form-container-container">
+        <h2>Formulaire</h2>
+        <form class="login-form"  (ngSubmit)="onSubmit()" [formGroup]="partyForm">
+            <label for="firstName">Nom de la Partie:</label>
+            <!-- <input type="text" name="gamename" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.name" required> -->
+            <input type="text" formControlName="gamename" name="gamename" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.name" required>
+
+            <label for="lastName">Nombre Max</label>
+            <!-- <input type="text" id="lastName" name="lastName" required>             -->
+            <!-- <input type="number" name="capacity" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.maxCapacityPlayer" required> -->
+            <input type="text" formControlName="maxCapacity" name="capacity" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.maxCapacityPlayer" required>
+            <button>Créer Partie</button>
+        </form>
+    </div>
+
+    <div class="display-container-party">
+        <h2>Liste des parties disponibles</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom de la Partie</th>
+                    <th>Capacité max</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let parti of listParty">
+                    <td>{{ parti.name }}</td>
+                    <td>{{ parti.maxCapacityPlayer }}</td>
+                    <td>{{ parti.id }}</td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>
+</div>

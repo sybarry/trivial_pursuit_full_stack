@@ -5,10 +5,10 @@
       <input type="email" name="username" class="ng-untouched ng-pristine ng-valid" #mail="ngModel" placeholder="Pseudo" [(ngModel)]="user.username" name="mail" required>
       <div [hidden]="mail.valid || mail.pristine" class="alert alert-danger">Email required</div>
       <input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="user.password" required>
-      <button>Se Connecter</button>
+      <button [disabled]="!playerForm.form.valid" >Se Connecter</button>
       <!-- <button type="submit" [disabled]="!playerForm.form.valid" (click)="connectPlayer(user.username, user.password)">Se Connecter</button> -->
     </form>
-    <p>Pas de compte ? <button class="button" (click)="redirectToCreate()">Cliquez ici </button>pour créer votre compte</p>
-    <p>Mot de passe oublié <button class="button" (click)="redirectToResetPass()">Cliquez ici </button>pour changer de mot de pass</p>
+    <p>Pas de compte ? <a routerLink="/create">Cliquez ici </a>pour créer votre compte</p>
+    <p>Mot de passe oublié <a routerLink="/resetPassword">Cliquez ici </a>pour changer de mot de pass</p>
   </div>
   <router-outlet></router-outlet>

@@ -214,17 +214,19 @@ class GamePlayControllerTest {
     @Test
     @DisplayName("test move to case")
     void testMoveToCase() throws Exception {
-        //TODO
         //CONFIG
         User user = new User("user", "pass");
+        user.setUserPlayer(new Player());
+        given(userService.findByUserName(user.getUsername())).willReturn(user);
 
         //ACTION
-        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/gameplay/moveToCase")
+        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/gameplay/moveToCase/case1")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         //VERIFY
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
     @Test

@@ -1,0 +1,8 @@
+== TODO FRONT :
+
+- [] : Button vers /party component dans home component (hidden when not logged)
+- [] : Component Création d'une partie 
+- [] : Component Rejoindre une partie
+- [x] : nom du profile changement
+- [x] : button to router link ( modifier home component)
+- [x] : vérife confirmation mot de passe on creation

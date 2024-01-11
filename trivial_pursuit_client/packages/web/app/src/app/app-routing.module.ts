@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PartyComponent } from './party/party.component';
 
 const routes: Routes = [
   { path:'', redirectTo: '/home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path:'login', component: LoginComponent},
   { path:'create', component: CreateAccountComponent},
   { path: 'resetPassword', component: ResetPasswordComponent},
+  { path: 'party', component: PartyComponent},
 ];
 
 @NgModule({
