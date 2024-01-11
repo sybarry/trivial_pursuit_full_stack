@@ -52,7 +52,8 @@ export class PartyComponent implements OnInit {
     },
   );
 
-  
-
+  get maxCapacityError() {
+    return this.partyForm.get('maxCapacity')?.hasError('min') || this.partyForm.get('maxCapacity')?.hasError('max');
+  }
 
 }

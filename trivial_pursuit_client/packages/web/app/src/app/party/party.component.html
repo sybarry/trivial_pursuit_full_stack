@@ -9,7 +9,8 @@
             <label for="lastName">Nombre Max</label>
             <!-- <input type="text" id="lastName" name="lastName" required>             -->
             <!-- <input type="number" name="capacity" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.maxCapacityPlayer" required> -->
-            <input type="text" formControlName="gamename">
+            <input type="text" formControlName="maxCapacity">
+            <div *ngIf="maxCapacityError" class="alert alert-danger">Les mots de passe doivent être les même</div>
             <button>Créer Partie</button>
         </form>
     </div>
