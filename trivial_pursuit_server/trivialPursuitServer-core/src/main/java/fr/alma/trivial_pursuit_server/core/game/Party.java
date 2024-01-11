@@ -132,7 +132,7 @@ public class Party implements IParty {
     }
 
     /**
-     * Check if tere is still some place for a new player in the party
+     * Check if there is still some place for a new player in the party
      * @return true if that's the case, false otherwise
      */
     public boolean playersCanJoin() {

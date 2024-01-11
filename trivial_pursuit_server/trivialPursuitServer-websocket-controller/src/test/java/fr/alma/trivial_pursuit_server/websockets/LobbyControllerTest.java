@@ -2,7 +2,6 @@ package fr.alma.trivial_pursuit_server.websockets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.game.Board;
-import fr.alma.trivial_pursuit_server.core.game.BoardFactory;
 import fr.alma.trivial_pursuit_server.core.game.Party;
 import fr.alma.trivial_pursuit_server.core.player.Player;
 import fr.alma.trivial_pursuit_server.core.player.User;
@@ -21,11 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.Assert;
-
+import java.util.Arrays;
 import java.util.Collections;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.atLeastOnce;
@@ -164,32 +161,43 @@ class LobbyControllerTest {
     }
 
     @Test
-    @DisplayName("test create game")
-    void testCreateGame() throws Exception {
+    @DisplayName("test create party")
+    void testCreateParty() throws Exception {
         //CONFIG
+        Player player = new Player();
         Party party = new Party("party",6);
+        Party partyMin = new Party("partyy",2);
+        Party partyMax = new Party("partyyy",7);
         party.setId(1L);
+        party.setPlayerList(Arrays.asList(player, player));
+        partyMin.setPlayerList(Arrays.asList(player, player));
+        partyMax.setPlayerList(Arrays.asList(player, player));
+        partyMin.setMaxCapacityPlayer(1);
+
         given(partyService.saveParty(Mockito.any())).willReturn(party);
 
         //ACTION
-        mvc.perform(get("/lobby/createGame/party/6")
+        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(party))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(notNullValue()))
-                .andExpect(jsonPath("$.playerList").isEmpty())
-                .andExpect(jsonPath("$.name").value("party"))
-                .andExpect(jsonPath("$.chat").value(nullValue()))
-                .andExpect(jsonPath("$.board").value(nullValue()))
-                .andExpect(jsonPath("$.maxCapacityPlayer").value(6))
                 .andReturn();
 
-        MvcResult resultNull = mvc.perform(get("/lobby/createGame"+"/partyyyy"+"/7")
+        MvcResult resultFalseMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMax))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+        MvcResult resultFalseMin = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMin))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
         //VERIFY
-        Assertions.assertEquals("", resultNull.getResponse().getContentAsString());
+        Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
+        Assertions.assertEquals("false", resultFalseMax.getResponse().getContentAsString());
+        Assertions.assertEquals("false", resultFalseMin.getResponse().getContentAsString());
     }
 
     @Test
@@ -346,6 +354,25 @@ class LobbyControllerTest {
 
         //VERIFY
         Assertions.assertFalse(result.getResponse().getContentAsString().isEmpty());
+
+        //CONFIG
+        party.setBoard(new Board());
+
+        //ACTION
+        result = mvc.perform(get("/lobby/partyAll")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(nullValue()))
+                .andExpect(jsonPath("$[0].playerList").isEmpty())
+                .andExpect(jsonPath("$[0].chat").value(nullValue()))
+                .andExpect(jsonPath("$[0].board").value(nullValue()))
+                .andExpect(jsonPath("$[0].maxCapacityPlayer").value(6))
+                .andExpect(jsonPath("$[0].name").value(nullValue()))
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertFalse(result.getResponse().getContentAsString().isEmpty());
+
     }
     public static String asJsonString(final Object obj) {
         try {

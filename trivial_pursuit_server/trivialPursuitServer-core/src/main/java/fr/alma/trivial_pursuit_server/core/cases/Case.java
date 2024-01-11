@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter(AccessLevel.PUBLIC)
-//@Setter(AccessLevel.PROTECTED)
 public class Case {
 
     private String name;

@@ -1,34 +1,5 @@
 = Projet Trivial Pursuit Full Stack
 
-[source]
-$$$$  $$$$$
- $$     $$
- $$    $$$  $$$$$$   $$$$$$$ $$$$$$  $$$$ $$
- $$$$$$$$$ $$   $$   $$   $$ $$   $$ $$$  $$
- $$     $$ $$   $$   $$   $$ $$   $$ $$   $$
-$$$    $$$ $$   $$   $$$  $$ $$$  $$ $$   $$
-$$$    $$$ $$$$$$$$$ $$$ $$$ $$$ $$$ $$$$$$$
-$$$   $$$$       $$$ $$$$$   $$$$$$       $$
-                     $$$     $$$      $$  $$
-                    $$$$$   $$$$$      $$$$$
-           $$$$              
-$$$$$$$$  $$ $$$  $$$  $$$ $$$
- $$  $$$ $$$ $$$ $$    $$   $$
- $$  $$  $$$$$$  $$   $$   $$
-$$$  $$  $$      $$  $$$  $$
-$$   $$$$ $$$$$$  $$$$$$$$$$
-$$   $$    $$$     $$   $$
-                                      $$$
-                                     $$$$$
-$$$  $$$  $$$$$  $$$$$$$ $$$$$$$     $$$$$
-$$$  $$  $$  $$ $$$  $$   $$$ $$     $$$$$
-$$   $$ $$$$$$  $$   $$   $$          $$$
-$$   $$ $$      $$  $$$   $$
-$$$$$$$ $$$$$$  $$$$$$$$ $$$         $$$
-    $$    $$$     $$  $$  $$         $$$
-$  $$
-$$$$
-
 == Member
 - Barry Saikou yaya
 - Chartier Hugo
@@ -40,13 +11,6 @@ On choisit la conception du groupe Snorlax comme base pour le développement du 
 
 L'ensemble de l'implémentation aura comme langue de référence l'anglais.
 
-== TODO
-[IMPORTANT]
-====
-- [] Coder le backend indépendamment du frontend
-- [] Code le frontend indépendamment du backend
-- [] Relier le frontend et le backend avec des websockets
-====
 
 
 == Utilitaires

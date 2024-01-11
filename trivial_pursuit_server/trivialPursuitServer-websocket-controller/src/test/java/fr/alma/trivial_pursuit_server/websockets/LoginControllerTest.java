@@ -159,7 +159,7 @@ public class LoginControllerTest {
     @DisplayName("test getUser")
     void testGetUser() throws Exception {
         //CONFIG
-        User userHash = new User("user", Constant.get_SHA_512_SecurePassword("pass"));
+        User userHash = new User("user", Constant.getSHA512SecurePassword("pass"));
         given(userService.findByUserName(user.getUsername())).willReturn(userHash);
         given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
@@ -169,7 +169,7 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(nullValue()))
                 .andExpect(jsonPath("$.username").value("user"))
-                .andExpect(jsonPath("$.password").value(Constant.get_SHA_512_SecurePassword("pass")))
+                .andExpect(jsonPath("$.password").value(Constant.getSHA512SecurePassword("pass")))
                 .andReturn();
 
         MvcResult resultNull = mvc.perform(get("/api/user/"+user2.getUsername())

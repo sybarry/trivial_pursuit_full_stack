@@ -1,7 +1,5 @@
 package fr.alma.trivial_pursuit_server.websockets;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.card.Card;
 import fr.alma.trivial_pursuit_server.core.card.Question;
 import fr.alma.trivial_pursuit_server.core.cases.Case;
@@ -22,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/gameplay")
@@ -40,6 +40,20 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     @Autowired
     private PartyService partyService;
 
+    /**
+     * Leave the game for a certain user
+     * @param user user to leave the game
+     * @return true if the user have leave the game, false otherwise
+     */
+    @PostMapping(path = "/leaveGame")
+    public boolean leaveGameDetached(@RequestBody User user){
+        log.info("leaveGame for "+user);
+        return leaveGame(user.getUsername());
+    }
+
+    /**
+     * @see GamePlayController#leaveGameDetached(User) leaveGameDetached
+     */
     @Override
     public boolean leaveGame(String user) {
         User userFound = userService.findByUserName(user);
@@ -62,14 +76,22 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
-    @PostMapping(path = "/leaveGame")
-    public boolean leaveGameDetached(@RequestBody User user){
-        log.info("leaveGame for "+user);
-        return leaveGame(user.getUsername());
+    /**
+     * Move a player to a new Case
+     * @param user user's player to be moved
+     * @param caseName newCase for the user's player
+     * @return true if the change is made, false otherwise
+     */
+    @PostMapping(path = "/moveToCase/{caseName}")
+    public boolean moveToCaseDetached(@RequestBody User user, @PathVariable("caseName") String caseName){
+        log.info("moveToCase for "+user+" with a new case : "+caseName);
+        return moveToCase(user.getUsername(),caseName);
     }
 
+    /**
+     * @see GamePlayController#moveToCaseDetached(User, String) moveToCaseDetached
+     */
     @Override
-    @RequestMapping(path = "moveToCase/{user}/{newCase}")
     public boolean moveToCase(@PathVariable("user") String user, @PathVariable("newCase") String newCase) {
         log.info("moveToCase for "+user+" with a new case : "+newCase);
         try{
@@ -90,12 +112,21 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
-    @PostMapping(path = "/moveToCase/{caseName}")
-    public boolean moveToCaseDetached(@RequestBody User user, @PathVariable("caseName") String caseName){
-        log.info("moveToCase for "+user+" with a new case : "+caseName);
-        return moveToCase(user.getUsername(),caseName);
+    /**
+     * Pick a question text in a card of the deck stored in party's board randomly for a certain theme
+     * @param questionTheme theme of the question
+     * @param partyId id of the party
+     * @return the question text
+     */
+    @PostMapping(path = "/pickCard/{partyId}")
+    public String pickCardDetached(@RequestBody Theme questionTheme, @PathVariable("partyId") String partyId){
+        log.info("pickCard for party : "+partyId+" and theme : "+questionTheme);
+        return pickCard(partyId, questionTheme.toString());
     }
 
+    /**
+     * @see GamePlayController#pickCardDetached(Theme, String) pickCardDetached
+     */
     @Override
     public String pickCard(String partyId, String questionTheme) {
         Party partyFound = partyService.findById(partyId);
@@ -114,12 +145,13 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return "";
     }
 
-    @PostMapping(path = "/pickCard/{partyId}")
-    public String pickCardDetached(@RequestBody Theme questionTheme, @PathVariable("partyId") String partyId){
-        log.info("pickCard for party : "+partyId+" and theme : "+questionTheme);
-        return pickCard(partyId, questionTheme.toString());
-    }
-
+    /**
+     * Analyse the response for a certain question
+     * @param cardId id of the card who have the question
+     * @param theme question theme
+     * @param answer answer provided
+     * @return true the answer provided is correct, false otherwise
+     */
     @Override
     @RequestMapping(path = "analyseResponse/{cardId}/{questionNb}/{answer}")
     public boolean analyseResponse(@PathVariable("cardId") String cardId, @PathVariable("questionNb") String theme, @PathVariable("answer") String answer) {
@@ -148,6 +180,11 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         return false;
     }
 
+    /**
+     * Create a chat for a party and assign it
+     * @param partyId id of the party
+     * @return chat created
+     */
     @Override
     @GetMapping(path = "createChat/{partyId}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -166,6 +203,10 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
         }
     }
 
+    /**
+     * Remove a party from the partyService and all it cascades association
+     * @param partyId id of the party to be removed
+     */
     @Override
     @GetMapping(path = "endGame/{partyId}")
     public void endGame(@PathVariable("partyId") String partyId) {
@@ -184,8 +225,13 @@ public class GamePlayController implements IBoardPlay, IPartyPlay {
     }
 
 
-    //Made for test in browser
-//    @GetMapping(path = "findAllCard", produces = MediaType.APPLICATION_JSON_VALUE)
+//    Made for test in browser
+//    You can uncomment it and check serialized card in browser
+//    /**
+//     * Return all the card in cardService
+//     * @return all the card stored
+//     */
+//    @GetMapping(path = "findAllCard")
 //    public List<Card> findAllCard(){
 //        log.info(cardService.findAll().size()+" taille");
 //        return cardService.findAll();
