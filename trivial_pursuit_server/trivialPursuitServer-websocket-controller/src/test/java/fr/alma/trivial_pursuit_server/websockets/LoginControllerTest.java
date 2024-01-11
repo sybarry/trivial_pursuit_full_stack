@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.alma.trivial_pursuit_server.core.player.User;
 import fr.alma.trivial_pursuit_server.util.Constant;
 import fr.alma.trivial_pursuit_server.data.service.UserService;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -98,6 +99,19 @@ public class LoginControllerTest {
 
         //VERIFY
         Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
+
+        //CONFIG
+        given(userService.saveUser(Mockito.any())).willThrow(ConstraintViolationException.class);
+
+        //ACTION
+        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/api/createAccount")
+                        .content(asJsonString(user))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        //VERIFY
+        Assertions.assertEquals("false", resultFalse.getResponse().getContentAsString());
     }
 
     @Test
@@ -145,7 +159,7 @@ public class LoginControllerTest {
     @DisplayName("test getUser")
     void testGetUser() throws Exception {
         //CONFIG
-        User userHash = new User("user", Constant.get_SHA_512_SecurePassword("pass"));
+        User userHash = new User("user", Constant.getSHA512SecurePassword("pass"));
         given(userService.findByUserName(user.getUsername())).willReturn(userHash);
         given(userService.findByUserName(user2.getUsername())).willReturn(null);
 
@@ -155,7 +169,7 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(nullValue()))
                 .andExpect(jsonPath("$.username").value("user"))
-                .andExpect(jsonPath("$.password").value(Constant.get_SHA_512_SecurePassword("pass")))
+                .andExpect(jsonPath("$.password").value(Constant.getSHA512SecurePassword("pass")))
                 .andReturn();
 
         MvcResult resultNull = mvc.perform(get("/api/user/"+user2.getUsername())

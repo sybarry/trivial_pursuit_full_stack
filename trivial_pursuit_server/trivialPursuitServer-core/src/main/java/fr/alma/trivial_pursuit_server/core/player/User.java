@@ -22,6 +22,12 @@ public class User {
     @JsonBackReference
     private Player userPlayer;
 
+    /**
+     * Constructor of a User with two field.
+     * userPlayer field is set to null.
+     * @param username username field
+     * @param password password field
+     */
     public User(String username, String password){
         this.username = username;
         this.password = password;

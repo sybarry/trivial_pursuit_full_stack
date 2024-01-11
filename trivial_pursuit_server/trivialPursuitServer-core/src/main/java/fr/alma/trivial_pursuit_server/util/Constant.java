@@ -19,7 +19,12 @@ public final class Constant {
     public static final int CASE_MAX_NEIGHBORS = 6;
     public static final int SIZE_JSON_CARD = 72;
 
-    public static String get_SHA_512_SecurePassword(String passwordToHash) {
+    /**
+     * Generate a string hash with SHA-512 algorithm for a string given
+     * @param passwordToHash string to be hash
+     * @return the string hashed
+     */
+    public static String getSHA512SecurePassword(String passwordToHash) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");

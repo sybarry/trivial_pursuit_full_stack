@@ -43,6 +43,11 @@ public class Question {
         this.questionCard = null;
     }
 
+    /**
+     * Analyse if the answer given is the same as the field answer in this question object
+     * @param answer answer to be checked
+     * @return true if that's the case, false otherwise
+     */
     public boolean analyseAnswer(String answer) {
         //TODO upgrade the way to validate an answer
         return Objects.equals(this.answer.getAnswerText(), answer);

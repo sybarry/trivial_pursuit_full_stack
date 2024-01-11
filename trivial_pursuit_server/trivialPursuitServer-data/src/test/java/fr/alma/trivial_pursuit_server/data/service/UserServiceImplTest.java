@@ -27,15 +27,15 @@ class UserServiceImplTest {
         this.userService = new UserServiceImpl(userRepository);
 
         user = new User("username",  "password");
-        userHash = new User("username",  Constant.get_SHA_512_SecurePassword("password"));
+        userHash = new User("username",  Constant.getSHA512SecurePassword("password"));
     }
     @Test
     @DisplayName("test add and check")
     void testAddAndCheck() {
         //CONFIG
         User user2 = new User("username2", "password2");
-        User user2Hash = new User("username2", Constant.get_SHA_512_SecurePassword("password2"));
-        User userSameUsernameNotPassword = new User("username2", Constant.get_SHA_512_SecurePassword("password5"));
+        User user2Hash = new User("username2", Constant.getSHA512SecurePassword("password2"));
+        User userSameUsernameNotPassword = new User("username2", Constant.getSHA512SecurePassword("password5"));
         user2.setId(888L);
         userSameUsernameNotPassword.setId(775L);
 
@@ -121,10 +121,10 @@ class UserServiceImplTest {
         //VERIFY
         Assertions.assertTrue(resultFalse);
         Assertions.assertFalse(result);
-        Assertions.assertEquals(Constant.get_SHA_512_SecurePassword("newPassword"), userHash.getPassword());
+        Assertions.assertEquals(Constant.getSHA512SecurePassword("newPassword"), userHash.getPassword());
         Assertions.assertTrue(userService.isInRepository(user));
         Assertions.assertFalse(userService.isInRepository(new User("user","password")));
-        Assertions.assertEquals(Constant.get_SHA_512_SecurePassword("newPassword"), userRepository.findByUserName(user.getUsername()).getPassword());
+        Assertions.assertEquals(Constant.getSHA512SecurePassword("newPassword"), userRepository.findByUserName(user.getUsername()).getPassword());
 
     }
 }
