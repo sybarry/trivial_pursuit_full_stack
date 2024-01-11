@@ -76,7 +76,7 @@ public class LobbyController implements ILobby {
     }
 
     @PostMapping(path = "/createParty")
-    public List<Party> createParty(@RequestBody Party party) {
+    public Party createParty(@RequestBody Party party) {
         log.info("createGame with gameName : "+party.getName()+" and nbPlayers : "+party.getMaxCapacityPlayer());
 
         if(party.getMaxCapacityPlayer() > Constant.BOARD_AND_PARTY_PLAYER_LIST_MAX_SIZE){
@@ -84,9 +84,8 @@ public class LobbyController implements ILobby {
             return null;
         }else{
             Party partyToSave = new Party(party.getName(), party.getMaxCapacityPlayer());
-            partyService.saveParty(partyToSave);
             log.info(" Get Partys "+partyService.findAll());
-            return partyService.findAll();
+            return partyService.saveParty(partyToSave);
         }
     }
     @Override
