@@ -165,37 +165,52 @@ class LobbyControllerTest {
     void testCreateParty() throws Exception {
         //CONFIG
         Player player = new Player();
-        Party party = new Party("party",6);
-        Party partyMin = new Party("partyy",2);
-        Party partyMax = new Party("partyyy",7);
-        party.setId(1L);
-        party.setPlayerList(Arrays.asList(player, player));
-        partyMin.setPlayerList(Arrays.asList(player, player));
-        partyMax.setPlayerList(Arrays.asList(player, player));
-        partyMin.setMaxCapacityPlayer(1);
 
-        given(partyService.saveParty(Mockito.any())).willReturn(party);
+        Party partyMaxTrue = new Party("party",6);
+        Party partyMinTrue = new Party("party",6);
+        Party partyMinFalse = new Party("partyy",2);
+        Party partyMaxFalse = new Party("partyyy",7);
+
+        partyMaxTrue.setId(1L);
+        partyMinTrue.setId(1L);
+
+        partyMaxTrue.setPlayerList(Arrays.asList(player, player));
+        partyMinTrue.setPlayerList(Arrays.asList(player, player));
+
+        partyMinFalse.setPlayerList(Arrays.asList(player, player));
+        partyMinFalse.setMaxCapacityPlayer(1);
+        partyMaxFalse.setPlayerList(Arrays.asList(player, player));
+
+        given(partyService.saveParty(Mockito.any())).willReturn(partyMaxTrue);
 
         //ACTION
-        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
-                        .content(asJsonString(party))
+        MvcResult resultTrueMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMaxTrue))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        given(partyService.saveParty(Mockito.any())).willReturn(partyMinTrue);
+        MvcResult resultTrueMin = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
+                        .content(asJsonString(partyMinTrue))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
         MvcResult resultFalseMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
-                        .content(asJsonString(partyMax))
+                        .content(asJsonString(partyMaxFalse))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
         MvcResult resultFalseMin = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
-                        .content(asJsonString(partyMin))
+                        .content(asJsonString(partyMinFalse))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
         //VERIFY
-        Assertions.assertEquals("true", resultTrue.getResponse().getContentAsString());
+        Assertions.assertEquals("true", resultTrueMax.getResponse().getContentAsString());
+        Assertions.assertEquals("true", resultTrueMin.getResponse().getContentAsString());
         Assertions.assertEquals("false", resultFalseMax.getResponse().getContentAsString());
         Assertions.assertEquals("false", resultFalseMin.getResponse().getContentAsString());
     }
