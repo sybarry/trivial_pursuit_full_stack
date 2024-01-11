@@ -167,7 +167,7 @@ class LobbyControllerTest {
         Player player = new Player();
 
         Party partyMaxTrue = new Party("party",6);
-        Party partyMinTrue = new Party("party",6);
+        Party partyMinTrue = new Party("party",2);
         Party partyMinFalse = new Party("partyy",2);
         Party partyMaxFalse = new Party("partyyy",7);
 
