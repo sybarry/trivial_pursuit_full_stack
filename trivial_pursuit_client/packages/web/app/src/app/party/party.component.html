@@ -1,14 +1,15 @@
 <div class="container-party">
     <div class="form-container-container">
         <h2>Formulaire</h2>
-        <form id="myForm" (ngSubmit)="onSubmit()" #playerForm="ngForm">
+        <form class="login-form"  (ngSubmit)="onSubmit()" [formGroup]="partyForm">
             <label for="firstName">Nom de la Partie:</label>
-            <input type="text" name="gamename" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.name" required>
+            <!-- <input type="text" name="gamename" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.name" required> -->
+            <input type="text" formControlName="gamename">
 
             <label for="lastName">Nombre Max</label>
             <!-- <input type="text" id="lastName" name="lastName" required>             -->
-            <input type="number" name="capacity" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.maxCapacityPlayer" required>
-
+            <!-- <input type="number" name="capacity" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.maxCapacityPlayer" required> -->
+            <input type="text" formControlName="gamename">
             <button>Créer Partie</button>
         </form>
     </div>

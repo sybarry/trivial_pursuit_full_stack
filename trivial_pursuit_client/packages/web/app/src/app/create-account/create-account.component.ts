@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '@trivial-pursuit-client/core/src/Player';
 import { AuthentificationService } from '../service/authentification.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create-account',
@@ -11,7 +12,9 @@ import { AuthentificationService } from '../service/authentification.service';
   standalone: true,
   imports: [
     FormsModule, 
-    RouterLink
+    RouterLink,
+    NgIf,
+    ReactiveFormsModule
   ]
 })
 export class CreateAccountComponent {
@@ -25,9 +28,10 @@ export class CreateAccountComponent {
   submitted = false;
 
   public onSubmit(){
-    if(this.user.password==this.mdpConfirmation){
-      this.mdpConfirmation = '';
+    console.log(this.profileForm.value.confirmPassword)
       this.submitted = true;
+      this.user.password = ''+this.profileForm.value.password;
+      this.user.username = ''+this.profileForm.value.username;
       console.log(this.user);
       this.authService.registrationAccountUser(this.user).subscribe(
         data=>{
@@ -39,14 +43,7 @@ export class CreateAccountComponent {
             this.msg="Cet utilisateur existe dejà"
           }
         })
-    }else{
-      this.msg="Veuillez rentrer le même mot de passe 2 fois"
-    }
     
-  }
-
-  redirectToConnect() {
-    this.route.navigate(['/login']);
   }
 
 
@@ -65,6 +62,7 @@ export class CreateAccountComponent {
     {
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required])
     },
     [CreateAccountComponent.MatchValidator('password', 'confirmPassword')]
   );
