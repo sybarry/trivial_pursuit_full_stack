@@ -17,6 +17,7 @@ public class PartyServiceImpl implements PartyService {
 
     public PartyServiceImpl(PartyRepository partyRepository){
         this.partyRepository = partyRepository;
+        partyRepository.save(new Party("game1",5));
     }
 
     @Override

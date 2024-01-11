@@ -45,6 +45,10 @@ export class CreateAccountComponent {
     
   }
 
+  redirectToConnect() {
+    this.route.navigate(['/login']);
+  }
+
 
   static MatchValidator(source: string, target: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

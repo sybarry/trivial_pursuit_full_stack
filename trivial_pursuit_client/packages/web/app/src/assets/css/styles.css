@@ -11047,7 +11047,7 @@ html {
 }
 
 .trivialimg{
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11111,4 +11111,47 @@ html {
 .img-profile {
   height: 2rem;
   width: 2rem;
+}
+
+.container-party {
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh; */
+  margin: 0;
+}
+
+.form-container-container{
+  width: 50%;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.display-container-party{
+  width: 50%;
+  padding: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Style des cellules du tableau */
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style de l'en-tête du tableau */
+th {
+  background-color: #f2f2f2;
+}
+
+/* Style des lignes impaires du tableau */
+tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }

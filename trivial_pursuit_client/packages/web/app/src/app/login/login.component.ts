@@ -13,15 +13,15 @@ import { Player, User } from '@trivial-pursuit-client/core/src/Player';
   styleUrl: './login.component.css',
   standalone: true,
   imports: [
-    FormsModule, 
+    FormsModule,
     RouterLink
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ], 
+  ],
 })
 export class LoginComponent {
-  
+
   constructor(private router: Router, private authService: AuthentificationService){}
 
 
@@ -30,28 +30,18 @@ export class LoginComponent {
   user: User = new User();
 
   msg = '';
-  
-  loginUserFromServe(){
-    this.authService.loginUserFromServe(this.user).subscribe(
-      data=>{
-        console.log("response received")
-        this.router.navigate(['/home'])
-      },
-      error=>{
-        console.log(error)
-      }
-    )
-  }
 
 
-  onSubmit() { 
+  onSubmit() {
     this.submitted = true;
     this.authService.loginUserFromServe(this.user).subscribe(
       data=>{
         if(data){
           console.log("response received")
           this.authService.login();
-          sessionStorage.setItem('user', ''+this.user.username);
+          let username = this.user.username;
+          console.log(username);
+          sessionStorage.setItem('user', ''+username);
           this.router.navigate(['/home'])
         }else{
           this.msg = "Bad credential"
