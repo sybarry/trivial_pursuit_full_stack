@@ -244,12 +244,12 @@ class LobbyControllerTest {
         given(partyService.findById(Mockito.any())).willReturn(party);
 
         //ACTION
-        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
+        MvcResult resultTrue = mvc.perform(MockMvcRequestBuilders.put("/lobby/joinGame/1")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
-        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
+        MvcResult resultFalse = mvc.perform(MockMvcRequestBuilders.put("/lobby/joinGame/1")
                         .content(asJsonString(user2))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -263,7 +263,7 @@ class LobbyControllerTest {
         verify(partyService, atLeastOnce()).flush();
 
         //ACTION
-        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
+        resultFalse = mvc.perform(MockMvcRequestBuilders.put("/lobby/joinGame/1")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -277,7 +277,7 @@ class LobbyControllerTest {
             party.addPlayer(new Player());
         }
         user.setUserPlayer(null);
-        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
+        resultFalse = mvc.perform(MockMvcRequestBuilders.put("/lobby/joinGame/1")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -291,7 +291,7 @@ class LobbyControllerTest {
         user.setUserPlayer(null);
 
         //ACTION
-        resultFalse = mvc.perform(MockMvcRequestBuilders.post("/lobby/joinGame/1")
+        resultFalse = mvc.perform(MockMvcRequestBuilders.put("/lobby/joinGame/1")
                         .content(asJsonString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
