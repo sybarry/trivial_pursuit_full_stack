@@ -3,6 +3,7 @@ import { LobbyService } from '../service/lobby.service';
 import { Party } from '../classFile';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 // import { Party } from '@trivial-pursuit-client/core/src/Player';
 
 @Component({
@@ -11,7 +12,7 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './party.component.css',
   standalone: true,
   imports: [
-    FormsModule, NgFor, NgIf, ReactiveFormsModule
+    FormsModule, NgFor, NgIf, ReactiveFormsModule, RouterLink
   ]
 })
 export class PartyComponent implements OnInit {
