@@ -1,7 +1,7 @@
 <div class="container-party">
     <div class="form-container-container">
         <h2>Formulaire</h2>
-        <form class="login-form"  (ngSubmit)="onSubmit()" [formGroup]="partyForm">
+        <form class="login-form" (ngSubmit)="onSubmit()" [formGroup]="partyForm">
             <label for="firstName">Nom de la Partie:</label>
             <!-- <input type="text" name="gamename" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.name" required> -->
             <input type="text" formControlName="gamename">
@@ -28,9 +28,10 @@
                 <tr *ngFor="let parti of listParty">
                     <td>{{ parti.name }}</td>
                     <td>{{ parti.maxCapacityPlayer }}</td>
-                    <td>{{ parti.id }}</td>
+                    <!-- <td>{{ parti.id }}</td> -->
+                    <td><a routerLink="/join/{{parti.id}}">Rejoindre</a></td>
                 </tr>
             </tbody>
-        </table>    
+        </table>
     </div>
 </div>

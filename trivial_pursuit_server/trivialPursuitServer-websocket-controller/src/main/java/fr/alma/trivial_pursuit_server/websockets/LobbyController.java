@@ -121,9 +121,9 @@ public class LobbyController implements ILobby {
         }
     }
 
-    @PostMapping(path = "/joinGame/{id}")
-    public boolean joinGameDetached(@RequestBody User user, @PathVariable("id") String partyId){
-        log.info("joinGame for party : "+partyId+" and user : "+user);
+    @PutMapping(path = "/joinGame/{id}")
+    public boolean joinGameDetached(@PathVariable("id") String partyId, @RequestBody User user){
+        log.info("joinGame for party : "+partyId+" and user : "+user.getUsername());
         return joinGame(user.getUsername(), partyId);
     }
 
