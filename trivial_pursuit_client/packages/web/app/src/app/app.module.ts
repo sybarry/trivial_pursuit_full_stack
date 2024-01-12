@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PartyComponent } from './party/party.component';
+import { JoinGameComponent } from './join-game/join-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    JoinGameComponent,
   ],
   imports: [
     BrowserModule,
