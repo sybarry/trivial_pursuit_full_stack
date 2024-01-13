@@ -4,7 +4,6 @@ import { Party } from '../classFile';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-// import { Party } from '@trivial-pursuit-client/core/src/Player';
 
 @Component({
   selector: 'app-party',
