@@ -75,9 +75,9 @@ public class LobbyController implements ILobby {
      */
     @PostMapping(path = "/createParty")
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean createParty(@RequestBody Party party) {
+    public IParty createParty(@RequestBody Party party) {
         log.info("createGame with gameName : "+party.getName()+" and nbPlayers : "+party.getMaxCapacityPlayer());
-        return createGame(party.getName(), party.getMaxCapacityPlayer()) != null;
+        return createGame(party.getName(), party.getMaxCapacityPlayer());
     }
 
     /**

@@ -188,6 +188,12 @@ class LobbyControllerTest {
                         .content(asJsonString(partyMaxTrue))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").value(1))
+                .andExpect(jsonPath("playerList").isArray())
+                .andExpect(jsonPath("chat").value(nullValue()))
+                .andExpect(jsonPath("board").value(nullValue()))
+                .andExpect(jsonPath("maxCapacityPlayer").value(6))
+                .andExpect(jsonPath("name").value("party"))
                 .andReturn();
 
         given(partyService.saveParty(Mockito.any())).willReturn(partyMinTrue);
@@ -195,6 +201,12 @@ class LobbyControllerTest {
                         .content(asJsonString(partyMinTrue))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("id").value(1))
+                .andExpect(jsonPath("playerList").isArray())
+                .andExpect(jsonPath("chat").value(nullValue()))
+                .andExpect(jsonPath("board").value(nullValue()))
+                .andExpect(jsonPath("maxCapacityPlayer").value(2))
+                .andExpect(jsonPath("name").value("party"))
                 .andReturn();
 
         MvcResult resultFalseMax = mvc.perform(MockMvcRequestBuilders.post("/lobby/createParty")
@@ -209,10 +221,10 @@ class LobbyControllerTest {
                 .andReturn();
 
         //VERIFY
-        Assertions.assertEquals("true", resultTrueMax.getResponse().getContentAsString());
-        Assertions.assertEquals("true", resultTrueMin.getResponse().getContentAsString());
-        Assertions.assertEquals("false", resultFalseMax.getResponse().getContentAsString());
-        Assertions.assertEquals("false", resultFalseMin.getResponse().getContentAsString());
+        Assertions.assertFalse(resultTrueMax.getResponse().getContentAsString().isEmpty());
+        Assertions.assertFalse(resultTrueMin.getResponse().getContentAsString().isEmpty());
+        Assertions.assertTrue(resultFalseMax.getResponse().getContentAsString().isEmpty());
+        Assertions.assertTrue(resultFalseMin.getResponse().getContentAsString().isEmpty());
     }
 
     @Test
