@@ -75,9 +75,9 @@ public class LobbyController implements ILobby {
      */
     @PostMapping(path = "/createParty")
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean createParty(@RequestBody Party party) {
+    public IParty createParty(@RequestBody Party party) {
         log.info("createGame with gameName : "+party.getName()+" and nbPlayers : "+party.getMaxCapacityPlayer());
-        return createGame(party.getName(), party.getMaxCapacityPlayer()) != null;
+        return createGame(party.getName(), party.getMaxCapacityPlayer());
     }
 
     /**
@@ -118,14 +118,14 @@ public class LobbyController implements ILobby {
      * @param partyId party id where a user will join
      * @return true if user has join, false otherwise
      */
-    @PostMapping(path = "/joinGame/{id}")
-    public boolean joinGameDetached(@RequestBody User user, @PathVariable("id") String partyId){
-        log.info("joinGame for party : "+partyId+" and user : "+user);
+    @PutMapping(path = "/joinGame/{id}")
+    public boolean joinGameDetached(@PathVariable("id") String partyId, @RequestBody User user){
+        log.info("joinGame for party : "+partyId+" and user : "+user.getUsername());
         return joinGame(user.getUsername(), partyId);
     }
 
     /**
-     * @see LobbyController#joinGameDetached(User, String) joinGameDetached
+     * @see LobbyController#joinGameDetached(String, User) joinGameDetached
      */
     @Override
     public boolean joinGame(String user, String partyId) {
