@@ -3,8 +3,7 @@ import { LobbyService } from '../service/lobby.service';
 import { Party } from '../classFile';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
-// import { Party } from '@trivial-pursuit-client/core/src/Player';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-party',
@@ -17,10 +16,10 @@ import { RouterLink } from '@angular/router';
 })
 export class PartyComponent implements OnInit {
 
-  constructor(private lobbyService: LobbyService){}
-  
+  constructor(private lobbyService: LobbyService, private router: Router){}
+
   party: Party = new Party();
-  
+
   listParty: Party[] = [];
 
   submitted = false;
@@ -39,8 +38,13 @@ export class PartyComponent implements OnInit {
     console.log(this.party);
     this.lobbyService.saveParty(this.party).subscribe(
       data=>{
-        this.ngOnInit();
+        this.party = data;
+        console.log(this.party);
+        console.log(this.party.id)
         console.log(data);
+        this.router.navigate(['/join/'+this.party.id]);
+        this.ngOnInit();
+        this.party = data;
         this.party = new Party();
       }
     )
@@ -53,7 +57,7 @@ export class PartyComponent implements OnInit {
     },
   );
 
-  
+
 
 
 }
