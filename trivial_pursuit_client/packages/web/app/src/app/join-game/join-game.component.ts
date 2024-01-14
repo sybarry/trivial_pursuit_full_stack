@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Party } from '../classFile';
+import { Party } from '@trivial-pursuit-client/core/src/Party';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
-import { User } from '@trivial-pursuit-client/core/src/Player';
+import { User } from '@trivial-pursuit-client/core/src/User';
 import { LobbyService } from '../service/lobby.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class JoinGameComponent implements OnInit {
 
  user: User = new User();
 
- constructor(private _route: ActivatedRoute, private router: Router, private authServ: AuthentificationService, private lobbyServ: LobbyService){}
+ constructor(private _route: ActivatedRoute, private router: Router, private lobbyServ: LobbyService){}
   
  
  ngOnInit(): void {
@@ -34,7 +34,13 @@ export class JoinGameComponent implements OnInit {
  }
 
  leaveGame(){
-  this.router.navigate(['/party']);
+  this.lobbyServ.leaveParty(this.user).subscribe(
+    data => {
+      console.log(data)
+      this.router.navigate(['/party']);
+    }
+  )
+
  }
 
 }

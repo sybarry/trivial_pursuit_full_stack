@@ -157,7 +157,7 @@ public class LobbyController implements ILobby {
     public boolean startGame(@PathVariable("partyId") String partyId) {
         log.info("startGame for party : "+partyId);
         try {
-            //TODO
+            //TODO if we want that the game is playable
             //party and card are link via board who is embeddable so it doesn't work
             //must be a table where party_id and card_id are linked.
             Party party = partyService.findById(partyId);

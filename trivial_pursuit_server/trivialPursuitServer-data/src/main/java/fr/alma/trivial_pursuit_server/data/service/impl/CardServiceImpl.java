@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class CardServiceImpl implements CardService {
-    @Autowired
+
     private CardRepository cardRepository;
 
 
@@ -22,6 +22,7 @@ public class CardServiceImpl implements CardService {
      * Initialize the service repository by providing card in the file card.json.
      * @param cardRepository cardRepository field
      */
+    @Autowired
     public CardServiceImpl(CardRepository cardRepository){
         this.cardRepository = cardRepository;
         try{

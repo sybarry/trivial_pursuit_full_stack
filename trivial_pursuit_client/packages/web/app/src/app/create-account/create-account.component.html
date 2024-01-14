@@ -1,16 +1,14 @@
 
 <div class="login-container">
-  <h2>Connexion</h2>
+  <h2>Création de compte</h2>
   {{ msg }}
   <form class="login-form" (ngSubmit)="onSubmit()" [formGroup]="profileForm">
     <input type="email" name="username" class="ng-untouched ng-pristine ng-valid"  placeholder="Pseudo" formControlName="username" name="mail" required>
-    <!-- <div [hidden]="username.valid || username.pristine" class="alert alert-danger">Email required</div> -->
     <input type="password" formControlName="password" placeholder="Mot de passe" required>
-    <input type="password" formControlName="confirmPassword" placeholder="Confirmation mot de passe" required>
-    <div *ngIf="passwordMatchError" class="alert alert-danger">Les mots de passe doivent être les même</div>
-    <button [disabled]="!profileForm.valid">Créer compte</button>
-    <!-- <button type="submit" [disabled]="!playerForm.form.valid" (click)="connectPlayer(user.username, user.password)">Se Connecter</button> -->
+    <input type="password" formControlName="confirmPassword" placeholder="Confirmation du mot de passe" required>
+    <div *ngIf="passwordMatchError" class="alert alert-danger">Les mots de passe doivent être similaires</div>
+    <button [disabled]="!profileForm.valid">Créer un compte</button>
   </form>
-  <p>Vous avez un compte ? <a routerLink="/login">Cliquez ici </a>pour vous connectez</p>
+  <p>Vous avez un compte ? <a routerLink="/login">Cliquez ici </a>pour vous connecter</p>
 </div>
 

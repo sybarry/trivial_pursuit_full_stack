@@ -12,13 +12,13 @@ import java.util.List;
 
 @Service
 public class PartyServiceImpl implements PartyService {
-    @Autowired
     private PartyRepository partyRepository;
 
     /**
      * Constructor of a PartyServiceImpl
      * @param partyRepository partyRepository field
      */
+    @Autowired
     public PartyServiceImpl(PartyRepository partyRepository){
         this.partyRepository = partyRepository;
         partyRepository.save(new Party("game1",5));

@@ -2,9 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
-// import { Player, User } from '../../../player';
-import { CoreFacade } from '@trivial-pursuit-client/core';
-import { Player, User } from '@trivial-pursuit-client/core/src/Player';
+import { User } from '@trivial-pursuit-client/core/src/User';
 
 
 @Component({

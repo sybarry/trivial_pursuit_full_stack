@@ -2,15 +2,14 @@
     <div class="form-container-container">
         <h2>Formulaire</h2>
         <form class="login-form" (ngSubmit)="onSubmit()" [formGroup]="partyForm">
-            <label for="firstName">Nom de la Partie:</label>
-            <!-- <input type="text" name="gamename" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.name" required> -->
-            <input type="text" formControlName="gamename" name="gamename" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.name" required>
+            <label for="gameName">Nom de la Partie:</label>
+            <input type="text" [formControl]="partyForm.controls.gamename" name="gamename" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.name" required>
 
-            <label for="lastName">Nombre Max</label>
-            <!-- <input type="text" id="lastName" name="lastName" required>             -->
-            <!-- <input type="number" name="capacity" class="ng-untouched ng-pristine ng-valid" #gamename="ngModel" [(ngModel)]="party.maxCapacityPlayer" required> -->
-            <input type="text" formControlName="maxCapacity" name="capacity" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.maxCapacityPlayer" required>
-            <button>Créer Partie</button>
+            <label for="nbPlayer">Nombre Maximum de joueur</label>
+            <div class="alert alert-danger" *ngIf="party.maxCapacityPlayer && partyForm.controls.maxCapacity.errors">Only 2 to 6 players are a correct number</div>
+            <input type="text" [formControl]="partyForm.controls.maxCapacity" name="capacity" class="ng-untouched ng-pristine ng-valid" [(ngModel)]="party.maxCapacityPlayer" required>
+            
+            <button type="submit" [disabled]="!partyForm.valid">Créer la Partie</button>
         </form>
     </div>
 
@@ -20,15 +19,14 @@
             <thead>
                 <tr>
                     <th>Nom de la Partie</th>
-                    <th>Capacité max</th>
-                    <th>Action</th>
+                    <th>Capacité maximum de joueur</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let parti of listParty">
                     <td>{{ parti.name }}</td>
                     <td>{{ parti.maxCapacityPlayer }}</td>
-                    <!-- <td>{{ parti.id }}</td> -->
                     <td><a routerLink="/join/{{parti.id}}">Rejoindre</a></td>
                 </tr>
             </tbody>

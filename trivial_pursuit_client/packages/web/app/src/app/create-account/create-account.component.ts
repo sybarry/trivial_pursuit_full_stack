@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { User } from '@trivial-pursuit-client/core/src/Player';
+import { User } from '@trivial-pursuit-client/core/src/User';
 import { AuthentificationService } from '../service/authentification.service';
 import { NgIf } from '@angular/common';
 

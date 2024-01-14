@@ -1,4 +1,4 @@
-package fr.alma.TrivialPursuitServer;
+package fr.alma.trivial_pursuit_server;
 
 /**
  * Hello world!

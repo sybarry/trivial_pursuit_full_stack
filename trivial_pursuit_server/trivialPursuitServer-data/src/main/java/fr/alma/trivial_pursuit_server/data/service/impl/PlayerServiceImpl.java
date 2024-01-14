@@ -12,13 +12,13 @@ import java.util.List;
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
-    @Autowired
     private PlayerRepository playerRepository;
 
     /**
      * Constructor of a PlayerServiceImpl
      * @param playerRepository playerRepository field
      */
+    @Autowired
     public PlayerServiceImpl(PlayerRepository playerRepository){
         this.playerRepository = playerRepository;
     }

@@ -1,4 +1,4 @@
-import { TrivialPursuitServer } from "@trivial-pursuit-client/api";
+import { TrivialPursuitServer } from "@trivial-pursuit-client/api/src/server";
 import { WebsocketServer } from "@trivial-pursuit-client/websocket";
 
 export class CoreFacade {

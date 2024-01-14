@@ -14,13 +14,13 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-    @Autowired
     private UserRepository userRepository;
 
     /**
      * Constructor of a UserServiceImpl
      * @param userRepository userRepository field
      */
+    @Autowired
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
         userRepository.save(new User("test", Constant.getSHA512SecurePassword("test")));

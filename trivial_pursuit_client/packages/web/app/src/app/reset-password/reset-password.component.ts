@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../service/authentification.service';
 import { FormsModule, NgModel } from '@angular/forms';
-import { User } from '@trivial-pursuit-client/core/src/Player';
+import { User } from '@trivial-pursuit-client/core/src/User';
 
 @Component({
   selector: 'app-reset-password',

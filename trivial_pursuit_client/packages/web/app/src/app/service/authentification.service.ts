@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '@trivial-pursuit-client/core/src/Player';
+import { User } from '@trivial-pursuit-client/core/src';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class AuthentificationService {
 
   baseUrl = 'http://localhost:8081';
 
-  private isAuth: boolean = false;
+  public isAuth: boolean = false;
 
   constructor(private _http: HttpClient) { }
 

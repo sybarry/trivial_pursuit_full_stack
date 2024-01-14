@@ -49,7 +49,7 @@ public class Question {
      * @return true if that's the case, false otherwise
      */
     public boolean analyseAnswer(String answer) {
-        //TODO upgrade the way to validate an answer
+        //TODO upgrade the way to validate an answer if we want that the game is playable
         return Objects.equals(this.answer.getAnswerText(), answer);
     }
 }

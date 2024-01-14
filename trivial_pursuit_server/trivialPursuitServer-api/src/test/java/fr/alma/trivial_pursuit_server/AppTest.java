@@ -1,4 +1,4 @@
-package fr.alma.TrivialPursuitServer;
+package fr.alma.trivial_pursuit_server;
 
 
 import org.junit.jupiter.api.Assertions;
@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest
+class AppTest
 {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
+    void shouldAnswerWithTrue()
     {
         Assertions.assertTrue( true );
     }

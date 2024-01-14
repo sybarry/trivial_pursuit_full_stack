@@ -9,12 +9,44 @@
 == Accord sur le dévelopemment
 On choisit la conception du groupe Snorlax comme base pour le développement du logiciel.
 
-L'ensemble de l'implémentation aura comme langue de référence l'anglais.
+== Modification lors de l'implémentation
 
+Lors du développement du back end, on s'est rendu compte de certains problèmes de conception. Que ce soit des problèmes de design globaux, d'optimisation inefficace, de signatures de méthodes incorrects ou encore de choses inutiles, voire impossibles parfois à implémenter. +
+La conception choisit, diffère donc en de nombreux points, cependant son respect a été appliqué au maximum dans le cadre du possible et de l'utile.
+Toujours dans le but de fournir les exigences souhaité, soit "rejoindre une partie" et "créer un compte". +
+Le front quant à lui utilise les interfaces définit dans le module API, les implémentent dans CORE et ils sont utilisés dans le module WEB. Dans l'optique de limiter le couplage.
+Les tests du code ont été réalisé avec des bouchons lorsque nécessaire, pour isolés ceux du front de ceux du back.
 
+== Consigne de lancement
+
+Lancer le fichier *TrivialPursuitServerApplication.java*, présent dans le répertoire *trivial_pursuit_full_stack/trivial_pursuit_server/trivialPursuitServer-websocket-controller/src/main/java/fr/alma/trivial_pursuit_server/TrivialPursuitServerApplication.java* puis lancer le front avec la commande
+
+[source, shell]
+----
+ng serve
+----
+
+Lorsque vous êtes dans le répertoire *trivial_pursuit_full_stack/trivial_pursuit_client/packages/web/app*
+
+Vous pouvez ensuite visualiser le projet en clickant sur cet url : **link:http://localhost:4200/[]**
+
+== Fonctionnalité implémentée
+
+- Se connecter
+- Se déconnecter
+- Créer un compte
+- Changer le mot de passe
+- Créer une partie
+- Rejoindre une partie
+- Quitter une partie
+
+== Qualité du code
+
+Vous pouvez visualiser la qualité du code du backend en allant sur la page suivante :
+**link:https://e206597m.univ-nantes.io/trivial_pursuit_full_stack/[Git Page pour la qualité du code server]**
 
 == Utilitaires
 
 **link:https://e206597m.univ-nantes.io/trivial-poursuit/trivial-doc/dev/index.html[Conception choisie]** +
 **link:https://p-trans.univ-nantes.io/projet/[Sujet Projet]** +
-**link:https://e206597m.univ-nantes.io/trivial_pursuit_full_stack/[Git Page]**
+

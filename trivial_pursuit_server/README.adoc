@@ -15,4 +15,4 @@
 - [x] : Test de ces controller comme la classe GamePlayControllerTest
 - [x] : Check Javadoc
 - [x] : hash password
-- [x] : add json cardServiceImpl pour éviter le chemin absolue
+- [x] : add json cardServiceImpl pour éviter le chemin absolu

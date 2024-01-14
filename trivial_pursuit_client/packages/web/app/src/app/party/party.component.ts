@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LobbyService } from '../service/lobby.service';
-import { Party } from '../classFile';
+import { Party } from '@trivial-pursuit-client/core/src/Party';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -53,7 +53,7 @@ export class PartyComponent implements OnInit {
   partyForm = new FormGroup(
     {
       gamename: new FormControl('', [Validators.required]),
-      maxCapacity: new FormControl('', [Validators.required, Validators.max(6), Validators.min(2)])
+      maxCapacity: new FormControl('', [Validators.required, Validators.pattern("[2-6]") ])
     },
   );
 
